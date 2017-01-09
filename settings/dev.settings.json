@@ -2,9 +2,9 @@
   "ROOT_URL": "",
   "MAIL_URL": "",
   "reaction": {
-    "REACTION_USER": "",
-    "REACTION_AUTH": "",
-    "REACTION_EMAIL": ""
+    "REACTION_USER": "Admin",
+    "REACTION_AUTH": "uyi",
+    "REACTION_EMAIL": "uyi@uyi.com"
   },
   "isDebug": "info",
   "public": {}
