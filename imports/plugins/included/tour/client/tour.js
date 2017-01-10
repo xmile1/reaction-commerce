@@ -1,14 +1,10 @@
 import Shepherd from "tether-shepherd";
 import "/node_modules/tether-shepherd/dist/css/shepherd-theme-arrows.css";
 import { Accounts } from "/lib/collections";
-import { Template } from 'meteor/templating'
+import { Template } from "meteor/templating";
 import "./tour.html";
 
-
-
-
-
-function options (whoseTour) {
+function options(whoseTour) {
   return {defaults: {
     showCancelLink: true,
     scrollTo: true,
@@ -20,76 +16,84 @@ function options (whoseTour) {
 export const vendorTour = new Shepherd.Tour(options("vendorTour"));
 export const buyerTour = new Shepherd.Tour(options("buyerTour"));
 
-function getButton(whichTour){
-
-  if (whichTour == "vendorTour") {
-    var actionNext = ()=>{
+function getButton(whichTour) {
+  let actionBack;
+  let actionHide;
+  let actionNext;
+  if (whichTour === "vendorTour") {
+    actionNext = ()=>{
       vendorTour.next();
-    }
-    var actionHide = ()=>{
+    };
+    actionHide = ()=>{
       vendorTour.hide();
-    }
-    var actionBack = ()=>{
+    };
+    actionBack = ()=>{
       vendorTour.back();
-    }
-  }
-
-  else if (whichTour == "buyerTour") {
-    var actionNext = ()=>{
+    };
+    actionNextTime = ()=>{
+      vendorTour.show("toViewnextTime");
+    };
+  }  else if (whichTour === "buyerTour") {
+    actionNext = ()=>{
       buyerTour.next();
-    }
-    var actionHide = ()=>{
+    };
+    actionHide = ()=>{
       buyerTour.hide();
-    }
-    var actionBack = ()=>{
+    };
+    actionBack = ()=>{
       buyerTour.back();
-    }
+    };
+    actionNextTime = ()=>{
+      buyerTour.show("toViewnextTime");
+    };
   }
 
-const allButtons = {
-  nexttime:
-  {
-    text: 'Dont Show Next Time',
-    classes: 'shepherd-button-secondary',
-    action: () => {
-      Accounts.update({_id: Meteor.userId()}, {$set: {takenTour: true}});
-      return actionHide()
+  const allButtons = {
+    nexttime:
+    {
+      text: "Skip Tour",
+      classes: "shepherd-button-secondary",
+      action: () => {
+        Accounts.update({_id: Meteor.userId()}, {$set: {takenTour: true}});
+        return actionNextTime();
+      }
+    },
+    next:
+    {
+      text: "Next",
+      action: actionNext,
+      classes: "shepherd-button-example-primary"
+    },
+    back:
+    {
+      text: "Back",
+      action: actionBack,
+      classes: "shepherd-button-example-primary"
+    },
+    finish:
+    {
+      text: "Finish",
+      action: actionHide,
+      classes: "shepherd-button-example-primary"
     }
-  },
-  next:
-   {
-    text: 'Next',
-    action: actionNext,
-    classes: 'shepherd-button-example-primary'
-  },
-  back:
-  {
-   text: 'Back',
-   action: actionBack,
-   classes: 'shepherd-button-example-primary'
- },
- finish:
- {
-  text: 'Finish',
-  action: actionHide,
-  classes: 'shepherd-button-example-primary'
+
+  };
+  return allButtons;
 }
 
-}
-return allButtons;
-};
 
-
-let template={};
+const template = {};
 Template.tour.onRendered(function () {
-  template.welcomeText = this.$('.welcomeText').html();
-  template.aboutDashboard = this.$('.aboutDashboard').html();
-  template.dashboardDetails = this.$('.dashboardDetails').html();
-  template.product = this.$('.product').html();
-  template.profileOrdersAccounts = this.$('.profileOrdersAccounts').html();
-  template.shop = this.$('.shop').html();
-  template.retakeTour = this.$('.retakeTour').html();
-
+  template.welcomeText = this.$(".welcomeText").html();
+  template.aboutDashboard = this.$(".aboutDashboard").html();
+  template.product = this.$(".product").html();
+  template.profileOrdersAccounts = this.$(".profileOrdersAccounts").html();
+  template.shop = this.$(".shop").html();
+  template.retakeTour = this.$(".retakeTour").html();
+  template.welcomeBuyer = this.$(".welcomeBuyer").html();
+  template.profile = this.$(".profile").html();
+  template.cart = this.$(".cart").html();
+  template.shopBuyer = this.$(".shopBuyer").html();
 
   vendorTour.addStep("Welcome", {
     title: "Welcome to Reaction Commerce",
@@ -98,52 +102,62 @@ Template.tour.onRendered(function () {
   });
 
   vendorTour.addStep("toDashboard", {
-    title: "customize Store",
+    title: "View Dashboard",
     text: template.aboutDashboard,
     attachTo: ".tour-accounts bottom",
-    advanceOn: "#dropown-apps-dashboard click"
-
-  });
-
-  vendorTour.addStep("dashboard", {
-    title: "customize Store",
-    text: template.dashboardDetails,
     advanceOn: "#dropown-apps-dashboard click"
   });
 
   vendorTour.addStep("newProduct", {
     title: "Create New Product",
     text: template.product,
-    attachTo: ".tour-create-content left",
-    advanceOn: ".docs-link clink"
+    attachTo: ".tour-create-content left"
   });
 
   vendorTour.addStep("profileOrdersAccounts", {
     title: "Orders",
-    text: template.profileOrdersAccounts,
-    advanceOn: ".docs-link clink"
+    text: template.profileOrdersAccounts
   });
 
   vendorTour.addStep("visitShop", {
     title: "Shop",
     text: template.shop,
-    attachTo: ".rui.tag.link bottom",
-    advanceOn: ".tour-shop",
-    buttons: [getButton("vendorTour").nexttime, getButton("vendorTour").back, getButton("vendorTour").finish ]
+    attachTo: ".rui.tag.link bottom"
   });
 
   vendorTour.addStep("toViewnextTime", {
     title: "Information",
     text: template.retakeTour,
-    // attachTo: ".user-accounts right",
-    advanceOn: ".docs-link clink"
+    buttons: [getButton("vendorTour").finish ]
   });
 
-  buyerTour.addStep("shop", {
-    title: "Shopping",
+  buyerTour.addStep("welcomeBuyer", {
+    title: "Welcome",
+    text: template.welcomeBuyer,
+    buttons: [getButton("buyerTour").nexttime, getButton("buyerTour").next]
+  });
+
+  buyerTour.addStep("shopBuyer", {
+    title: "Shop",
+    text: template.shopBuyer,
+    attachTo: ".rui.tag.link bottom"
+  });
+
+  buyerTour.addStep("profile", {
+    title: "Profile",
+    text: template.profile,
+    attachTo: ".tour-accounts bottom"
+  });
+
+  buyerTour.addStep("Cart", {
+    title: "Cart",
+    text: template.cart,
+    attachTo: ".cart-icon bottom"
+  });
+
+  buyerTour.addStep("toViewnextTime", {
+    title: "Information",
     text: template.retakeTour,
-    // attachTo: ".user-accounts right",
-    advanceOn: ".docs-link clink"
+    buttons: [getButton("buyerTour").finish ]
   });
-
 });
