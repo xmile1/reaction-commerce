@@ -1,0 +1,18 @@
+.js-search-filter {
+  color: black;
+}
+
+
+.search-modal-filter-container {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.transform {
+  text-transform: uppercase;
+}
+.row-padd {
+  padding-bottom: 5px;
+  padding-top:5px;
+}

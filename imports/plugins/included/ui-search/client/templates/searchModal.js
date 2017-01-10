@@ -122,6 +122,9 @@ Template.searchModal.events({
     $("#search-input").focus();
     const searchQuery = templateInstance.find("#search-input").value;
     templateInstance.state.set("searchQuery", searchQuery);
+  },
+  "click [data-event-action=toggleFilter]": function (event, templateInstance) {
+    $("#filterGrid").toggleClass("hidden");
   }
 });
 
