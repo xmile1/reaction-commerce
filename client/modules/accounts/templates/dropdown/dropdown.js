@@ -75,7 +75,6 @@ Template.loginDropdown.events({
       });
     } else if (this.route || this.name) {
       event.preventDefault();
-      console.log(vendorTour);
       if (vendorTour.currentStep && vendorTour.currentStep.isOpen()) {
         vendorTour.next();
       }
