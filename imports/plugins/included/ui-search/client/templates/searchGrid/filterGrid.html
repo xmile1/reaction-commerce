@@ -3,48 +3,42 @@
     <div class="container" style="margin-top:20px">
       <div class="row">
           
-        <div class="col-md-3">
-          <label class="transform">Tag</label>
-          <div class="rui select">
-            <select>
-               {{#each tags in displayTags}}
-                  <option>{{tags.name}}</option>
-                  <!--<option>{{ this }}</option>-->
-               {{/each}}
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
           <label class="transform">Price</label>
           <div class="rui select">
-            <select>
-              {{#each price in displayPrice}}
-              <option>
-                {{price}}
-              </option>
-              {{/each}}
+            <select id="price-filter">
+              <option value="null">Filter by price</option>
+              <option value="all">All prices</option>
+              <option value="0-10">below - $10</option>
+              <option value="10-55">$10 - $55</option>
+              <option value="55-100">$55 - $100</option>
+              <option value="100-500">$100 - $500</option>
+              <option value="500-1000">$500 - $1000</option>
+              <option value="1000-above">$1000 - above</option>
             </select>
           </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
           <label class="transform">Brand</label>
           <div class="rui select">
-            <select>
-              {{#each brand in displayBrand}}
-              <option>
-                {{brand}}
-              </option>
+            <select id="brand-filter">
+              <option value="null">Filter by brand</option>
+              <option value="all">All brands</option>
+              {{#each brand in getBrands productSearchResults }}
+                  <option value="{{brand}}">{{ brand }}</option>
               {{/each}}
             </select>
           </div>
         </div>
 
-        <div class="col-md-3" style="margin-bottom:10px;">
-          <label class="transform">Best Sellers</label>
+        <div class="col-md-4" style="margin-bottom:10px;">
+          <label class="transform">Sort products</label>
           <div class="rui select">
-            <select>
-              <option></option>
+            <select id="sort-value">
+              <option value="null">Sort by price</option>
+              <option value="ASC">Lowest price</option>
+              <option value="DESC">Highest price</option>
             </select>
           </div>
         </div>
