@@ -74,7 +74,8 @@ Template.coreOrderCancelOrder.events({
     Alerts.alert({
       title: "Are you sure you want to cancel this order?",
       showCancelButton: true,
-      confirmButtonText: "Cancel Order"
+      cancelButtonText: "No",
+      confirmButtonText: "Yes"
     }, (confirmed) => {
       if (confirmed) {
         Meteor.call("orders/cancelOrder", order, newComment, (error) => {
