@@ -5,6 +5,7 @@ machine:
     - docker
   pre:
     - hash meteor 2>/dev/null || curl https://install.meteor.com | /bin/sh
+    - mkdir -p ~/reaction
 
 dependencies:
   cache_directories:
