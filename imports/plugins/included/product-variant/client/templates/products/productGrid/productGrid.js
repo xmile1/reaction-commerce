@@ -6,7 +6,7 @@ import Logger from "/client/modules/logger";
 import { ReactionProduct } from "/lib/api";
 import Sortable from "sortablejs";
 import { buyerTour, vendorTour } from "/imports/plugins/included/tour/client/tour";
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from "meteor/meteor";
 import { Accounts } from "/lib/collections";
 
 /**
@@ -52,11 +52,10 @@ Template.productGrid.onRendered(function () {
       }
     });
   }
-  if(Meteor.user().emails.length > 0 && !hasTakenTour){
-    if(Reaction.hasAdminAccess()){
+  if (Meteor.user().emails.length > 0 && !hasTakenTour) {
+    if (Reaction.hasAdminAccess()) {
       vendorTour.start();
-    }
-    else{
+    }    else {
       buyerTour.start();
     }
   }

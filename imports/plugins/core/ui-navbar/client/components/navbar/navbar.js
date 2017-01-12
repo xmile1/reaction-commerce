@@ -1,7 +1,7 @@
 import { FlatButton } from "/imports/plugins/core/ui/client/components";
 import { Reaction } from "/client/api";
 import { Tags } from "/lib/collections";
-import { buyerTour, vendorTour } from "/imports/plugins/included/tour/client/tour";
+import { buyerTour } from "/imports/plugins/included/tour/client/tour";
 
 Template.CoreNavigationBar.onCreated(function () {
   this.state = new ReactiveDict();
@@ -27,8 +27,8 @@ Template.CoreNavigationBar.events({
   },
   "click #takeTour": (event) =>{
     event.preventDefault();
-        buyerTour.start();
-  },
+    buyerTour.start();
+  }
 });
 
 

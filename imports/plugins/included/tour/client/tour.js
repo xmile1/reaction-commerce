@@ -2,6 +2,7 @@ import Shepherd from "tether-shepherd";
 import "/node_modules/tether-shepherd/dist/css/shepherd-theme-arrows.css";
 import { Accounts } from "/lib/collections";
 import { Template } from "meteor/templating";
+import { Meteor } from "meteor/meteor";
 import "./tour.html";
 
 function options(whoseTour) {
@@ -20,6 +21,7 @@ function getButton(whichTour) {
   let actionBack;
   let actionHide;
   let actionNext;
+  let actionNextTime;
   if (whichTour === "vendorTour") {
     actionNext = ()=>{
       vendorTour.next();
@@ -34,16 +36,16 @@ function getButton(whichTour) {
       vendorTour.show("toViewnextTime");
     };
   }  else if (whichTour === "buyerTour") {
-    actionNext = ()=>{
+    actionNext = () => {
       buyerTour.next();
     };
-    actionHide = ()=>{
+    actionHide = () => {
       buyerTour.hide();
     };
-    actionBack = ()=>{
+    actionBack = () => {
       buyerTour.back();
     };
-    actionNextTime = ()=>{
+    actionNextTime = () =>{
       buyerTour.show("toViewnextTime");
     };
   }
