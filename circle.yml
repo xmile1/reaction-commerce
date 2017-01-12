@@ -24,7 +24,7 @@ test:
 
 deployment:
   prequel:
-    branch: development
+    branch: staging
     commands:
       - docker tag reactioncommerce/reaction:latest reactioncommerce/prequel:latest
       - docker tag reactioncommerce/reaction:latest reactioncommerce/prequel:$CIRCLE_BUILD_NUM
