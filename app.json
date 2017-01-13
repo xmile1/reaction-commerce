@@ -1,0 +1,15 @@
+{
+  "name": "kissa-rc",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
