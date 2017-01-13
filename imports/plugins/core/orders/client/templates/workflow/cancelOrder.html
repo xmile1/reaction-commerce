@@ -7,8 +7,16 @@
     <div class="panel-body">
       <form name="cancelOrderForm">
         <div class="form-group {{hasError messages.errors.comment}}">
-          <label>Reasons for Cancelling Order</label>
-          <textarea name="comment" class="form-control input-comment"></textarea>
+          <label for="comment">Reason for Cancelling Order</label>
+            <select class="form-control input-comment" id="comment" style="text-align-last: center;">
+              <option selected disabled>Select One</option>
+              <option>Failed delivery</option>
+              <option>Damaged</option>
+              <option>Wrong Item</option>
+              <option>Customer Changed Mind</option>
+              <option>Item out of stock</option>             
+            </select>
+          <!-- <textarea name="comment" class="form-control input-comment"></textarea> -->
           {{#if hasError messages.errors.comment}}
             <span class="help-block">
               {{messages.errors.comment.reason}}
