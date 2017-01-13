@@ -1,15 +1,11 @@
 {
-  "name": "kissa-rc",
-  "scripts": {
-  },
-  "env": {
-  },
-  "formation": {
-  },
-  "addons": [
-
-  ],
-  "buildpacks": [
-
-  ]
+    "name": "kissa-rc",
+    "repository": "https://github.com/andela/kissa-rc",
+    "addons": [
+        "mlab"
+    ],
+    "env": {
+        "BUILDPACK_URL": "https://github.com/swrdfish/meteor-buildpack-horse.git"
+    },
+    "generator": "https://www.expeditedssl.com/heroku-button-maker"
 }
