@@ -5,15 +5,14 @@ const validateComment = (comment) => {
   check(comment, Match.OptionalOrNull(String));
 
   // Valid
-  const length = 15;
-  if (comment.length >= length) {
+  if (comment !== "Select One") {
     return true;
   }
 
   // Invalid
   return {
     error: "INVALID_COMMENT",
-    reason: `The reason must be ${length} characters long or more.`
+    reason: "Select a reason for cancelling order"
   };
 };
 
@@ -40,9 +39,9 @@ Template.coreOrderCancelOrder.events({
   "submit form[name=cancelOrderForm]"(event, template) {
     event.preventDefault();
 
-    const commentInput = template.$(".input-comment");
+    const commentInput = template.$(".input-comment option:selected");
 
-    const comment = commentInput.val().trim();
+    const comment = commentInput.text();
     const validatedComment = validateComment(comment);
 
     const templateInstance = Template.instance();
