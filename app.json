@@ -2,15 +2,24 @@
   "name": "kissa-rc",
   "scripts": {},
   "env": {
-    "BUILDPACK_URL": "https://github.com/swrdfish/meteor-buildpack-horse.git",
-    "ROOT_URL": "https://kissa-rc-project-pr-1.herokuapp.com/"
-  },
-  "formation": {
-    "web": {
-      "quantity": 1
+    "BUILDPACK_CLEAR_CACHE": {
+      "required": true,
+      "value":"1"
+    },
+    "MONGODB_URI": {
+      "required": true
+    },
+    "ROOT_URL": {
+      "required": true
     }
   },
+  "formation": {},
   "addons": [
     "mongolab"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/swrdfish/meteor-buildpack-horse.git"
+    }
   ]
 }
