@@ -5,9 +5,8 @@
     <div class="menu">
       {{> tagNav tagNavProps}}
     </div>
-
     {{#unless currentUser}}
-    <div id="takeTour" class="tour">{{> React tourButton}}</div>
+      <div id="takeTour" class="tour">{{> React tourButton}}</div>
     {{/unless}}
     <div class="search">{{> React IconButtonComponent}}</div>
     <div class="languages hidden-xs">{{> i18nChooser}}</div>
