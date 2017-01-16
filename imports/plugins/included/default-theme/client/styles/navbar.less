@@ -1,4 +1,3 @@
-
 .rui.navbar {
   .display(flex);
   .align-items(center);
@@ -8,10 +7,10 @@
   border: 0;
 }
 
+.rui.navbar .dropdown-toggle,
 .rui.navbar a,
-.rui.navbar a:hover,
 .rui.navbar a:focus,
-.rui.navbar .dropdown-toggle {
+.rui.navbar a:hover {
   color: @navbar-default-link-color;
   cursor: pointer;
   text-decoration: none;
@@ -21,7 +20,6 @@
   display: none;
   .flex(0 0 auto);
   .padding-left(10px);
-
   @media screen and (max-width: @screen-sm-max) {
     display: block;
   }
@@ -66,7 +64,7 @@
   color: @link-color;
 }
 
-.rui.navbar .dropdown .dropdown-menu > .active > a{
+.rui.navbar .dropdown .dropdown-menu > .active > a {
   color: @white;
 }
 
@@ -99,8 +97,8 @@
   margin-top: 0;
 }
 
-.rui.navbar .languages li,
-.rui.navbar .languages .menu-item {
+.rui.navbar .languages .menu-item,
+.rui.navbar .languages li {
   .text-align(left);
 }
 
@@ -167,7 +165,7 @@
 }
 
 .rui.navbar .accounts .dropdown ul {
-    padding: 0;
+  padding: 0;
 }
 
 .rui.navbar .accounts .dropdown .user-accounts-dropdown-apps {
@@ -179,7 +177,7 @@
   width: 20px;
   font-size: inherit;
   text-align: center;
- }
+}
 
 .rui.navbar .accounts .dropdown .dropdown-apps-icon {
   cursor: pointer;
@@ -201,8 +199,8 @@
   min-height: 44px;
 }
 
-.rui.navbar .accounts .dropdown .dropdown-apps-icon a:hover,
-.rui.navbar .accounts .dropdown .dropdown-apps-icon a:focus {
+.rui.navbar .accounts .dropdown .dropdown-apps-icon a:focus,
+.rui.navbar .accounts .dropdown .dropdown-apps-icon a:hover {
   color: @brand-vivid-color;
   text-decoration: none;
   background-color: transparent;
@@ -220,7 +218,7 @@
   .align-items(center);
   .flex(0 0 auto);
   height: @navbar-height;
-  padding: 0px @navbar-padding-vertical;
+  padding: 0 @navbar-padding-vertical;
   cursor: pointer;
 }
 
@@ -231,4 +229,26 @@
 
 .rui.navbar .search:hover button {
   outline: none;
+}
+
+.rui.navbar .tour {
+  .display(flex);
+  .align-items(center);
+  .flex(0 0 auto);
+  height: @navbar-height;
+  padding: 0 @navbar-padding-vertical;
+  cursor: pointer;
+}
+
+.rui.navbar .tour:hover {
+  background-color: @navbar-default-toggle-icon-bar-bg;
+  border-color: @navbar-default-toggle-border-color;
+}
+
+.rui.navbar .tour:hover button {
+  outline: none;
+}
+
+.rui.navbar .tour .flat {
+  width: auto;
 }

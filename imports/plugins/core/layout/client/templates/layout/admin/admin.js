@@ -5,7 +5,6 @@ import { Template } from "meteor/templating";
 import { Reaction, i18next } from "/client/api";
 import { Packages } from "/lib/collections";
 
-
 Template.coreAdminLayout.onRendered(function () {
   $("body").addClass("admin");
 });
@@ -48,6 +47,7 @@ Template.coreAdminLayout.helpers({
       tooltip: "Create Content",
       i18nKeyTooltip: "app.createContent",
       tooltipPosition: "left middle",
+      className: "tour-create-content",
       onClick(event) {
         if (!instance.dropInstance) {
           instance.dropInstance = new Drop({

@@ -45,6 +45,7 @@
         </a>
       </li>
     {{/each}}
+    {{> takeTour}}
   </ul>
 </template>
 
@@ -65,4 +66,15 @@
     <span class="icon-text" data-i18n="accountsUI.signedIn">You are signed in.</span>
   </li>
   {{/each}}
+</template>
+
+<template name="takeTour">
+  <li id="takeTour" class="dropdown-apps-icon">
+    <a title="Take a Tour">
+      <i class="fa fa-bus"></i>
+      <span class="icon-text">
+        Take Tour
+      </span>
+    </a>
+  </li>
 </template>
