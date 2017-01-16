@@ -1,1 +1,3 @@
-dev.settings.json
+*.json
+!dev.settings.json
+settings.json

@@ -39,4 +39,3 @@ deployment:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push reactioncommerce/reaction:$CIRCLE_BUILD_NUM
       - docker push reactioncommerce/reaction:latest
-      
