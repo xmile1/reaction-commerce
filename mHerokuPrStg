@@ -11,7 +11,7 @@ case $response in
       branch_name=${branch_name##refs/heads/}
 
       heroku git:remote -a kissa-rc-project
-      git push heroku $branch_name:master
+      git push -f heroku $branch_name:master
 
 
         ;;
