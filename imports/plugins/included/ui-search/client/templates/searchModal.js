@@ -1,7 +1,11 @@
+/* eslint-disable no-undef */
+/* eslint-env node*/
+
 import _ from "lodash";
 import { IconButton } from "/imports/plugins/core/ui/client/components";
 import { Template } from "meteor/templating";
 import { ProductSearch, Tags } from "/lib/collections";
+import { Session } from "meteor/session";
 
 
 Template.searchModal.onCreated(function () {
@@ -18,7 +22,7 @@ Template.searchModal.onCreated(function () {
 
   // Allow modal to be closed by clicking ESC
   // Must be done in Template.searchModal.onCreated and not in Template.searchModal.events
-  $(document).on('keyup', (event) => {
+  $(document).on("keyup", (event) => {
     if (event.keyCode === 27) {
       const view = this.view;
       $(".js-search-modal").fadeOut(400, () => {
@@ -28,14 +32,61 @@ Template.searchModal.onCreated(function () {
     }
   });
 
+  // Filters product by price
+  const priceFilter = (products, query) =>  {
+    return _.filter(products, (product) => {
+      if (product.price) {
+        const productMaxPrice = parseFloat(product.price.max);
+        const productMinPrice = parseFloat(product.price.min);
+        const queryMaxPrice = parseFloat(query[1]);
+        const queryMinPrice = parseFloat(query[0]);
+        if (productMinPrice >= queryMinPrice && productMaxPrice <= queryMaxPrice) {
+          return product;
+        }
+      }
+    });
+  };
+  // Sorts product by price
+  const sort = (products, type) => {
+    return products.sort((a, b) => {
+      const A = parseFloat(a.price.min);
+      const B = parseFloat(b.price.min);
+      if (A < B) {
+        return type === "DESC" ? 1 : -1;
+      }
+      if (A > B) {
+        return type === "ASC" ? 1 : -1;
+      }
+      return 0;
+    });
+  };
+
+
+  // Filters product by brand
+  function brandFilter(products, query) {
+    return _.filter(products, (product) => {
+      return product.vendor === query;
+    });
+  }
 
   this.autorun(() => {
     const searchQuery = this.state.get("searchQuery");
+    const priceQuery = Session.get("priceFilter");
+    const brandQuery = Session.get("brandFilter");
+    const sortQuery = Session.get("sortValue");
     const facets = this.state.get("facets") || [];
     const sub = this.subscribe("SearchResults", "products", searchQuery, facets);
 
     if (sub.ready()) {
-      const results = ProductSearch.find().fetch();
+      let results = ProductSearch.find().fetch();
+      if (!["null", "all"].includes(priceQuery) && priceQuery) {
+        const range = priceQuery.split("-");
+        results =  priceFilter(results, range);
+      } if (!["null", "all"].includes(brandQuery) && brandQuery) {
+        results = brandFilter(results, brandQuery);
+      } if (sortQuery !== "null" && sortQuery) {
+        results = sort(results, sortQuery);
+      }
       this.state.set("productSearchResults", results);
       const hashtags = [];
       for (const product of results) {
@@ -76,13 +127,11 @@ Template.searchModal.helpers({
   productSearchResults() {
     const instance = Template.instance();
     const results = instance.state.get("productSearchResults");
-    // console.log("productSearchResults", results);
     return results;
   },
   tagSearchResults() {
     const instance = Template.instance();
     const results = instance.state.get("tagSearchResults");
-    // console.log("tagSearchResults", results);
     return results;
   }
 });
@@ -122,12 +171,15 @@ Template.searchModal.events({
     $("#search-input").focus();
     const searchQuery = templateInstance.find("#search-input").value;
     templateInstance.state.set("searchQuery", searchQuery);
+  },
+  "click [data-event-action=toggleFilter]": function () {
+    $("#filterGrid").toggleClass("hidden");
   }
 });
 
 Template.searchModal.onDestroyed(() => {
   // Kill Allow modal to be closed by clicking ESC, which was initiated in Template.searchModal.onCreated
-  $(document).off('keyup');
+  $(document).off("keyup");
 });
 
 function tagToggle(arr, val) {

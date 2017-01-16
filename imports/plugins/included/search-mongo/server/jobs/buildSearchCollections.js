@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Jobs, ProductSearch, Orders, OrderSearch, AccountSearch } from "/lib/collections";
 import { Hooks, Logger } from "/server/api";
-import { buildProductSearch, buildOrderSearch, buildAccountSearch, rebuildProductSearchIndex } from "../methods/";
+import { buildProductSearch, buildEmptyProductSearch, buildOrderSearch, buildAccountSearch, rebuildProductSearchIndex } from "../methods/";
 
 
 function addBuildProductSearchCollection() {
@@ -64,6 +64,7 @@ function addBuildAccountSearchCollection() {
 
 Hooks.Events.add("afterCoreInit", () => {
   if (!Meteor.isAppTest) {
+    buildEmptyProductSearch();
     addBuildProductSearchCollection();
     addBuildOrderSearchCollection();
     addBuildAccountSearchCollection();
