@@ -3,7 +3,8 @@
   "scripts": {},
   "env": {
     "BUILDPACK_CLEAR_CACHE": {
-      "required": true
+      "required": true,
+      "value":"1"
     },
     "MONGODB_URI": {
       "required": true
@@ -16,7 +17,9 @@
   "addons": [
     "mongolab"
   ],
-  "buildpacks": [{
-    "url": "https://github.com/swrdfish/meteor-buildpack-horse.git"
-  }]
+  "buildpacks": [
+    {
+      "url": "https://github.com/swrdfish/meteor-buildpack-horse.git"
+    }
+  ]
 }

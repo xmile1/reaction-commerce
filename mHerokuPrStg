@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo "Please make sure you are logged in to heroku"
+echo "use Heroku Login to Login"
+
+read -r -p "Are you sure you are on Staging branch? [y/N] " response
+case $response in
+    [yY][eE][sS]|[yY])
+      branch_name="$(git symbolic-ref HEAD 2>/dev/null)" ||
+      branch_name="(unnamed branch)"
+      branch_name=${branch_name##refs/heads/}
+
+      heroku git:remote -a kissa-rc-project
+      git push heroku $branch_name:master
+
+
+        ;;
+    *)
+        echo "checkout to staging to continue"
+        ;;
+esac
+  echo Made at Kissa for kissa!

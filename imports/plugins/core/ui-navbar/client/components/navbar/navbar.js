@@ -1,6 +1,7 @@
 import { FlatButton } from "/imports/plugins/core/ui/client/components";
 import { Reaction } from "/client/api";
 import { Tags } from "/lib/collections";
+import { buyerTour } from "/imports/plugins/included/tour/client/tour";
 
 Template.CoreNavigationBar.onCreated(function () {
   this.state = new ReactiveDict();
@@ -23,8 +24,13 @@ Template.CoreNavigationBar.events({
     }, $("body").get(0));
     $("body").css("overflow", "hidden");
     $("#search-input").focus();
+  },
+  "click #takeTour": (event) =>{
+    event.preventDefault();
+    buyerTour.start();
   }
 });
+
 
 Template.CoreNavigationBar.helpers({
   IconButtonComponent() {
@@ -38,6 +44,13 @@ Template.CoreNavigationBar.helpers({
       //   $("body").css("overflow-y", "hidden");
       //   $("#search-input").focus();
       // }
+    };
+  },
+  tourButton() {
+    return {
+      component: FlatButton,
+      kind: "flat",
+      label: "Take Tour"
     };
   },
   onMenuButtonClick() {

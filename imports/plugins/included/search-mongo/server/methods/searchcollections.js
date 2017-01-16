@@ -108,6 +108,17 @@ export function buildProductSearch(cb) {
   }
 }
 
+export function buildEmptyProductSearch() {
+  const { weightObject, customFields } = getSearchParameters();
+  const indexObject = {};
+  for (const field of customFields) {
+    indexObject[field] = "text";
+  }
+  const rawProductSearchCollection = ProductSearch.rawCollection();
+  rawProductSearchCollection.dropIndexes("*");
+  rawProductSearchCollection.createIndex(indexObject, weightObject, getSearchLanguage());
+}
+
 export function rebuildProductSearchIndex(cb) {
   check(cb, Match.Optional(Function));
   const { customFields, weightObject } = getSearchParameters();
