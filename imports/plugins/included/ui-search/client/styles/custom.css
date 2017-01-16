@@ -2,6 +2,13 @@
   color: black;
 }
 
+.customContainer {
+  margin-top:20px;
+}
+
+customSearch {
+  margin-right:65px;
+}
 
 .search-modal-filter-container {
   margin-top: 0px;
@@ -12,6 +19,7 @@
 .transform {
   text-transform: uppercase;
 }
+
 .row-padd {
   padding-bottom: 5px;
   padding-top:5px;
