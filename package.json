@@ -74,7 +74,7 @@
     "transliteration": "^1.1.9",
     "url": "^0.11.0"
   },
-  "script":{
+  "script": {
     "start": "meteor"
   },
   "devDependencies": {
