@@ -1,8 +1,9 @@
-import { Reaction, Logger } from "/client/api";
+import { Reaction, Logger} from "/client/api";
 import { Tags } from "/lib/collections";
 import { Session } from "meteor/session";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
+import { buyerTour, vendorTour } from "/imports/plugins/included/tour/client/tour";
 
 Template.loginDropdown.events({
 
@@ -31,6 +32,17 @@ Template.loginDropdown.events({
         Logger.warn("Failed to logout.", error);
       }
     });
+  },
+
+  "click #takeTour": (event) => {
+    event.preventDefault();
+    if (Meteor.user()) {
+      if (Reaction.hasAdminAccess()) {
+        vendorTour.start();
+      } else {
+        buyerTour.start();
+      }
+    }
   },
 
   /**
@@ -63,6 +75,9 @@ Template.loginDropdown.events({
       });
     } else if (this.route || this.name) {
       event.preventDefault();
+      if (vendorTour.currentStep && vendorTour.currentStep.isOpen()) {
+        vendorTour.next();
+      }
       const route = this.name || this.route;
       Reaction.Router.go(route);
     }
