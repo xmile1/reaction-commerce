@@ -1,4 +1,9 @@
+/* eslint-disable no-undef */
+/* eslint-env node*/
+
 import { Session } from "meteor/session";
+import { Template } from "meteor/templating";
+import _ from "lodash";
 
 Template.filterGrid.helpers({
   getBrands(products) {

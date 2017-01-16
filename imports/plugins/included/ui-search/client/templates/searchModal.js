@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-env node*/
+
 import _ from "lodash";
 import { IconButton } from "/imports/plugins/core/ui/client/components";
 import { Template } from "meteor/templating";
@@ -19,7 +22,7 @@ Template.searchModal.onCreated(function () {
 
   // Allow modal to be closed by clicking ESC
   // Must be done in Template.searchModal.onCreated and not in Template.searchModal.events
-  $(document).on('keyup', (event) => {
+  $(document).on("keyup", (event) => {
     if (event.keyCode === 27) {
       const view = this.view;
       $(".js-search-modal").fadeOut(400, () => {
@@ -169,14 +172,14 @@ Template.searchModal.events({
     const searchQuery = templateInstance.find("#search-input").value;
     templateInstance.state.set("searchQuery", searchQuery);
   },
-  "click [data-event-action=toggleFilter]": function (event, templateInstance) {
+  "click [data-event-action=toggleFilter]": function () {
     $("#filterGrid").toggleClass("hidden");
   }
 });
 
 Template.searchModal.onDestroyed(() => {
   // Kill Allow modal to be closed by clicking ESC, which was initiated in Template.searchModal.onCreated
-  $(document).off('keyup');
+  $(document).off("keyup");
 });
 
 function tagToggle(arr, val) {
