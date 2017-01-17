@@ -3,7 +3,7 @@
 
 import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
-import _ from "lodash";
+import _ from "underscore";
 
 Template.filterGrid.helpers({
   getBrands(products) {
