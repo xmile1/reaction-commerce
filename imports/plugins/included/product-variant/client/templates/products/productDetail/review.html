@@ -1,0 +1,14 @@
+<template name="productReview">
+  <div id="reviews">
+    <h3>Product Reviews</h3>
+    <div>
+      <h5>Rating:</h5>
+      {{> starsRating id='rating' mutable=true size=20}}
+    </div>
+    <div id="comment">
+      <h5>Comment:</h5>
+      <textarea placeholder="Please write your comment here"></textarea>
+      <button type="submit" class="btn btn-success pull-right">Send</button>
+    </div>
+  </div>
+</template>
