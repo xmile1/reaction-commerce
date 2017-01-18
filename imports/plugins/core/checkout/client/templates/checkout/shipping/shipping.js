@@ -48,14 +48,19 @@ Template.coreCheckoutShipping.helpers({
 
   // helper to make sure there are some shipping providers
   shippingConfigured: function () {
+
     const instance = Template.instance();
+    console.log(instance);
+    console.log(instance.subscriptionsReady());
     if (instance.subscriptionsReady()) {
-      return Shipping.find({
+      var shipCount = Shipping.find({
         "methods.enabled": true
       }).count();
+      console.log(shipCount);
+      return shipCount;
     }
   },
-
+ßß
   // helper to display currently selected shipmentMethod
   isSelected: function () {
     const self = this;
