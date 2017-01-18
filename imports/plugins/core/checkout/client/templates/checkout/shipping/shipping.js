@@ -3,8 +3,7 @@ import { Cart, Shipping } from "/lib/collections";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { Logger } from "/client/api";
-Logger.error("got here");
-//
+
 // These helpers can be used in general shipping packages
 // cartShippingMethods to get current shipment methods
 // until we handle multiple methods, we just use the first
@@ -50,14 +49,12 @@ Template.coreCheckoutShipping.helpers({
   // helper to make sure there are some shipping providers
   shippingConfigured: function () {
     const instance = Template.instance();
-    Logger.error(instance);
-    Logger.error(instance.subscriptionsReady());
+// alert(instance);
+// alert(instance.subscriptionsReady());
     if (instance.subscriptionsReady()) {
-      var shipCount = Shipping.find({
+      return Shipping.find({
         "methods.enabled": true
       }).count();
-      Logger.error(shipCount);
-      return shipCount;
     }
   },
 
