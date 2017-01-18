@@ -60,7 +60,7 @@ Template.coreCheckoutShipping.helpers({
       return shipCount;
     }
   },
-ßß
+
   // helper to display currently selected shipmentMethod
   isSelected: function () {
     const self = this;
