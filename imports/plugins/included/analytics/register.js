@@ -22,7 +22,7 @@ Reaction.registerPackage({
     }
   },
   registry: [{
-    provides: "dashboard",
+    route: "/dashboard/analytics",
     label: "Analytics",
     description: "Analytics and tracking integrations",
     template: "reactionAnalytics",
@@ -41,3 +41,17 @@ Reaction.registerPackage({
     template: "reactionAnalyticsSettings"
   }]
 });
+
+
+// {
+//     route: "/dashboard/orders",
+//     provides: "dashboard",
+//     workflow: "coreOrderWorkflow",
+//     name: "orders",
+//     label: "Orders",
+//     description: "Fulfill your orders",
+//     icon: "fa fa-sun-o",
+//     priority: 1,
+//     container: "core",
+//     template: "orders"
+//   }
