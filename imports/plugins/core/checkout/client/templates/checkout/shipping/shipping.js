@@ -2,7 +2,6 @@ import _ from "lodash";
 import { Cart, Shipping } from "/lib/collections";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
-import { Logger } from "/client/api";
 
 // These helpers can be used in general shipping packages
 // cartShippingMethods to get current shipment methods
@@ -48,14 +47,8 @@ Template.coreCheckoutShipping.helpers({
 
   // helper to make sure there are some shipping providers
   shippingConfigured: function () {
-  Logger.error("got here")
     const instance = Template.instance();
-Logger.error(instance);
-Logger.error(instance.subscriptionsReady());
     if (instance.subscriptionsReady()) {
-      Logger.error(Shipping.find({
-        "methods.enabled": true
-      }).count());
       return Shipping.find({
         "methods.enabled": true
       }).count();
