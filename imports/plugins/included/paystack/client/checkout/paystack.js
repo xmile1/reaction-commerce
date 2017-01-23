@@ -53,7 +53,7 @@ Template.paystackPaymentForm.helpers({
 AutoForm.addHooks("paystack-payment-form", {
   onSubmit(doc) {
     const cart = Cart.findOne();
-    const amount = parseFloat(cart.cartTotal(), 10) * 100;
+    const amount = Math.round(cart.cartTotal()) * 100;
     const key = paystackKeys().public;
     const template = this.template;
     const details = {
@@ -96,16 +96,8 @@ AutoForm.addHooks("paystack-payment-form", {
         uiEnd(template, "resubmit payment");
       }
     };
+
     PaystackPop.setup(details).openIframe();
     return false;
   }
-});
-
-
-
-
-Template.paystackPaymentForm.onCreated(function () {
-  this.autorun(() => {
-
-  });
 });
