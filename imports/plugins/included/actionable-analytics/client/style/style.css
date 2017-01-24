@@ -1,5 +1,5 @@
-/*  bhoechie tab */
-div.bhoechie-tab-container{
+/*  analytics tab */
+div.analytics-tab-container{
   z-index: 10;
   background-color: #ffffff;
   padding: 0 !important;
@@ -15,37 +15,37 @@ div.bhoechie-tab-container{
   opacity: 0.97;
   filter: alpha(opacity=97);
 }
-div.bhoechie-tab-menu{
+div.analytics-tab-menu{
   padding-right: 0;
   padding-left: 0;
   padding-bottom: 0;
 }
-div.bhoechie-tab-menu div.list-group{
+div.analytics-tab-menu div.list-group{
   margin-bottom: 0;
 }
-div.bhoechie-tab-menu div.list-group>a{
+div.analytics-tab-menu div.list-group>a{
   margin-bottom: 0;
 }
-div.bhoechie-tab-menu div.list-group>a .glyphicon,
-div.bhoechie-tab-menu div.list-group>a .fa {
+div.analytics-tab-menu div.list-group>a .glyphicon,
+div.analytics-tab-menu div.list-group>a .fa {
   color: #333333;
 }
-div.bhoechie-tab-menu div.list-group>a:first-child{
+div.analytics-tab-menu div.list-group>a:first-child{
   border-top-right-radius: 0;
   -moz-border-top-right-radius: 0;
 }
-div.bhoechie-tab-menu div.list-group>a:last-child{
+div.analytics-tab-menu div.list-group>a:last-child{
   border-bottom-right-radius: 0;
   -moz-border-bottom-right-radius: 0;
 }
-div.bhoechie-tab-menu div.list-group>a.active,
-div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
-div.bhoechie-tab-menu div.list-group>a.active .fa{
+div.analytics-tab-menu div.list-group>a.active,
+div.analytics-tab-menu div.list-group>a.active .glyphicon,
+div.analytics-tab-menu div.list-group>a.active .fa{
   background-color: #333333;
   background-image: #333333;
   color: #ffffff;
 }
-div.bhoechie-tab-menu div.list-group>a.active:after{
+div.analytics-tab-menu div.list-group>a.active:after{
   content: '';
   position: absolute;
   left: 100%;
@@ -57,7 +57,7 @@ div.bhoechie-tab-menu div.list-group>a.active:after{
   border-left: 10px solid #333333;
 }
 
-div.bhoechie-tab-content{
+div.analytics-tab-content{
   background-color: #ffffff;
   /* border: 1px solid #eeeeee; */
   padding-left: 20px;
@@ -65,6 +65,6 @@ div.bhoechie-tab-content{
   min-height: 458px;
 }
 
-div.bhoechie-tab div.bhoechie-tab-content:not(.active){
+div.analytics-tab div.analytics-tab-content:not(.active){
   display: none;
 }

@@ -1,5 +1,107 @@
 
 <template name="actionableAnalytics">
-    <h2 class="text-center"> Analysing Performance </h2>
-    
+    <div class="container">
+			<h1 class="text-center"> Actionable Analytics </h1>
+			<hr />
+		<div class="row">
+        <div class="analytics-tab-container">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 analytics-tab-menu">
+              <div class="list-group">
+                <a href="#" class="list-group-item active text-center">
+                  <h4 class="fa fa-bar-chart-o"></h4><br/> Number of Products Sold 
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h4 class="fa fa-pie-chart"></h4><br/> Highest selling products
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h4 class="fa fa-line-chart"></h4><br/>Most patronising customers 
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h4 class="fa fa-area-chart"></h4><br/>Most patronised Brand.
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h4 class="fa fa-bar-chart"></h4> <br/> Product Views/Sales <br/>
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 analytics-tab">
+                <div class="analytics-tab-content active">
+										{{> analyticsProductsSold}}
+                </div>
+                <div class="analytics-tab-content">
+										{{> analyticsHighestSelling}}
+                </div>
+                
+                <div class="analytics-tab-content">
+										{{> analyticsMostPatronising}}
+                </div>
+                <div class="analytics-tab-content">
+										{{> analyticsMostPatronisedBrand}}
+                </div>
+                <div class="analytics-tab-content">
+										{{> analyticsProductsViewsSales}}
+                </div>
+            </div>
+        </div>
+  </div>
+	</div>
+</template>
+
+<template name="analyticsProductsSold">
+	<div class="panel panel-default">
+  <div class="panel-heading">
+		<center>
+  		<h3>Number of Products Sold</h3>
+		</center>
+	</div>
+
+</div>
+
+</template>
+
+<template name="analyticsHighestSelling">
+	<div class="panel panel-default">
+  <div class="panel-heading">
+		<center>
+  		<h3>Highest Selling Products</h3>
+		</center>
+	</div>
+
+</div>
+
+</template>
+
+<template name="analyticsMostPatronising">
+	<div class="panel panel-default">
+  <div class="panel-heading">
+		<center>
+  		<h3>Most Patronising customers</h3>
+		</center>
+	</div>
+
+</div>
+
+</template>
+
+<template name="analyticsMostPatronisedBrand">
+	<div class="panel panel-default">
+  <div class="panel-heading">
+		<center>
+  		<h3>Most patronised Brand</h3>
+		</center>
+	</div>
+
+</div>
+
+</template>
+
+<template name="analyticsProductsViewsSales">
+	<div class="panel panel-default">
+  <div class="panel-heading">
+		<center>
+  		<h3>Product Views/Sales</h3>
+		</center>
+	</div>
+
+</div>
 </template>

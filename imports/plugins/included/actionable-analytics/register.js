@@ -32,24 +32,7 @@ Reaction.registerPackage({
       icon: "fa fa-truck",
       priority: 1,
       container: "core",
-      workflow: "coreOrderWorkflow",
       template: "actionableAnalytics"
     }
-  ],
-  layout: [{
-    layout: "coreLayout",
-    collection: "Orders",
-    theme: "default",
-    enabled: true,
-    structure: {
-      template: "actionableAnalytics",
-      layoutHeader: "layoutHeader",
-      layoutFooter: "layoutFooter",
-      notFound: "notFound",
-      dashboardHeader: "dashboardHeader",
-      dashboardHeaderControls: "filterStatic",
-      dashboardControls: "dashboardControls",
-      adminControlsFooter: "adminControlsFooter"
-    }
-  }]
+  ]
 });

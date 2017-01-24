@@ -8,26 +8,32 @@ Reaction.registerPackage({
   settings: {
     public: {
       segmentio: {
-        enabled: true,
+        enabled: false,
         api_key: ""
       },
       googleAnalytics: {
-        enabled: true,
+        enabled: false,
         api_key: ""
       },
       mixpanel: {
-        enabled: true,
+        enabled: false,
         api_key: ""
       }
     }
   },
   registry: [{
-    label: "Reaction Analytics",
-    route: "/dashboard/analytics",
-    container: "dashboard",
-    template: "AnalyticsForm"
-  },
-  {
+    provides: "dashboard",
+    label: "Analytics",
+    description: "Analytics and tracking integrations",
+    template: "reactionAnalytics",
+    icon: "fa fa-bar-chart-o",
+    priority: 3,
+    container: "connect",
+    permissions: [{
+      label: "Reaction Analytics",
+      permission: "dashboard/analytics"
+    }]
+  }, {
     label: "Analytics Settings",
     route: "/dashboard/analytics/settings",
     provides: "settings",
