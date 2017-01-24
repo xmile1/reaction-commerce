@@ -1,30 +1,24 @@
-/* eslint camelcase: 0 */
-import { Template } from "meteor/templating";
-import { Random } from "meteor/random";
-import { Cart } from "/lib/collections";
-import { PaystackPayment } from "../../lib/collections/schemas";
+import { Meteor } from  "meteor/meteor";
+import { WalletPayment } from "../../lib/collections/schemas";
+import { Paystack } from "/imports/plugins/included/paystack/lib/api/paystack";
+import * as Collections from "/lib/collections";
 import { Packages } from "/lib/collections";
 import { Reaction } from "/client/api";
-import { Paystack } from "../../lib/api";
-import "./paystack.html";
-import "../../lib/api/paystackApi";
+import "/imports/plugins/included/paystack/lib/api/paystackApi";
+import "./dashboard.html";
+
+
+Template.fund.helpers({
+  WalletPayment() {
+    return WalletPayment;
+  }
+});
 
 function uiEnd(template, buttonText) {
   template.$(":input").removeAttr("disabled");
   template.$("#btn-complete-order").text(buttonText);
   return template.$("#btn-processing").addClass("hidden");
 }
-
-paystackKeys = () => {
-  const paystack = Packages.findOne({
-    name: "paystack",
-    shopId: Reaction.getShopId()
-  });
-  return {
-    public: paystack.settings.publicKey,
-    secret: paystack.settings.secretKey
-  };
-};
 
 paymentAlert = (errorMessage) => {
   return $(".alert").removeClass("hidden").text(errorMessage);
@@ -43,16 +37,22 @@ handlePaystackSubmitError = (error) => {
   }
 };
 
-Template.paystackPaymentForm.helpers({
-  PaystackPayment() {
-    return PaystackPayment;
-  }
-});
 
-AutoForm.addHooks("paystack-payment-form", {
+paystackKeys = () => {
+  const paystack = Packages.findOne({
+    name: "paystack",
+    shopId: Reaction.getShopId()
+  });
+  return {
+    public: paystack.settings.publicKey,
+    secret: paystack.settings.secretKey
+  };
+};
+
+
+AutoForm.addHooks("wallet-payment-form", {
   onSubmit(doc) {
-    const cart = Cart.findOne();
-    const amount = Math.round(cart.cartTotal()) * 100;
+    const amount = doc.amount;
     const key = paystackKeys().public;
     const template = this.template;
     const details = {
@@ -67,24 +67,16 @@ AutoForm.addHooks("paystack-payment-form", {
         if (reference) {
           Paystack.verify(reference, secret, (err, res) => {
             if (err) {
-              handlePaystackSubmitError(err, "");
+              handlePaystackSubmitError(err);
               uiEnd(template, "Resubmit payment");
             } else {
-              const transaction = res.data;
-              const paymentMethod = {
-                processor: "Paystack",
-                storedCard: transaction.authorization.card_type,
-                method: "Paystack Payment",
-                transactionId: transaction.reference,
-                currency: transaction.currency,
-                amount: transaction.amount,
-                status: "created",
-                mode: "authorize",
-                createdAt: new Date(),
-                transactions: []
+              const transaction = {
+                from: "Paystack",
+                amount: res.data.amount,
+                date: new Date()
               };
-              paymentMethod.transactions.push(transaction.authorization);
-              Meteor.call("cart/submitPayment", paymentMethod);
+              Meteor.call("wallet/fundAccount", transaction);
+              Alerts.alert("Alert Title", "Alert Message");
             }
           });
         }
@@ -95,7 +87,6 @@ AutoForm.addHooks("paystack-payment-form", {
         uiEnd(template, "resubmit payment");
       }
     };
-
     PaystackPop.setup(details).openIframe();
     return false;
   }

@@ -1,21 +1,37 @@
 <template name="walletDashboard">
-  <h2>My Wallet</h2>
   <div class="container">
+    <h1>My Wallet</h1>
     <div class="row">
       <div class="wallet-header">
-        <div class="col-md-3">
+        <div class="col-md-3 wallet-details ">
           <p>Overview</p>
         </div>
-        <div class="col-md-3">
-          <p>Sent</p>
+        <div class="col-md-3 wallet-details">
+          <p id="sent">Sent</p>
         </div>
-        <div class="col-md-3">
-          <p>Recived</p>
+        <div class="col-md-3 wallet-details">
+          <p id="recived">Recived</p>
         </div>
-        <div class="col-md-3">
-          <p>Fund</p>
+        <div class="col-md-3 wallet-details">
+          <p id="fund">Fund</p>
         </div>
       </div>
     </div>
+    <div class="wallet-body">
+      {{> UI.dynamic template=showTemplate  }}
+    </div>
   </div>
 </template>
+
+
+<template name="overview">
+  <h2>Account overview</h2>
+</template>
+
+<template name="sent">
+  <h2>Sent funds</h2>
+</template>
+<template name="recived">
+   <h2>recived funds</h2>
+</template>
+

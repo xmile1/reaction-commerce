@@ -19,6 +19,7 @@ import "./wallet.html";
 // });
 
 
+
 Template.wallet.helpers({
   packageData: function () {
     return Packages.findOne({

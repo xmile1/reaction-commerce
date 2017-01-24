@@ -35,10 +35,9 @@ Reaction.registerPackage({
       provides: "paymentMethod"
     },
     {
-      route: "/wallet",
-      name: "wallet",
-      template: "walletDashboard",
-      workflow: "coreWorkflow"
+      route: "wallet",
+      name: "wallet-dashboard",
+      template: "walletDashboard"
     }
   ]
 });

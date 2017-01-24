@@ -1,0 +1,11 @@
+.wallet-details {
+  padding: 20px;
+  border: 1px solid grey;
+  text-align: center;
+  cursor: pointer;
+}
+
+.seperator {
+  height: 300px;
+  border-right: 1px solid grey;
+}
