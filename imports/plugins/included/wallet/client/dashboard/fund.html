@@ -9,7 +9,7 @@
           <li>Enter your full name</li>
           <li>Enter your email</li>
           <li>enter the amout you want credit. $100 and above</li>
-          <li>Enter your credit card details and complet the transaction</li>
+          <li>Enter your credit card details and complete the transaction</li>
         </ol>
       </div>
       <div class="col-md-6">
@@ -23,7 +23,7 @@
         </div>
         <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8 form-group{{#if afFieldIsInvalid name='payerEmail'}} has-error{{/if}}">
             <label class="control-label">{{afFieldLabelText name='payerEmail'}}</label>
-            {{>afFieldInput name="payerEmail" value=payerEmail placeholder="Email" class="form-control"}}
+            {{>afFieldInput name="payerEmail" value=payerEmail placeholder="Email" type="email" class="form-control"}}
             {{#if afFieldIsInvalid name="payerEmail"}}
             <span class="help-block">{{afFieldMessage name="payerEmail"}}</span>
             {{/if}}

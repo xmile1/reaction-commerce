@@ -20,4 +20,3 @@ Meteor.methods({
   }
 
 });
-

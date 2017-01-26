@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Template } from "meteor/templating";
 import { Reaction } from "/client/api";
 import { Packages } from "/lib/collections";

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
 import { WalletTransfer } from "../../lib/collections/schemas";
 import * as walletApi from "../../lib/api/walletApi";

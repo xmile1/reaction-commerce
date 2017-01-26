@@ -1,5 +1,5 @@
-/* eslint camelcase: 0 */
-// import { Meteor } from "meteor/meteor";
+/* eslint-disable no-undef */
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { Random } from "meteor/random";
 import { WalletPayment } from "../../lib/collections/schemas";

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+import { Template } from "meteor/templating";
 import { Meteor } from  "meteor/meteor";
 import { WalletFund } from "../../lib/collections/schemas";
 import { Paystack } from "/imports/plugins/included/paystack/lib/api/paystack";
@@ -14,6 +16,7 @@ Template.fund.helpers({
 
 AutoForm.addHooks("wallet-fund-form", {
   onSubmit(doc) {
+    const self = this;
     Meteor.call("paystack/getKeys", (err, keys) => {
       const amount = doc.amount * 100;
       const key = keys.public;
@@ -41,7 +44,7 @@ AutoForm.addHooks("wallet-fund-form", {
                 Meteor.call("wallet/fundAccount", transaction);
                 Alerts.toast("Account funded");
                 walletApi.uiEnd(template, "Pay Now");
-                this.resetForm();
+                self.resetForm();
               }
             });
           }
@@ -50,7 +53,12 @@ AutoForm.addHooks("wallet-fund-form", {
           walletApi.uiEnd(template, "Pay Now");
         }
       };
-      PaystackPop.setup(details).openIframe();
+      try {
+        PaystackPop.setup(details).openIframe();
+      } catch (error) {
+        walletApi.handlePaystackSubmitError(template, error);
+        walletApi.uiEnd(template, "Pay Now");
+      }
     });
     return false;
   }

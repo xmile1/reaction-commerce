@@ -8,15 +8,15 @@ Meteor.methods({
    * wallet/fundAccount
    * @description funds user wallet account and creates
    * a transaction history
-   * @param {Object} transaction - details to saved
+   * @param {Object} transaction - details to be saved
    * @return {Object} returns the transaction details
    */
   "wallet/fundAccount"(transaction) {
     check(transaction, Schemas.Received);
-    const amount = transaction.amount / 100;
+    transaction.amount = transaction.amount / 100;
     const update = {
       $inc: {
-        "wallet.balance": amount
+        "wallet.balance": transaction.amount
       }
     };
 
@@ -30,7 +30,7 @@ Meteor.methods({
    * @description creates a transaction history
    * for user been credited
    * @param {String} userId - recipient id
-   * @param {Object} transaction - details to saved
+   * @param {Object} transaction - details to be saved
    * @return {void}
    */
   "wallet/receivedFund"(userId, transaction) {
@@ -50,13 +50,12 @@ Meteor.methods({
    * @description creates a transaction history
    * for user been debited
    * @param {String} userId - recipient id
-   * @param {Object} transaction - details to saved
+   * @param {Object} transaction - details to be saved
    * @return {void}
    */
   "wallet/sentFund"(userId, transaction) {
     check(transaction, Schemas.Sent);
     check(userId, String);
-
     const update = {
       $push: {
         "wallet.transactions.sent": transaction
@@ -106,14 +105,17 @@ Meteor.methods({
       }
     };
 
-    user = Collections.Accounts.findOne(query);
-    sender = Collections.Accounts.findOne({
+    const user = Collections.Accounts.findOne(query);
+    const sender = Collections.Accounts.findOne({
       _id: Meteor.userId()
     });
 
     if (!user) {
       throw new Meteor.Error("User with that email not found");
     } else {
+      if (user._id === Meteor.userId()) {
+        throw new Meteor.Error("haha! you cant send money to yourself");
+      }
       const wallet = sender.wallet;
       if (wallet.balance < amount) {
         throw new Meteor.Error(`Insufficient balance $${wallet.balance} is all you have`);
@@ -129,7 +131,7 @@ Meteor.methods({
           date: new Date()
         };
         const receivedTransaction = {
-          from: Meteor.user().username,
+          from: Meteor.user().username || Meteor.user().emails[0].address,
           amount,
           date: new Date()
         };

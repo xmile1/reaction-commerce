@@ -8,6 +8,6 @@ branch_name="(unnamed branch)"
 branch_name=${branch_name##refs/heads/}
 
 heroku git:remote -a kissa-rc-project-pr-$prNumber
-git push heroku $branch_name:master
+git push heroku -f $branch_name:master
 
 echo Made for kissa!

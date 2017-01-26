@@ -1,4 +1,4 @@
-/* eslint camelcase: 0 */
+/* eslint-disable no-undef */
 import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
 import { Random } from "meteor/random";
@@ -8,22 +8,22 @@ import { Paystack } from "../../lib/api";
 import "./paystack.html";
 import "../../lib/api/paystackApi";
 
-function uiEnd(template, buttonText) {
+const uiEnd = (template, buttonText) => {
   template.$(":input").removeAttr("disabled");
   template.$("#btn-complete-order").text(buttonText);
   return template.$("#btn-processing").addClass("hidden");
-}
-paymentAlert = (template, errorMessage) => {
+};
+
+const paymentAlert = (template, errorMessage) => {
   return template.$(".alert").removeClass("hidden").text(errorMessage);
 };
 
-handlePaystackSubmitError = (template, error) => {
+const handlePaystackSubmitError = (template, error) => {
   const serverError = error !== null ? error.message : void 0;
   if (serverError) {
     return paymentAlert("Oops! " + serverError);
-  } else if (error) {
-    return paymentAlert("Oops! " + error, null, 4);
   }
+  return paymentAlert("Oops! " + error, null, 4);
 };
 
 Template.paystackPaymentForm.helpers({
@@ -34,10 +34,10 @@ Template.paystackPaymentForm.helpers({
 
 AutoForm.addHooks("paystack-payment-form", {
   onSubmit(doc) {
-    const cart = Cart.findOne();
-    const amount = Math.round(cart.cartTotal()) * 100;
-    const template = this.template;
     Meteor.call("paystack/getKeys", (err, keys) => {
+      const cart = Cart.findOne();
+      const amount = Math.round(cart.cartTotal()) * 100;
+      const template = this.template;
       const key = keys.public;
       const details = {
         key,
@@ -61,7 +61,7 @@ AutoForm.addHooks("paystack-payment-form", {
                   method: "Paystack Payment",
                   transactionId: transaction.reference,
                   currency: transaction.currency,
-                  amount: transaction.amount,
+                  amount: transaction.amount / 100,
                   status: "created",
                   mode: "authorize",
                   createdAt: new Date(),
@@ -78,7 +78,12 @@ AutoForm.addHooks("paystack-payment-form", {
           uiEnd(template, "Complete payment");
         }
       };
-      PaystackPop.setup(details).openIframe();
+      try {
+        PaystackPop.setup(details).openIframe();
+      } catch (error) {
+        handlePaystackSubmitError(template, error);
+        uiEnd(template, "Complete payment");
+      }
     });
     return false;
   }

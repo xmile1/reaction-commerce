@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 export const uiEnd = (template, buttonText) => {
   template.$(":input").removeAttr("disabled");
   template.$("#btn-complete-order").text(buttonText);

@@ -1,8 +1,9 @@
 import request from "request";
+import _ from "underscore";
 
 export const Paystack = {};
 
-paystackHeaders = (secret) => {
+const paystackHeaders = (secret) => {
   return {
     "Authorization": `Bearer ${secret}`,
     "Content-Type": "application/json"

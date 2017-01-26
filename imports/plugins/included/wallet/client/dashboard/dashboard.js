@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { Accounts } from "/lib/collections";
 
@@ -22,10 +24,9 @@ Template.walletDashboard.helpers({
 
 Template.walletDashboard.events({
   "click .nav-pills li"(event, template) {
-    currentTab = $(event.target).closest("li");
+    const currentTab = $(event.target).closest("li");
     currentTab.addClass("active");
     $(".nav-pills  li").not(currentTab).removeClass("active");
     template.state.set("renderTemplate", currentTab.data("template"));
   }
-
 });
