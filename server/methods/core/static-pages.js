@@ -7,9 +7,13 @@ import * as Schemas from "/lib/collections/schemas";
 Meteor.methods({
   /**
    * @summary - Creates a Static Page
-   * @param{String} name - The name of the page
    * @param{String} title - The title of the page
-   * @param{String} body - The body of the page
+   * @param{String} slug - the URI with which the page is accessible
+   * @param{String} content - the content of the page
+   * @param{String} shopId - the ShopId of the page
+   * @param{String} pageOwner of the page
+   * @param{String} createdAt, the date of creation of the page
+   * @return {no-return} there is no return
    */
   insertPage: function (title, slug, content, shopId, pageOwner, createdAt) {
     check(title, String);
@@ -33,10 +37,12 @@ Meteor.methods({
 
   /**
    * @summary - Updates a Static Page
-   * @param{String} pageId - The page to be updated
-   * @param{String} name - The new name for the page
-   * @param{String} title - The new title for the page
-   * @param{String} body - The new body for the page
+   * @param{String} _id - The page to be updated
+   * @param{String} title - The new name for the page
+   * @param{String} slug - The new title for the page
+   * @param{String} content - The new body for the page
+   * @param{String} shopId - the content of the page
+   * @return{no-return} No return value
    */
   "updatePage"(_id, title, slug, content, shopId) {
     check(_id, String);
@@ -61,10 +67,11 @@ Meteor.methods({
 
   /**
    * @summary - Deletes a Static Page
-   * @param{String} pageId - The id of the page
+   * @param{String} _id - The id of the page
+   * @return{no-return} No return value
    */
-  "deletePage"(_Id) {
-    check(_Id, String);
-    StaticPages.remove(_Id);
+  "deletePage"(_id) {
+    check(_id, String);
+    StaticPages.remove(_id);
   }
 });

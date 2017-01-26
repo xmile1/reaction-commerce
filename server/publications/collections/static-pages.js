@@ -1,4 +1,5 @@
 import { StaticPages } from "/lib/collections";
+import { Meteor } from "meteor/meteor";
 
 Meteor.publish("staticPages", function () {
   return StaticPages.find({
@@ -7,5 +8,5 @@ Meteor.publish("staticPages", function () {
 });
 
 Meteor.publish("viewPages", function () {
-  return StaticPages.find()
+  return StaticPages.find();
 });

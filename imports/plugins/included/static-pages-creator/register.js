@@ -15,7 +15,7 @@ Reaction.registerPackage({
     name: "staticPages",
     label: "Static Pages",
     description: "Create and manage static pages",
-    icon: "fa fa-sun-o",
+    icon: "fa fa-copy",
     priority: 1,
     container: "core",
     template: "staticPages"
