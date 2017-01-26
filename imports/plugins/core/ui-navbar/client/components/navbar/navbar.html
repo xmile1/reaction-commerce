@@ -8,6 +8,7 @@
     {{#unless currentUser}}
       <div id="takeTour" class="tour">{{> React tourButton}}</div>
     {{/unless}}
+    <div  class="accounts">{{> accounts tpl="staticPagesNav"}}</div>
     <div class="search">{{> React IconButtonComponent}}</div>
     <div class="languages hidden-xs">{{> i18nChooser}}</div>
     <div  class="accounts tour-accounts">{{> accounts tpl="loginDropdown"}}</div>
