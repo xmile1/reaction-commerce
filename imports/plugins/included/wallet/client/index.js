@@ -1,7 +1,12 @@
-import "./checkout/wallet";
-import "./settings/wallet";
+import "./checkout/wallet.html";
+import "./checkout/wallet.js";
 import "./dashboard/dashboard.html";
 import "./dashboard/dashboard.js";
 import "./dashboard/style.css";
 import "./dashboard/fund.html";
 import "./dashboard/fund.js";
+import "./dashboard/transfer.html";
+import "./dashboard/transfer.js";
+import "./dashboard/overview.html";
+import "./dashboard/sent.html";
+import "./dashboard/received.html";

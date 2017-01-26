@@ -1,1 +1,1 @@
-export { Example } from "./wallet";
+export * from "./walletApi.js";

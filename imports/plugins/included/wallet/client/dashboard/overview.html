@@ -1,0 +1,23 @@
+<template name="overview">
+  <div class="container">
+    <row>
+     <div class="col-md-6 seperator">
+       <h2>Why Wallet</h2>
+       <p>Reaction wallet is a safe and secure way of paying for goods and services</p>
+
+       <h3>You can</h3>
+       <ul>
+         <li>Credit your wallet using Paystack</li>
+         <li>Send funds to other users account in just three clicks</li>
+         <li>Pay for your goods and services without hassle</li>
+       </ul>
+     </div>
+     <div class="col-md-5 col-md-offset-1">
+       <h2>Wallet Overview</h2>
+       <h4><b>Current balance: </b>{{formatPrice this.balance }} </h4>  
+       <h4><b>Total Sent Transactions:</b> {{ this.transactions.sent.length}} </h4> 
+       <h4><b>Total Recieved Transactions:</b> {{ this.transactions.received.length}}</h4> 
+     </div>
+   </row>
+  </div>
+</template>

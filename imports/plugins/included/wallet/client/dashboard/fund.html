@@ -1,40 +1,49 @@
 <template name="fund">
-   <h2>credit Account</h2>
-   <row>
-     <div class="col-md-4 col-md-offset-2 seperator">
-       <h3>Fund wallet with paystack</h3>
-     </div>
-     <div class="col-md-6 ">
-       {{#autoForm schema=WalletPayment id="wallet-payment-form"}}
-        <div class="row">
-          <div class="col-sm-12 col-lg-12 form-group{{#if afFieldIsInvalid name='payerName'}} has-error{{/if}}">
-              <label class="control-label">{{afFieldLabelText name='payerName'}}</label>
-              {{>afFieldInput name="payerName" value=cartPayerName class="form-control"}}
-              {{#if afFieldIsInvalid name="payerName"}}
-              <span class="help-block">{{afFieldMessage name="payerName"}}</span>
-              {{/if}}
-          </div>
-          <div class="col-sm-12 col-lg-12 form-group{{#if afFieldIsInvalid name='payerEmail'}} has-error{{/if}}">
-              <label class="control-label">{{afFieldLabelText name='payerEmail'}}</label>
-              {{>afFieldInput name="payerEmail" value=payerEmail placeholder="Email" class="form-control"}}
-              {{#if afFieldIsInvalid name="payerEmail"}}
-              <span class="help-block">{{afFieldMessage name="payerEmail"}}</span>
-              {{/if}}
-          </div>
-          <div class="col-sm-12 col-lg-12 form-group{{#if afFieldIsInvalid name='amount'}} has-error{{/if}}">
-              <label class="control-label">{{afFieldLabelText name='amount'}}</label>
-              {{>afFieldInput name="amount" value=amount placeholder="Amount" class="form-control"}}
-              {{#if afFieldIsInvalid name="amount"}}
-              <span class="help-block">{{afFieldMessage name="amount"}}</span>
-              {{/if}}
-          </div>
+  <div class="container">
+    <row>
+      <div class="col-md-6 wallet-body seperator">
+        <h2>credit wallet</h2>
+        <h3>Fund wallet with paystack</h3>
+        <h4>Steps:</h4>
+        <ol>
+          <li>Enter your full name</li>
+          <li>Enter your email</li>
+          <li>enter the amout you want credit. $100 and above</li>
+          <li>Enter your credit card details and complet the transaction</li>
+        </ol>
+      </div>
+      <div class="col-md-6">
+        {{#autoForm schema=WalletPayment id="wallet-fund-form"}}
+        <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8 form-group{{#if afFieldIsInvalid name='payerName'}} has-error{{/if}}">
+            <label class="control-label">{{afFieldLabelText name='payerName'}}</label>
+            {{>afFieldInput name="payerName" value=cartPayerName class="form-control"}}
+            {{#if afFieldIsInvalid name="payerName"}}
+            <span class="help-block">{{afFieldMessage name="payerName"}}</span>
+            {{/if}}
         </div>
-        <div class="alert alert-danger hidden">Oh! Snap!</div>
-        <button type="submit" class="btn btn-lg btn-success btn-block btn-complete-order">
-          <span id="btn-complete-order">Pay Now</span>
-          <i class="fa fa-spinner fa-spin hidden" id="btn-processing"></i>
-        </button>
+        <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8 form-group{{#if afFieldIsInvalid name='payerEmail'}} has-error{{/if}}">
+            <label class="control-label">{{afFieldLabelText name='payerEmail'}}</label>
+            {{>afFieldInput name="payerEmail" value=payerEmail placeholder="Email" class="form-control"}}
+            {{#if afFieldIsInvalid name="payerEmail"}}
+            <span class="help-block">{{afFieldMessage name="payerEmail"}}</span>
+            {{/if}}
+        </div>
+        <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8 form-group{{#if afFieldIsInvalid name='amount'}} has-error{{/if}}">
+            <label class="control-label">{{afFieldLabelText name='amount'}}</label>
+            {{>afFieldInput name="amount" value=amount placeholder="Amount" class="form-control"}}
+            {{#if afFieldIsInvalid name="amount"}}
+            <span class="help-block">{{afFieldMessage name="amount"}}</span>
+            {{/if}}
+        </div>
+        <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8">
+          <div class="alert alert-danger hidden">Oh! Snap!</div>
+            <button type="submit" class="btn btn-lg btn-success btn-block btn-complete-order">
+              <span id="btn-complete-order">Pay Now</span>
+              <i class="fa fa-spinner fa-spin hidden" id="btn-processing"></i>
+            </button>
+        </div>
         {{/autoForm}}
-     </div>
-   </row>
+      </div>
+    </row>
+  </div>
 </template>

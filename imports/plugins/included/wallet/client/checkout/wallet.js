@@ -1,31 +1,12 @@
 /* eslint camelcase: 0 */
+// import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
+import { Random } from "meteor/random";
 import { WalletPayment } from "../../lib/collections/schemas";
+import { Cart } from "/lib/collections";
+import * as walletApi  from "../../lib/api/walletApi";
 
 import "./wallet.html";
-
-function uiEnd(template, buttonText) {
-  template.$(":input").removeAttr("disabled");
-  template.$("#btn-complete-order").text(buttonText);
-  return template.$("#btn-processing").addClass("hidden");
-}
-
-paymentAlert = (errorMessage) => {
-  return $(".alert").removeClass("hidden").text(errorMessage);
-};
-
-hidePaymentAlert = () => {
-  return $(".alert").addClass("hidden").text("");
-};
-
-handlePaystackSubmitError = (error) => {
-  const serverError = error !== null ? error.message : void 0;
-  if (serverError) {
-    return paymentAlert("Oops! " + serverError);
-  } else if (error) {
-    return paymentAlert("Oops! " + error, null, 4);
-  }
-};
 
 Template.walletPaymentForm.helpers({
   WalletPayment() {
@@ -35,6 +16,30 @@ Template.walletPaymentForm.helpers({
 
 AutoForm.addHooks("wallet-payment-form", {
   onSubmit(doc) {
+    const template = this.template;
+    const amount = Math.round(Cart.findOne().cartTotal());
+    Meteor.call("wallet/checkout", doc.payerName, amount, (err, transaction) => {
+      if (err) {
+        walletApi.handlePaystackSubmitError(template, err.message);
+        walletApi.uiEnd(template, "Complete Order");
+      } else {
+        const paymentMethod = {
+          processor: "Wallet",
+          method: "Walet Payment",
+          transactionId: Random.id(),
+          currency: "NGN",
+          amount: transaction.amount,
+          status: "created",
+          mode: "authorize",
+          createdAt: new Date(),
+          transactions: []
+        };
+        Alerts.toast("Transaction successful");
+        paymentMethod.transactions.push(transaction);
+        Meteor.call("cart/submitPayment", paymentMethod);
+        Alerts.toast("transaction completed");
+      }
+    });
     return false;
   }
 });

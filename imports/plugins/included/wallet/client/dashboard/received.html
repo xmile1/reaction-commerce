@@ -1,18 +1,18 @@
-<template name="sent">
+<template name="recived">
    <row>
      <div class="col-md-12 wallet">
        <table class="table table-bordered">
          <thead>
            <tr>
-            <th>To</th>
+            <th>From</th>
             <th>Amout</th>
             <th>Date</th>
            </tr>
          </thead>
          <tbody>
-           {{#each transaction in this.transactions.sent }} 
+           {{#each transaction in this.transactions.received }} 
             <tr>
-              <td>{{ transaction.username }}</td>
+              <td>{{ transaction.from }}</td>
               <td>{{ formatPrice transaction.amount }}</td>
               <td>{{ dateFormat transaction.date }}</td>
             </tr>

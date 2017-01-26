@@ -21,23 +21,17 @@ Reaction.registerPackage({
       container: "paymentMethod"
     },
 
-    // // Settings panel
-    // {
-    //   label: "Wallet Settings", // this key (minus spaces) is used for translations
-    //   provides: "settings",
-    //   container: "dashboard",
-    //   template: "walletSettings"
-    // },
-
     // Payment form for checkout
     {
       template: "walletPaymentForm",
       provides: "paymentMethod"
     },
     {
-      route: "wallet",
-      name: "wallet-dashboard",
-      template: "walletDashboard"
+      route: "reaction/wallet",
+      icon: "fa fa-google-wallet",
+      template: "walletDashboard",
+      label: "Wallet",
+      provides: "shortcut"
     }
   ]
 });

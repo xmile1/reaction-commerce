@@ -8,13 +8,6 @@
         <span class="help-block">{{afFieldMessage name="payerName"}}</span>
         {{/if}}
     </div>
-     <div class="col-sm-12 col-lg-6 form-group{{#if afFieldIsInvalid name='payerEmail'}} has-error{{/if}}">
-        <label class="control-label">{{afFieldLabelText name='payerEmail'}}</label>
-        {{>afFieldInput name="payerEmail" value=payerEmail placeholder="Email"}}
-        {{#if afFieldIsInvalid name="payerEmail"}}
-        <span class="help-block">{{afFieldMessage name="payerEmail"}}</span>
-        {{/if}}
-    </div>
   </div>
   <div class="alert alert-danger hidden">Oh! Snap!</div>
   <button type="submit" class="btn btn-lg btn-success btn-block btn-complete-order">

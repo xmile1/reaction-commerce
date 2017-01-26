@@ -1,37 +1,19 @@
 <template name="walletDashboard">
   <div class="container">
-    <h1>My Wallet</h1>
+    <h1>My Wallet ( {{ formatPrice Wallet.balance }})</h1>
     <div class="row">
       <div class="wallet-header">
-        <div class="col-md-3 wallet-details ">
-          <p>Overview</p>
-        </div>
-        <div class="col-md-3 wallet-details">
-          <p id="sent">Sent</p>
-        </div>
-        <div class="col-md-3 wallet-details">
-          <p id="recived">Recived</p>
-        </div>
-        <div class="col-md-3 wallet-details">
-          <p id="fund">Fund</p>
-        </div>
+        <ul class="nav nav-pills">
+          <li data-template="overview" role="presentation" class="active"><a href="#">Overview</a></li>
+          <li data-template="sent" role="presentation"><a href="#">Sent funds</a></li>
+          <li data-template="recived" role="presentation"><a href="#">Recived funds</a></li>
+          <li data-template="transfer" role="presentation"><a href="#">Transfer funds</a></li>
+          <li data-template="fund" role="presentation"><a href="#">Fund wallet</a></li>
+        </ul>
       </div>
     </div>
     <div class="wallet-body">
-      {{> UI.dynamic template=showTemplate  }}
+      {{> UI.dynamic template=showTemplate  data=Wallet }}
     </div>
   </div>
 </template>
-
-
-<template name="overview">
-  <h2>Account overview</h2>
-</template>
-
-<template name="sent">
-  <h2>Sent funds</h2>
-</template>
-<template name="recived">
-   <h2>recived funds</h2>
-</template>
-

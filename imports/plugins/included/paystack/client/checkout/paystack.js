@@ -1,10 +1,9 @@
 /* eslint camelcase: 0 */
 import { Template } from "meteor/templating";
+import { Meteor } from "meteor/meteor";
 import { Random } from "meteor/random";
 import { Cart } from "/lib/collections";
 import { PaystackPayment } from "../../lib/collections/schemas";
-import { Packages } from "/lib/collections";
-import { Reaction } from "/client/api";
 import { Paystack } from "../../lib/api";
 import "./paystack.html";
 import "../../lib/api/paystackApi";
@@ -14,27 +13,11 @@ function uiEnd(template, buttonText) {
   template.$("#btn-complete-order").text(buttonText);
   return template.$("#btn-processing").addClass("hidden");
 }
-
-paystackKeys = () => {
-  const paystack = Packages.findOne({
-    name: "paystack",
-    shopId: Reaction.getShopId()
-  });
-  return {
-    public: paystack.settings.publicKey,
-    secret: paystack.settings.secretKey
-  };
+paymentAlert = (template, errorMessage) => {
+  return template.$(".alert").removeClass("hidden").text(errorMessage);
 };
 
-paymentAlert = (errorMessage) => {
-  return $(".alert").removeClass("hidden").text(errorMessage);
-};
-
-hidePaymentAlert = () => {
-  return $(".alert").addClass("hidden").text("");
-};
-
-handlePaystackSubmitError = (error) => {
+handlePaystackSubmitError = (template, error) => {
   const serverError = error !== null ? error.message : void 0;
   if (serverError) {
     return paymentAlert("Oops! " + serverError);
@@ -53,50 +36,50 @@ AutoForm.addHooks("paystack-payment-form", {
   onSubmit(doc) {
     const cart = Cart.findOne();
     const amount = Math.round(cart.cartTotal()) * 100;
-    const key = paystackKeys().public;
     const template = this.template;
-    const details = {
-      key,
-      name: doc.payerName,
-      email: doc.payerEmail,
-      reference: Random.id(),
-      amount,
-      callback(response) {
-        const secret = paystackKeys().secret;
-        const reference = response.reference;
-        if (reference) {
-          Paystack.verify(reference, secret, (err, res) => {
-            if (err) {
-              handlePaystackSubmitError(err, "");
-              uiEnd(template, "Resubmit payment");
-            } else {
-              const transaction = res.data;
-              const paymentMethod = {
-                processor: "Paystack",
-                storedCard: transaction.authorization.card_type,
-                method: "Paystack Payment",
-                transactionId: transaction.reference,
-                currency: transaction.currency,
-                amount: transaction.amount,
-                status: "created",
-                mode: "authorize",
-                createdAt: new Date(),
-                transactions: []
-              };
-              paymentMethod.transactions.push(transaction.authorization);
-              Meteor.call("cart/submitPayment", paymentMethod);
-            }
-          });
+    Meteor.call("paystack/getKeys", (err, keys) => {
+      const key = keys.public;
+      const details = {
+        key,
+        name: doc.payerName,
+        email: doc.payerEmail,
+        reference: Random.id(),
+        amount,
+        callback(response) {
+          const secret = keys.secret;
+          const reference = response.reference;
+          if (reference) {
+            Paystack.verify(reference, secret, (error, res) => {
+              if (error) {
+                handlePaystackSubmitError(template, error);
+                uiEnd(template, "Resubmit payment");
+              } else {
+                const transaction = res.data;
+                const paymentMethod = {
+                  processor: "Paystack",
+                  storedCard: transaction.authorization.card_type,
+                  method: "Paystack Payment",
+                  transactionId: transaction.reference,
+                  currency: transaction.currency,
+                  amount: transaction.amount,
+                  status: "created",
+                  mode: "authorize",
+                  createdAt: new Date(),
+                  transactions: []
+                };
+                Alerts.toast("Transaction successful");
+                paymentMethod.transactions.push(transaction.authorization);
+                Meteor.call("cart/submitPayment", paymentMethod);
+              }
+            });
+          }
+        },
+        onClose() {
+          uiEnd(template, "Complete payment");
         }
-      },
-      onClose() {
-        handlePaystackSubmitError(`Sorry a server error 
-          occurred please retry or use a different payment system`);
-        uiEnd(template, "resubmit payment");
-      }
-    };
-
-    PaystackPop.setup(details).openIframe();
+      };
+      PaystackPop.setup(details).openIframe();
+    });
     return false;
   }
 });
