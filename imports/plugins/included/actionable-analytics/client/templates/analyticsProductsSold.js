@@ -1,25 +1,15 @@
-import {
-  Template
-} from "meteor/templating";
+import { Template } from "meteor/templating";
 import Chart from "chart.js";
-import {
-  Orders
-} from "/lib/collections";
-import {
-  Meteor
-} from "meteor/meteor";
+import { Meteor } from "meteor/meteor";
 
 const analysisData = {
   month: ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
   orders: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 };
-let ordersDates = {};
 
 getOrders = function (date, length) {
   let index = date.getMonth();
-  console.log(index);
   analysisData.orders[index] = analysisData.orders[index] + length;
-  console.log(analysisData.orders[index]);
 };
 
 displayGraph = function () {
@@ -72,22 +62,14 @@ displayGraph = function () {
       }
     }
   });
-  console.log('DisplayGraph funtion');
 };
 
 Template.analyticsProductsSold.onRendered(function () {
   analysisData.orders = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   Meteor.call("analytics/getorders", (error, result) => {
-    const dates = [];
     result.forEach((order) => {
       getOrders(order.updatedAt, order.items.length);
-      dates.push(order.updatedAt);
     });
     displayGraph();
-    ordersDates = dates;
   });
-});
-
-Template.analyticsProductsSold.helpers({
-
 });

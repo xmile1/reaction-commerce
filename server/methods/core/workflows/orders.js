@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Reaction } from "/server/api";
 import { Orders } from "/lib/collections";
+import { Accounts } from "/lib/collections";
 
 /**
  *  Step 4 of the "workflow/pushOrderWorkflow" flow
@@ -46,6 +47,14 @@ Meteor.methods({
   "analytics/getorders": function () {
     const result = Orders.find({
       "workflow.status": "coreOrderWorkflow/completed"
+    }).fetch();
+    return result;
+  },
+
+  "analytics/getcustomerid": function (id) {
+    check(id, String);
+    const result = Accounts.find({
+      userId: id
     }).fetch();
     return result;
   }
