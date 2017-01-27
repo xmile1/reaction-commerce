@@ -5,3 +5,6 @@ import "./templates/analyticsProductsSold.html";
 import "./templates/analyticsProductsSold";
 import "./templates/analyticsHighestSelling.html";
 import "./templates/analyticsHighestSelling";
+import "./templates/analyticsMostPatronising.html";
+import "./templates/analyticsMostPatronising";
+
