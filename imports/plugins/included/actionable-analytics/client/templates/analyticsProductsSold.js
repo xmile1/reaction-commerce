@@ -17,9 +17,7 @@ let ordersDates = {};
 
 getOrders = function (date, length) {
   let index = date.getMonth();
-  console.log(index);
   analysisData.orders[index] = analysisData.orders[index] + length;
-  console.log(analysisData.orders[index]);
 };
 
 displayGraph = function () {
@@ -72,7 +70,6 @@ displayGraph = function () {
       }
     }
   });
-  console.log('DisplayGraph funtion');
 };
 
 Template.analyticsProductsSold.onRendered(function () {
