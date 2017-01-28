@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
 import "./review.html";
@@ -12,11 +13,10 @@ Template.productReview.events({
   "click #send": () => {
     review.comment = document.getElementById("comment").value;
     if (review.comment === "") {
-      alert("Please enter comment");
+      Alerts.toast("Please enter comment", "error");
       return false;
     }
     review.productId = Products.findOne()._id;
-    productId = Products.findOne()._id;
     try {
       review.username = Meteor.user().username || Meteor.user().emails[0].address;
       Meteor.call("insert/review", review, function (error) {
@@ -26,14 +26,14 @@ Template.productReview.events({
       });
       document.getElementById("comment").value = "";
     }    catch (error) {
-      alert("You need to sign in to post a review");
+      Alerts.toast("You need to sign in to post a review", "error");
     }
   }
 });
 
 Template.showReviews.helpers({
   reviews: () => {
-    productId = Products.findOne()._id;
+    const productId = Products.findOne()._id;
     Meteor.subscribe("Reviews");
     return Reviews.find({productId: productId}).fetch();
   }

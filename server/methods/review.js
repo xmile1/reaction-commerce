@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 import * as Schemas from "/lib/collections/schemas";
@@ -7,5 +8,5 @@ Meteor.methods({
     check(review, Schemas.Reviews);
     Meteor.publish("Reviews");
     Collections.Reviews.insert(review);
-  },
+  }
 });
