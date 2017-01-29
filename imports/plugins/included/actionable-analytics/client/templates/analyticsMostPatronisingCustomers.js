@@ -10,7 +10,7 @@ let customerDetails = [];
 
 const getCustomerNames = (customerId)=> {
   customerId.forEach((id) => {
-    Meteor.call("analytics/getcustomerid", id, (error, result) => {
+    Meteor.call("analytics/getcustomername", id, (error, result) => {
       customerNames.push(result[0].profile.addressBook[0].fullName);
     });
   });
@@ -54,7 +54,7 @@ const displayCustomers = ()=> {
   });
 };
 
-const getCustomer = (userId, count)=> {
+const storeCustomer = (userId, count)=> {
   if (customerData[userId]) {
     customerData[userId] = customerData[userId] + count;
   } else {
@@ -62,7 +62,7 @@ const getCustomer = (userId, count)=> {
   }
 };
 
-Template.analyticsMostPatronising.onRendered(()=> {
+Template.analyticsMostPatronisingCustomers.onRendered(()=> {
   // Reset variables
   customerData = {};
   customerNames = [];
@@ -72,10 +72,10 @@ Template.analyticsMostPatronising.onRendered(()=> {
 
   Meteor.call("analytics/getorders", (error, result) => {
     result.forEach((order) => {
-      getCustomer(order.userId, order.items.length);
+      storeCustomer(order.userId, order.items.length);
     });
 
-    Object.keys(customerData).forEach(data=> {
+    Object.keys(customerData).forEach(data => {
       customerDetails.push({
         ID: data,
         count: customerData[data]
