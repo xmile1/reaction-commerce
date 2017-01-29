@@ -1,0 +1,11 @@
+ Meteor.call("analytics/getProductsName", item.productId, (error, result) => {
+                    console.log('seconf call');
+                     let res = result[0].title;
+                     if (!productObject[res]) {
+                         return productObject[res] = 1
+                     }
+
+                     else {
+                         return productObject[res] += 1;
+                     }
+                });

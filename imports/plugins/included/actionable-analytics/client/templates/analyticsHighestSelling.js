@@ -1,59 +1,63 @@
-import { Template} from "meteor/templating";
+import { Template } from "meteor/templating";
 import Chart from "chart.js";
 import { Meteor } from "meteor/meteor";
 import { Orders } from "/lib/collections";
 import { Products } from "/lib/collections";
+import _ from "lodash";
 
-const productTitle = [];
+let productObject = {};
 
-Template.analyticsHighestSelling.onRendered(() => {  
+Template.analyticsHighestSelling.onRendered(() => {
     Meteor.call("analytics/getorders", (error, result) => {
         result.forEach((orders) => {
-            const completedOrders = orders.items;
-            completedOrders.forEach((item) => {
-                Meteor.call("analytics/getProductsName", item.productId, (error, result) => {
-                    productTitle.push(result[0].title);
-                });    
+            orders.items.forEach((eachItem) => {
+                if(eachItem.workflow.status === "coreOrderItemWorkflow/completed") {
+                    if(!productObject.hasOwnProperty(eachItem.title)) {
+                        productObject[eachItem.title] = eachItem.quantity;
+                    }
+                    else {
+                        productObject[eachItem.title] += eachItem.quantity;
+                    }
+                }
             });
-        })
+            
+        });
+        const data  = getData(productObject)
+        displayGraphs(data);
     });
-    displayGraphs();
 });
-
-displayGraphs = function() {
-    let ctx = document.getElementById("myCharts");
-    var myDoughnutChart = new Chart(ctx,{
-    type: 'doughnut',
-    data: data,
-    options: {
-        elements: {
-            arc: {
-                borderColor: "#000000"
-            }
-        }
-    }
-});
-}
-
+getData = function(productObject) {
 var data = {
     datasets: [{
-        data: [
-            1,
-            2,
-            3,
-            4
-        ],
+        data: Object.values(productObject),
         backgroundColor: [
-            "#FF6384",
-            "#4BC0C0",
-            "#FFCE56",
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)"
         ],
         label: 'My dataset'
     }],
-    labels: productTitle
+    labels: Object.keys(productObject)
 };
+    return data;
+}
 
-    
+displayGraphs = function (data) {
+    let ctx = document.getElementById("myCharts");
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data,
+        options: {
+            elements: {
+                arc: {
+                    borderColor: "#000000"
+                }
+            }
+        }
+    });
+}
 
 
 
