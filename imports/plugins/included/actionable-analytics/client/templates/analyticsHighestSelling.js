@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars  */
+
 import { Template } from "meteor/templating";
 import Chart from "chart.js";
 import _ from "lodash";

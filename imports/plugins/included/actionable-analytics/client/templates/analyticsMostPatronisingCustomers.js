@@ -12,7 +12,7 @@ let customerDetails = [];
 
 const getCustomerNames = (customerId)=> {
   customerId.forEach((id) => {
-    Meteor.call("analytics/getcustomername", id, (error, result) => {
+    Meteor.call("analytics/getcustomer", id, (error, result) => {
       customerNames.push(result[0].profile.addressBook[0].fullName);
     });
   });
