@@ -1,4 +1,5 @@
 /* eslint dot-notation: 0 */
+/* eslint-disable no-undef */
 import { expect } from "meteor/practicalmeteor:chai";
 import { sinon} from "meteor/practicalmeteor:sinon";
 import Fixtures from "/server/imports/fixtures";

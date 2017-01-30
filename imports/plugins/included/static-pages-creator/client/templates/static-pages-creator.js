@@ -23,6 +23,9 @@ Template.staticPages.onRendered(function () {
       .addClass("fa fa-floppy-o static-pages-new")
   );
 });
+Template.staticPages.onDestroyed(()=>{
+  $("#main").css("overflow", "auto");
+});
 
 Template.staticPages.helpers({
   baseUrl() {
@@ -41,7 +44,13 @@ Template.staticPages.events({
     const pageOwner = Meteor.user()._id;
     const content = simplemde.value();
     const createdAt = new Date();
-    Meteor.call("insertPage", title, slug, content, shopId, pageOwner,  createdAt);
+    Meteor.call("insertPage", title, slug, content, shopId, pageOwner,  createdAt, function (err) {
+      if (err) {
+        Alerts.toast(err.message, "error");
+      } else {
+        Alerts.toast("Created New Static Page", "success");
+      }
+    });
   },
   "click .static-pages-update": ()=> {
     const _id = $("#static-page-id").val();
@@ -50,7 +59,13 @@ Template.staticPages.events({
     const shopId = Reaction.shopId;
     const content = simplemde.value();
 
-    Meteor.call("updatePage", _id, title, slug, content, shopId);
+    Meteor.call("updatePage", _id, title, slug, content, shopId,  function (err) {
+      if (err) {
+        Alerts.toast(err.message, "error");
+      } else {
+        Alerts.toast(`Updated ${title}`, "success");
+      }
+    });
   },
   "click #static-pages-menu-toggle": (event)=> {
     event.preventDefault();
