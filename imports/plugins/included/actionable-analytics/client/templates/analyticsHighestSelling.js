@@ -19,8 +19,7 @@ Template.analyticsHighestSelling.onRendered(() => {
                         productObject[eachItem.title] += eachItem.quantity;
                     }
                 }
-            });
-            
+            });            
         });
         const data  = getData(productObject)
         displayGraphs(data);
