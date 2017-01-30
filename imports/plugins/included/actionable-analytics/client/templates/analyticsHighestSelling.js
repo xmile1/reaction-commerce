@@ -3,10 +3,10 @@ import Chart from "chart.js";
 import _ from "lodash";
 
 let productData = {};
-let vendourDetails = [];
-let vendourCounts = [];
-let vendourIds = [];
-let vendourNames = [];
+let productDetails = [];
+let productCounts = [];
+let productIds = [];
+let productNames = [];
 const backgroundColor = ["#FF6384", "#36A2EB", "#FFCE56", "#FE7EA6", "#2ACEEB"];
 
 const storeProductData = (productId) => {
@@ -17,28 +17,22 @@ const storeProductData = (productId) => {
   }
 };
 
-const getVendours = (vendourId) => {
-  vendourId.forEach((id) => {
+const getProducts = (productId) => {
+  productId.forEach((id) => {
     Meteor.call("analytics/getproduct", id, (error, result) => {
-      const index = vendourNames.indexOf(result[0].vendor);
-      if (index === -1) {
-        vendourNames.push(result[0].vendor);
-      } else {
-        vendourCounts[index] = vendourCounts[index] + vendourCounts[vendourIds.indexOf(id)];
-        delete vendourCounts[vendourIds.indexOf(id)];
-      }
+      productNames.push(result[0].title);
     });
   });
 };
 
-const displayVendours = () => {
-  const ctx = document.getElementById("pieChart");
+const displayProducts = () => {
+  const ctx = document.getElementById("sellingProductChart");
   const myChart = new Chart(ctx, {
-    type: "pie",
+    type: "doughnut",
     data: {
-      labels: vendourNames,
+      labels: productNames,
       datasets: [{
-        data: vendourCounts,
+        data: productCounts,
         backgroundColor: backgroundColor,
         hoverBackgroundColor: backgroundColor
       }]
@@ -46,12 +40,12 @@ const displayVendours = () => {
   });
 };
 
-Template.analyticsMostPatronisedBrand.onRendered(() => {
+Template.analyticsHighestSelling.onRendered(() => {
   productData = {};
-  vendourDetails = [];
-  vendourCounts = [];
-  vendourIds = [];
-  vendourNames = [];
+  productDetails = [];
+  productCounts = [];
+  productIds = [];
+  productNames = [];
 
   Meteor.call("analytics/getorders", (error, result) => {
     result.forEach((order) => {
@@ -60,18 +54,18 @@ Template.analyticsMostPatronisedBrand.onRendered(() => {
       });
     });
     Object.keys(productData).forEach(id => {
-      vendourDetails.push({
+      productDetails.push({
         ID: id,
         count: productData[id]
       });
     });
 
-    productData = _.orderBy(vendourDetails, ["count"], ["desc"]).slice(0, 5);
+    productData = _.orderBy(productDetails, ["count"], ["desc"]).slice(0, 5);
     productData.forEach(data => {
-      vendourIds.push(data.ID);
-      vendourCounts.push(data.count);
+      productIds.push(data.ID);
+      productCounts.push(data.count);
     });
-    getVendours(vendourIds);
-    displayVendours();
+    getProducts(productIds);
+    displayProducts();
   });
 });

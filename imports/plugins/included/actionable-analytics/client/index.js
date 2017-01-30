@@ -5,7 +5,7 @@ import "./templates/analyticsProductsSold.html";
 import "./templates/analyticsProductsSold";
 import "./templates/analyticsMostPatronisingCustomers.html";
 import "./templates/analyticsMostPatronisingCustomers";
-
-
+import "./templates/analyticsHighestSelling.html";
+import "./templates/analyticsHighestSelling";
 import "./templates/analyticsMostPatronisedBrand.html";
 import "./templates/analyticsMostPatronisedBrand";

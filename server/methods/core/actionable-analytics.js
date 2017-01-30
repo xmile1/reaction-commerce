@@ -19,10 +19,18 @@ Meteor.methods({
     return result;
   },
 
-  "analytics/getvendour": function (id) {
+  "analytics/getproduct": function (id) {
     check(id, String);
     const result = Products.find({
       _id: id
+    }).fetch();
+    return result;
+  },
+
+  "analytics/getProductsName": function (productId) {
+    check(productId, String);
+    const result = Products.find({
+      _id: productId
     }).fetch();
     return result;
   }
