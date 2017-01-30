@@ -11,7 +11,7 @@ Meteor.methods({
     return result;
   },
 
-  "analytics/getcustomername": function (id) {
+  "analytics/getcustomer": function (id) {
     check(id, String);
     const result = Accounts.find({
       userId: id
@@ -23,14 +23,6 @@ Meteor.methods({
     check(id, String);
     const result = Products.find({
       _id: id
-    }).fetch();
-    return result;
-  },
-
-  "analytics/getProductsName": function (productId) {
-    check(productId, String);
-    const result = Products.find({
-      _id: productId
     }).fetch();
     return result;
   }
