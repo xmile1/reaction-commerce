@@ -28,29 +28,29 @@ describe("Core static pages methods", function () {
     it("should create new staticPage for valid input", function () {
       sandbox.stub(Meteor, "userId", () => "12345678");
       sandbox.stub(Reaction, "hasOwnerAccess", () => true);
-      Meteor.call("insertPage", "title", "slug", "content", "shopId", userId, new Date());
-      const newStaticPage = StaticPages.find({pageOwner: userId}).count();
+      Meteor.call("insertPage", "title", "slug", "content", "shopId", "12345678", new Date());
+      const newStaticPage = StaticPages.find({pageOwner: "12345678"}).count();
       expect(newStaticPage).to.equal(1);
     });
     it("should update a staticPage with valid input", function () {
       sandbox.stub(Meteor, "userId", () => "12345678");
       sandbox.stub(Reaction, "hasOwnerAccess", () => true);
-      Meteor.call("insertPage", "title", "slug", "content", "shopId", userId, new Date());
-      const newStaticPage = StaticPages.find({pageOwner: userId}).fetch();
-      Meteor.call("updatePage", newStaticPage._id, "newtitle", "newslug", "newcontent", shopId);
-      const updatedStaticPage = StaticPages.find({pageOwner: userId}).fetch();
-      expect(updatedStaticPage.title).to.equal("newtitle");
-      expect(updatedStaticPage.slug).to.equal("newslug");
-      expect(updatedStaticPage.content).to.equal("newcontent");
+      Meteor.call("insertPage", "title", "slug", "content", "shopId", "12345678", new Date());
+      const newStaticPage = StaticPages.find({pageOwner: "12345678"}).fetch();
+      Meteor.call("updatePage", newStaticPage[0]._id, "newtitle", "newslug", "newcontent", "shopId");
+      const updatedStaticPage = StaticPages.find({pageOwner: "12345678"}).fetch();
+      expect(updatedStaticPage[0].title).to.equal("newtitle");
+      expect(updatedStaticPage[0].slug).to.equal("newslug");
+      expect(updatedStaticPage[0].content).to.equal("newcontent");
     });
     it("should delete a staticPage based on specified id", function () {
       sandbox.stub(Meteor, "userId", () => "12345678");
       sandbox.stub(Reaction, "hasOwnerAccess", () => true);
-      Meteor.call("insertPage", "title", "slug", "content", "shopId", userId, new Date());
-      const newStaticPage = StaticPages.find({pageOwner: userId}).fetch();
-      Meteor.call("deletePage", newStaticPage._id);
-      const deletedStaticPage = StaticPages.find({id: newStaticPage._id}).fetch();
-      expect(deletedStaticPage).to.equal([]);
+      Meteor.call("insertPage", "title", "slug", "content", "shopId", "12345678", new Date());
+      const newStaticPage = StaticPages.find({pageOwner: "12345678"}).fetch();
+      Meteor.call("deletePage", newStaticPage[0]._id);
+      const deletedStaticPage = StaticPages.find({_id: newStaticPage[0]._id}).fetch();
+      expect(deletedStaticPage[0]).to.be.undefined;
     });
   });
 });
