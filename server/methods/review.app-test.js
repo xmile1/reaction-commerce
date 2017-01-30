@@ -26,9 +26,9 @@ describe("Core review methods", function () {
 
     it("should create review for product", function () {
       sandbox.stub(Reaction, "hasOwnerAccess", () => true);
-      const review = {productId: 23456, rating: 2, comment: "This is a comment", username: "moyosore"};
-      Meteor.call("review/insert", review);
-      const newReview = Reviews.find({productId: 23456}).count();
+      const review = {productId: "23456", rating: 2, comment: "This is a comment", username: "moyosore"};
+      Meteor.call("insert/review", review);
+      const newReview = Reviews.find({productId: "23456"}).count();
       expect(newReview).to.equal(1);
     });
   });

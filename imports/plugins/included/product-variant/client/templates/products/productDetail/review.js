@@ -1,4 +1,4 @@
-/* eslint-disable consistent-return no-undef */
+/* eslint-disable consistent-return, no-undef */
 import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
 import "./review.html";
