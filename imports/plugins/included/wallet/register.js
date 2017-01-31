@@ -8,7 +8,6 @@ Reaction.registerPackage({
   autoEnable: true,
   settings: {
     mode: false
-    // apiKey: ""
   },
   registry: [
     // Dashboard card
@@ -27,11 +26,11 @@ Reaction.registerPackage({
       provides: "paymentMethod"
     },
     {
-      route: "reaction/wallet",
+      route: "/wallet",
       icon: "fa fa-google-wallet",
       template: "walletDashboard",
-      label: "Wallet",
-      provides: "shortcut"
+      label: "wallet",
+      name: "wallet"
     }
   ]
 });
