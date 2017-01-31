@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars  */
+
 import { Template } from "meteor/templating";
 import Chart from "chart.js";
 import { Meteor } from "meteor/meteor";
@@ -8,12 +10,12 @@ const analysisData = {
 };
 
 getOrders = function (date, length) {
-  let index = date.getMonth();
+  const index = date.getMonth();
   analysisData.orders[index] = analysisData.orders[index] + length;
 };
 
 displayGraph = function () {
-  let ctx = document.getElementById("myChart");
+  const ctx = document.getElementById("myChart");
   const myChart = new Chart(ctx, {
     type: "bar",
     data: {
