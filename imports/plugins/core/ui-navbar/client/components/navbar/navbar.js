@@ -53,6 +53,13 @@ Template.CoreNavigationBar.helpers({
       label: "Take Tour"
     };
   },
+  staticPagesMenu() {
+    return {
+      component: FlatButton,
+      kind: "flat",
+      label: "More Pages"
+    };
+  },
   onMenuButtonClick() {
     const instance = Template.instance();
     return () => {
