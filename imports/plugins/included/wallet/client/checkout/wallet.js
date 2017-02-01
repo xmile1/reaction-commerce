@@ -25,11 +25,11 @@ AutoForm.addHooks("wallet-payment-form", {
       } else {
         const paymentMethod = {
           processor: "Wallet",
-          method: "Walet Payment",
+          method: "Wallet",
           transactionId: Random.id(),
           currency: "NGN",
           amount: transaction.amount,
-          status: "created",
+          status: "passed",
           mode: "authorize",
           createdAt: new Date(),
           transactions: []

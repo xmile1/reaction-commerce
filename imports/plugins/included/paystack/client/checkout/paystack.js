@@ -62,7 +62,7 @@ AutoForm.addHooks("paystack-payment-form", {
                   transactionId: transaction.reference,
                   currency: transaction.currency,
                   amount: transaction.amount / 100,
-                  status: "created",
+                  status: "passed",
                   mode: "authorize",
                   createdAt: new Date(),
                   transactions: []
