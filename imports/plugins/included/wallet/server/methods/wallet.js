@@ -160,14 +160,31 @@ Meteor.methods({
     if (wallet.balance < amount) {
       throw new Meteor.Error(`Insufficient balance $${wallet.balance} is all you have`);
     } else {
+      shopOwnerEmail = Collections.Shops.findOne().emails[0].address;
+      const query = {
+        emails: {
+          $elemMatch: {
+            address: shopOwnerEmail
+          }
+        }
+      };
+
+      const user = Collections.Accounts.findOne(query);
+      OwnerID = Collections.Accounts.findOne(query);
       const sentTransaction = {
         username: username || Meteor.user().username,
+        amount,
+        date: new Date()
+      };
+      const receivedTransaction = {
+        from: Meteor.user().username || Meteor.user().emails[0].address,
         amount,
         date: new Date()
       };
 
       Meteor.call("wallet/withdrawFund", amount);
       Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
+      Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
       return sentTransaction;
     }
   }
