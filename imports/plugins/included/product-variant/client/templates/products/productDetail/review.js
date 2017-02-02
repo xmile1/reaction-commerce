@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return, no-undef */
 import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
+import { Reaction } from "/client/api";
 import "./review.html";
 import { Reviews } from "/lib/collections";
 import { Products } from "/lib/collections";
@@ -36,5 +37,24 @@ Template.showReviews.helpers({
     const productId = Products.findOne()._id;
     Meteor.subscribe("Reviews");
     return Reviews.find({productId: productId}).fetch();
+  }
+});
+
+Template.showTweets.onCreated(function () {
+  this.state = new ReactiveDict();
+  this.state.setDefault({
+    tweets: []
+  });
+  const productTitle = Products.findOne().title;
+  const hashtag = productTitle.toLowerCase().replace(/\s*/g, "");
+  Meteor.call("twitter/hashtag", `${hashtag} #${Reaction.shopName}`, (error, result) => {
+    this.state.set("tweets", result);
+  });
+});
+
+Template.showTweets.helpers({
+  tweeter() {
+    instance = Template.instance();
+    return instance.state.get("tweets");
   }
 });

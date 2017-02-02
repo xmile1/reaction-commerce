@@ -31,3 +31,18 @@
     {{/each}}
   </div>
 </template>
+
+<template name="showTweets">
+  <div class="tweets">
+    <h3>Tweets about this product</h3>
+    {{#each tweets in tweeter}}
+      <div>
+        <b> @{{tweets.name}} </b>
+      </div>
+      <div>
+        {{tweets.text}}
+      </div>
+      <br>
+    {{/each}}
+  </div>
+</template>
