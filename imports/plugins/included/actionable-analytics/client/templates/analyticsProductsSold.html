@@ -5,7 +5,79 @@
 				<h3>Number of Products Sold</h3>
 			</center>
 		</div>
+		<div class="panel-body">
+      <center>
+			<form name="productViewForm" class="form-inline">
+        <div class="form-group {{hasError messages.errors.comment}}">
+        <label for="year">Year</label>
+          <select class="form-control input-view" id="year" style="text-align-last: center;">
+          <option selected>Select Year</option> 
+          {{#each year in showYears}}
+            <option> {{year}} </option>  
+          {{/each}}
+          </select> &nbsp;
+        <label for="month">Month</label>
+          <select class="form-control input-view" id="month" style="text-align-last: center;">
+          <option selected>Select Month</option> 
+          {{#each month in showMonths}}
+            <option> {{month}} </option>  
+          {{/each}}
+          </select> &nbsp;
+        <label for="week">Week</label>
+          <select class="form-control input-view" id="week" style="text-align-last: center;">
+          <option selected>Select Week</option> 
+          {{#each week in showWeeks}}
+            <option> {{week}} </option>  
+          {{/each}}
+          </select> &nbsp;
+        </div>
+        <div class="form-group">
+           <button class="btn btn-info btn-block" type="submit">Submit</button>
+        </div>
+      </form>
+        {{#if hasError messages.errors.comment}}
+          <span class="help-block">
+            {{messages.errors.comment.reason}}
+          </span>
+        {{/if}}
+      </center>
+		</div>
+    {{> UI.dynamic template=showTemplate}}
+	</div>
+</template>
 
-		<canvas id="myChart" width="250" height="100"></canvas>
+<template name="analyticsYearView">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<center>
+        <h3>Year View : <b>{{year}}</b></h3>
+			</center>
+		</div>
+
+		<canvas id="yearChart" width="250" height="100"></canvas>
+	</div>
+</template>
+
+<template name="analyticsMonthView">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<center>
+        <h3>Month View : <b>{{month}} - {{year}}</b></h3>
+			</center>
+		</div>
+
+		<canvas id="monthChart" width="250" height="100"></canvas>
+	</div>
+</template>
+
+<template name="analyticsWeekView">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<center>
+        <h3>Week View : <b>{{week}} - {{month}} - {{year}}</b></h3>
+			</center>
+		</div>
+
+		<canvas id="weekChart" width="250" height="100"></canvas>
 	</div>
 </template>
