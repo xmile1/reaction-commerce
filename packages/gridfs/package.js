@@ -19,6 +19,7 @@ Package.onUse(function (api) {
 });
 
 Package.onTest(function (api) {
+  api.use(["ecmascript", "practicalmeteor:mocha", "practicalmeteor:chai", "practicalmeteor:sinon", "lmieulet:meteor-coverage@1.1.4"]);
   api.use(["cfs:gridfs", "test-helpers", "tinytest"], "server");
   api.addFiles("tests/server-tests.js", "server");
   api.addFiles("tests/client-tests.js", "client");

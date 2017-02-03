@@ -3,7 +3,6 @@ import { Cart, Shipping } from "/lib/collections";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 
-//
 // These helpers can be used in general shipping packages
 // cartShippingMethods to get current shipment methods
 // until we handle multiple methods, we just use the first

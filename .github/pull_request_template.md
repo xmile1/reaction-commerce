@@ -1,11 +1,20 @@
-<!-- Thanks so much for your PR, your contribution is appreciated! -->
-**Are you submitting to `development`?**
+<!-- PR Title should follow the template below -->
+#<story-id> story description
+Example
+#869522144 Build HQ for meetings
 
-We currently only accept PR's to `development` not `master`
+<!-- Please Follow the template below for PR content. Team Kissa! -->
+<!-- delete all above -->
+#### What does this PR do?
 
-- [ ] Description explains the issue / use-case resolved
-- [ ] Only contains code directly related to the issue
-- [ ] Has tests.
-- [ ] Has docs.
-- [ ] Passes all tests
-- [ ] Has been linted and follows the style guide
+#### Description of Task completed?
+
+#### How should this be manually tested?
+
+#### Any background context you want to provide?
+
+#### What are the relevant pivotal tracker stories?
+
+#### Screenshots (if appropriate)
+
+#### Questions:
