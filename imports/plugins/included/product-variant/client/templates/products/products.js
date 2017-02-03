@@ -147,7 +147,6 @@ Template.products.helpers({
 /**
  * products events
  */
-
 Template.products.events({
   "click #productListView": function () {
     $(".product-grid").hide();

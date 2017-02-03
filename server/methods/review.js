@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 import * as Schemas from "/lib/collections/schemas";
 import * as Collections from "/lib/collections";
+
 Meteor.methods({
   "insert/review"(review) {
     check(review, Schemas.Reviews);
@@ -12,16 +13,21 @@ Meteor.methods({
 
   "twitter/hashtag"(query) {
     check(query, String);
-    const a1 = new Promise(
+    const promise = new Promise(
       function (resolve, reject) {
         const twitt = require("twitter-node-client").Twitter;
 
-        const config = {
-          consumerKey: "C8EuYwqGkACiMN2w0z2v8tpvN",
-          consumerSecret: "DLNClQ6ZmBuhqYNRt99a1w2BKX4keHA7ARTW6FAgiBNPPyhYXt",
-          accessToken: "264145054-Qjhnxk9xFlzelwgy7m2AMely0x59GO6jDwej2w2w",
-          accessTokenSecret: "aOKN3smuz9mVZqOTyT75ati1kqzccoklDFfc9WJG8Crnl"
-        };
+        let config;
+        if (Meteor.settings.TWITTER_KEY) {
+          config = Meteor.settings.TWITTER_KEY;
+        }        else {
+          config = {
+            consumerKey: process.env.consumerKey,
+            consumerSecret: process.env.consumerSecret,
+            accessToken: process.env.accessToken,
+            accessTokenSecret: process.env.accessTokenSecret
+          };
+        }
 
         const success = (data) => {
           const tags = [];
@@ -40,9 +46,9 @@ Meteor.methods({
       }
     );
 
-    a1.then((val)=> {
+    promise.then((val)=> {
       return val;
     });
-    return a1;
+    return promise;
   }
 });
