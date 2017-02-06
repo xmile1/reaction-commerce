@@ -8,7 +8,7 @@ import { Paystack } from "../../lib/api";
 import "./paystack.html";
 import "../../lib/api/paystackApi";
 
-const uiEnd = (template, buttonText) => {
+const enableButton = (template, buttonText) => {
   template.$(":input").removeAttr("disabled");
   template.$("#btn-complete-order").text(buttonText);
   return template.$("#btn-processing").addClass("hidden");
@@ -52,7 +52,7 @@ AutoForm.addHooks("paystack-payment-form", {
             Paystack.verify(reference, secret, (error, res) => {
               if (error) {
                 handlePaystackSubmitError(template, error);
-                uiEnd(template, "Resubmit payment");
+                enableButton(template, "Resubmit payment");
               } else {
                 const transaction = res.data;
                 const paymentMethod = {
@@ -75,14 +75,14 @@ AutoForm.addHooks("paystack-payment-form", {
           }
         },
         onClose() {
-          uiEnd(template, "Complete payment");
+          enableButton(template, "Complete payment");
         }
       };
       try {
         PaystackPop.setup(details).openIframe();
       } catch (error) {
         handlePaystackSubmitError(template, error);
-        uiEnd(template, "Complete payment");
+        enableButton(template, "Complete payment");
       }
     });
     return false;

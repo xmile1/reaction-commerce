@@ -15,10 +15,10 @@ AutoForm.addHooks("wallet-transfer-form", {
     Meteor.call("wallet/sendFund", doc.amount, doc.payerEmail, (err, transaction) => {
       if (err) {
         walletApi.handlePaystackSubmitError(template, err);
-        walletApi.uiEnd(template, "Resend");
+        walletApi.enableButton(template, "Resend");
       } else {
         Alerts.toast(`Funds successfully sent to ${transaction.username}`);
-        walletApi.uiEnd(template, "Transfer Now");
+        walletApi.enableButton(template, "Transfer Now");
         this.resetForm();
       }
     });

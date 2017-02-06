@@ -34,7 +34,7 @@ AutoForm.addHooks("wallet-fund-form", {
             Paystack.verify(reference, secret, (error, res) => {
               if (error) {
                 walletApi.handlePaystackSubmitError(template, error);
-                walletApi.uiEnd(template, "Resubmit payment");
+                walletApi.enableButton(template, "Resubmit payment");
               } else {
                 const transaction = {
                   from: "Paystack",
@@ -43,21 +43,21 @@ AutoForm.addHooks("wallet-fund-form", {
                 };
                 Meteor.call("wallet/fundAccount", transaction);
                 Alerts.toast("Account funded");
-                walletApi.uiEnd(template, "Pay Now");
+                walletApi.enableButton(template, "Pay Now");
                 self.resetForm();
               }
             });
           }
         },
         onClose() {
-          walletApi.uiEnd(template, "Pay Now");
+          walletApi.enableButton(template, "Pay Now");
         }
       };
       try {
         PaystackPop.setup(details).openIframe();
       } catch (error) {
         walletApi.handlePaystackSubmitError(template, error);
-        walletApi.uiEnd(template, "Pay Now");
+        walletApi.enableButton(template, "Pay Now");
       }
     });
     return false;

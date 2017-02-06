@@ -61,10 +61,8 @@ Meteor.methods({
         "wallet.transactions.sent": transaction
       }
     };
-
     Collections.Accounts.update({_id: userId }, update);
   },
-
 
   /**
    * wallet/withdrawFund
@@ -79,11 +77,9 @@ Meteor.methods({
         "wallet.balance": -amount
       }
     };
-
     Collections.Accounts.update({ _id: Meteor.userId()}, update);
     return amount;
   },
-
 
   /**
    * wallet/withdrawFund
@@ -95,7 +91,6 @@ Meteor.methods({
   "wallet/sendFund"(amount, email) {
     check(amount, Number);
     check(email, String);
-
 
     const query = {
       emails: {
@@ -136,11 +131,11 @@ Meteor.methods({
           date: new Date()
         };
 
-        Meteor.call("wallet/withdrawFund", amount);
-        Collections.Accounts.update({_id: user._id }, credit);
-
-        Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
-        Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+        Meteor.call("wallet/withdrawFund", amount, () => {
+          Collections.Accounts.update({_id: user._id }, credit);
+          Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
+          Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+        });
         return sentTransaction;
       }
     }
@@ -182,9 +177,10 @@ Meteor.methods({
         date: new Date()
       };
 
-      Meteor.call("wallet/withdrawFund", amount);
-      Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
-      Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+      Meteor.call("wallet/withdrawFund", amount, () => {
+        Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
+        Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+      });
       return sentTransaction;
     }
   }

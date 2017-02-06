@@ -21,7 +21,7 @@ AutoForm.addHooks("wallet-payment-form", {
     Meteor.call("wallet/checkout", doc.payerName, amount, (err, transaction) => {
       if (err) {
         walletApi.handlePaystackSubmitError(template, err.message);
-        walletApi.uiEnd(template, "Complete Order");
+        walletApi.enableButton(template, "Complete Order");
       } else {
         const paymentMethod = {
           processor: "Wallet",
@@ -34,7 +34,6 @@ AutoForm.addHooks("wallet-payment-form", {
           createdAt: new Date(),
           transactions: []
         };
-        Alerts.toast("Transaction successful");
         paymentMethod.transactions.push(transaction);
         Meteor.call("cart/submitPayment", paymentMethod);
         Alerts.toast("transaction completed");
