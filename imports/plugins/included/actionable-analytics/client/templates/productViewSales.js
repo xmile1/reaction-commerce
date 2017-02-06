@@ -1,16 +1,13 @@
 import { Template } from "meteor/templating";
-import { $ } from 'meteor/jquery';
-import { Products } from "/lib/collections";
 import { ReactiveDict } from "meteor/reactive-dict";
 let productDetails = [];
-let header = ['Product', ' Product views', 'Product sales', 'Converation Rate (%)'];
-let data = [];
+const header = ["Product", " Product views", "Product sales", "Converation Rate (%)"];
 
 Template.productViewSales.onCreated(function () {
   this.state = new ReactiveDict();
   this.state.setDefault({
     productDetails: []
-  })
+  });
 
   this.autorun(() => {
     const displaySales = () => {
@@ -26,8 +23,8 @@ Template.productViewSales.onCreated(function () {
           });
         });
 
-        Meteor.call("analytics/getorders", (error, result) => {
-          result.forEach((order) => {
+        Meteor.call("analytics/getorders", (err, res) => {
+          res.forEach((order) => {
             order.items.forEach((item) => {
               productDetails.forEach((product) => {
                 if (product.ID === item.productId) {
@@ -37,19 +34,19 @@ Template.productViewSales.onCreated(function () {
               });
             });
           });
-          this.state.set('productDetails', productDetails);
+          this.state.set("productDetails", productDetails);
         });
       });
-    }
+    };
     displaySales();
   });
-})
+});
 
 Template.productViewSales.helpers({
 
   displayProductCount: function () {
     const template = Template.instance();
-    return template.state.get('productDetails');
+    return template.state.get("productDetails");
   },
 
   displayTableHeader: function () {
