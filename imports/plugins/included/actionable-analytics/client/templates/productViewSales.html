@@ -1,0 +1,31 @@
+<template name="productViewSales">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<center>
+				<h3>Product Views and Sales</h3>
+				<h4> <i> </i></h4>
+			</center>
+		</div>
+
+		<table class="table table-bordered table-inverse">
+			<thead class>
+				<tr>
+					{{#each head in displayTableHeader}}
+					<th>{{head}}</th>
+					{{/each}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each product in displayProductCount}}
+					<tr>
+						<td>{{product.title}}</td>
+						<td>{{product.count}}</td>
+						<td>{{product.salesCount}}</td>
+						<td>{{product.conversionRate}}</td>
+					</tr>
+				{{/each}} 
+			</tbody>
+		</table>
+	</div>
+
+</template>

@@ -25,5 +25,18 @@ Meteor.methods({
       _id: id
     }).fetch();
     return result;
+  },
+
+  "analytics/getProductOrder": function (productId) {
+    check(productId, String);
+    const result = Products.findOne({
+      _id: productId
+    });
+    if (result) {
+      const query = {
+        $inc: { salesCount: 1 }
+      }
+      Products.update({productId}, query)
+    }
   }
 });
