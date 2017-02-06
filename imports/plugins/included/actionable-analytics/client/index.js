@@ -9,3 +9,5 @@ import "./templates/analyticsHighestSelling.html";
 import "./templates/analyticsHighestSelling";
 import "./templates/analyticsMostPatronisedBrand.html";
 import "./templates/analyticsMostPatronisedBrand";
+import "./templates/productViewSales.html";
+import "./templates/productViewSales";
