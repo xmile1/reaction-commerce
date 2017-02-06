@@ -18,6 +18,7 @@ audit-argument-checks@1.0.7
 autoupdate@1.3.11
 babel-compiler@6.9.1
 babel-runtime@0.1.11
+barbatus:stars-rating@1.1.1
 base64@1.0.9
 binary-heap@1.0.9
 blaze@2.1.9
@@ -144,6 +145,7 @@ reload@1.1.10
 retry@1.0.8
 risul:moment-timezone@0.5.0_5
 routepolicy@1.0.11
+schiller:twit@0.0.3
 service-configuration@1.0.10
 session@1.1.6
 sha@1.0.8

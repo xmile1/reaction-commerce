@@ -1,8 +1,16 @@
-/* eslint no-cond-assign: 1 */
+/* eslint no-cond-assign: 1, */
+/* eslint-disable no-unused-vars */
 //
 // TODO twitter social templates need review to ensure proper use of reaction layouts
 //
+import { Reaction } from "/client/api";
+import { Products } from "/lib/collections";
+
+
 Template.twitter.onRendered(function () {
+  const productTitle = Products.findOne().title;
+  const hashTitle = productTitle.toLowerCase().replace(/\s*/g, "");
+  const hashtag = `%23${hashTitle} %23${Reaction.shopName}`;
   let ref;
   if (this.data.placement === "footer" && (((ref = this.data.apps.twitter) !== null ? ref.profilePage : void 0) !== null)) {
     return this.$(".twitter-share").attr("href", this.data.apps.twitter.profilePage);
@@ -47,12 +55,13 @@ Template.twitter.onRendered(function () {
         }).appendTo("head");
       }
     }
+
     const preferredUrl = data.url || location.origin + location.pathname;
     const url = encodeURIComponent(preferredUrl);
     const base = "https://twitter.com/intent/tweet";
     let ref2;
     const text = encodeURIComponent(((ref2 = data.apps.twitter) !== null ? ref2.title : void 0) || data.title);
-    let href = base + "?url=" + url + "&text=" + text;
+    let href = base + "?url=" + url + "&text= " + hashtag;
     if (data.apps.twitter.username) {
       href += "&via=" + data.apps.twitter.username;
     }
