@@ -1,9 +1,19 @@
 import { Reaction, Logger} from "/client/api";
-import { Tags } from "/lib/collections";
+import { StaticPages, Tags } from "/lib/collections";
 import { Session } from "meteor/session";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { buyerTour, vendorTour } from "/imports/plugins/included/tour/client/tour";
+
+Template.staticPagesNav.onCreated(function () {
+  Meteor.subscribe("viewPages");
+});
+
+Template.staticPagesNav.helpers({
+  staticPages() {
+    return StaticPages.find({shopId: Reaction.shopId}).fetch();
+  }
+});
 
 Template.loginDropdown.events({
 

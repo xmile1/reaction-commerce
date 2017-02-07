@@ -1,5 +1,4 @@
 import request from "request";
-import _ from "underscore";
 
 export const Paystack = {};
 
