@@ -114,7 +114,6 @@
                 "autoInit": true,
                 "appsOrder": [
                     "facebook",
-                    "twitter",
                     "pinterest",
                     "googleplus"
                 ],

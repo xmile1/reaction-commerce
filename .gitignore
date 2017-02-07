@@ -40,3 +40,5 @@ imports/plugins/custom/*
 .reaction/config.json
 
 .vscode
+
+.coveralls.yml

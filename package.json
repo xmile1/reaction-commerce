@@ -65,6 +65,7 @@
     "react-komposer": "^1.13.1",
     "react-simple-di": "^1.2.0",
     "react-textarea-autosize": "^4.0.5",
+    "simplemde": "^1.11.2",
     "sortablejs": "^1.4.2",
     "stripe": "^4.11.0",
     "sweetalert2": "^4.3.3",
@@ -73,6 +74,9 @@
     "tether-shepherd": "^1.8.1",
     "tether-tooltip": "^1.2.0",
     "transliteration": "^1.1.9",
+    "twit": "^2.2.5",
+    "twitter-js-client": "0.0.5",
+    "twitter-node-client": "0.0.6",
     "url": "^0.11.0"
   },
   "script": {
@@ -83,6 +87,7 @@
     "babel-eslint": "^6.1.2",
     "babel-preset-stage-2": "^6.13.0",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
     "eslint": "^3.5.0",
     "eslint-plugin-react": "^6.2.2",
     "js-yaml": "^3.6.1",
