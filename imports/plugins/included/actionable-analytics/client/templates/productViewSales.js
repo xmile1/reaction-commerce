@@ -1,7 +1,7 @@
 import { Template } from "meteor/templating";
 import { ReactiveDict } from "meteor/reactive-dict";
 let productDetails = [];
-const header = ["Product", " Product views", "Product sales", "Converation Rate (%)"];
+const header = ["Product", " Product Views", "Product Sales", "Conversion Rate (%)"];
 
 Template.productViewSales.onCreated(function () {
   this.state = new ReactiveDict();

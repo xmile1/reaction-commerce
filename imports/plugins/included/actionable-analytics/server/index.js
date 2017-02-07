@@ -1,1 +1,1 @@
-import './methods/productAnalytics';
+import "./methods/productAnalytics";
