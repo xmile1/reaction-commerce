@@ -2,6 +2,7 @@ import { FlatButton } from "/imports/plugins/core/ui/client/components";
 import { Reaction } from "/client/api";
 import { Tags } from "/lib/collections";
 import { buyerTour } from "/imports/plugins/included/tour/client/tour";
+import { Accounts } from "/lib/collections";
 
 Template.CoreNavigationBar.onCreated(function () {
   this.state = new ReactiveDict();
@@ -28,7 +29,7 @@ Template.CoreNavigationBar.events({
   "click #takeTour": (event) =>{
     event.preventDefault();
     buyerTour.start();
-  }
+  },
 });
 
 
@@ -84,5 +85,32 @@ Template.CoreNavigationBar.helpers({
         instance.toggleMenuCallback = callback;
       }
     };
+  }
+});
+
+Template.notificationMenu.helpers({
+  notificationBar() {
+    return {
+      component: FlatButton,
+      icon: "fa fa-bell fa-lg",
+      kind: "flat"
+    };
+  },
+  newNotificationCount() {
+    return Accounts.findOne({_id: Meteor.userId()})
+      .notificationCount;
+  }
+});
+
+Template.notificationMenu.events({
+  "click .notification-icon"() {
+    $(".notifications").toggle();
+    Accounts.update({
+      _id: Meteor.userId()
+    }, {
+      $set: {
+        notificationCount: 0
+      }
+    });
   }
 });

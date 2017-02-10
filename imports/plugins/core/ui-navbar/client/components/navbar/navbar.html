@@ -8,10 +8,19 @@
     {{#unless currentUser}}
       <div id="takeTour" class="tour">{{> React tourButton}}</div>
     {{/unless}}
-    <div class="search">{{> React IconButtonComponent}}</div>
+    {{> notificationMenu}}
+    <div class="search">{{> React IconButtonComponent tpl="notification"}}</div>
     <div class="languages hidden-xs">{{> i18nChooser}}</div>
     <div  class="accounts tour-accounts">{{> accounts tpl="loginDropdown"}}</div>
     <div class="cart">{{> cartIcon}}</div>
     <div class="cart-alert">{{> cartPanel}}</div>
+  </div>
+</template>
+
+<template name="notificationMenu">
+  <div class="notification-body">
+    {{> notification}}
+    <div class="notification-icon">{{> React notificationBar}}</div>
+    <span class="badge notification-badge">{{ newNotificationCount }}</span>
   </div>
 </template>

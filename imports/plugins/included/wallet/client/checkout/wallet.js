@@ -23,10 +23,11 @@ AutoForm.addHooks("wallet-payment-form", {
         walletApi.handlePaystackSubmitError(template, err.message);
         walletApi.uiEnd(template, "Complete Order");
       } else {
+        transactionId: Random.id();
         const paymentMethod = {
           processor: "Wallet",
           method: "Walet Payment",
-          transactionId: Random.id(),
+          transactionId: transactionId,
           currency: "NGN",
           amount: transaction.amount,
           status: "created",
@@ -37,6 +38,8 @@ AutoForm.addHooks("wallet-payment-form", {
         Alerts.toast("Transaction successful");
         paymentMethod.transactions.push(transaction);
         Meteor.call("cart/submitPayment", paymentMethod);
+        Meteor.call("notification/postInApp", "checkout", `Thank you for your purchase, 
+        your order is been processed`, transactionId);
         Alerts.toast("transaction completed");
       }
     });

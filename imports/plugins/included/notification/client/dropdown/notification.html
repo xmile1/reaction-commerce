@@ -1,0 +1,38 @@
+<template name="notification">  
+ <div class="notifications">
+  <div class="notification-head">
+    <div class="arrow-up"></div>
+    <p>Notifications</p>
+  </div>
+  <div class="main-notification">
+  {{#if hasValue Notifications}}
+    {{#each notification in Notifications}}
+    <div class="notification">
+      <h4>
+        <i class="fa fa-bell" aria-hidden="true"></i>
+        {{ notification.type}}
+      </h4>
+      <p> {{ notification.message}}</p>
+    </div>
+    {{/each}}
+  {{else}}
+    <div class="notification">
+      <h4>
+        Whala! That's all 
+      </h4>
+    </div>
+  {{/if}}
+  </div>
+  <div class="notification-footer">
+    <div class="delete-all">
+      <p>Delete All</p>
+    </div>
+    <div class="load-more n-prev">
+      <p>prev</p>
+    </div>
+    <div class="load-more n-next">
+      <p>next</p>
+    </div>
+  </div>
+</div>
+</template>

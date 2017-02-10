@@ -73,6 +73,7 @@
     "tether-shepherd": "^1.8.1",
     "tether-tooltip": "^1.2.0",
     "transliteration": "^1.1.9",
+    "twilio": "^2.11.1",
     "url": "^0.11.0"
   },
   "script": {

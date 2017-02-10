@@ -1,9 +1,8 @@
-import Meteor from "meteor/meteor";
+import { Meteor } from "meteor/meteor";
+import { Notifications } from "/lib/collections";
 
-
-Meteor.methods({
-
-  "notification/sendSms"() {
-    console.log("i was called', 'sendSms");
-  }
-});
+/**
+ * PublishNotifications
+ * @type {Object} options - standard publication options object
+ */
+Meteor.publish("Notifications");

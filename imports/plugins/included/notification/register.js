@@ -7,9 +7,19 @@ Reaction.registerPackage({
   icon: "fa fa-bullhorn",
   autoEnable: true,
   settings: {
-    mode: false,
-    publicKey: "",
-    secretKey: ""
+    default: "twillo",
+    api: {
+      twillo: {
+        authToken: "",
+        accSid: "",
+        phoneNumber: ""
+      },
+      jusibe: {
+        authToken: "",
+        accSid: "",
+        phoneNumber: ""
+      }
+    }
   },
   registry: [
     // Dashboard card

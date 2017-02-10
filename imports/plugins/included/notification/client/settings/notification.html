@@ -1,12 +1,60 @@
-<template name="notificationSettings">
+<template name="notificationSettings"> 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="panel-title">Panel Title</div>
+      <div class="panel-title">Default settings</div>
     </div>
     <div class="panel-body">
-      {{#autoForm collection=Collections.Packages schema=NotificationPackageConfig doc=packageData type="update" id="notification-update-form"}}
-        {{>afQuickField name='settings.authToken'}}
-        {{>afQuickField name='settings.accSid'}}
+      <form novalidate="novalidate">
+        <div class="form-group" data-required="true">
+          <select name="smsMethod" id="smsMethod" class="form-control">
+            <option disabled>(Select One)</option>
+            <option value="twilloSettings">Twillo</option>
+            <option value="jusibeSettings">Jusibe</option>
+          </select>
+        </div>   
+      </form>
+      {{#autoForm collection=Collections.Packages schema=DefaultPackageConfig doc=packageData type="update" id="sms-update-form"}}
+        <label class="radio-inline">
+          {{>afFieldInput name='settings.default' value="jusibe"}}
+        </label>
+        <label class="radio-inline">
+          {{>afFieldInput name='settings.default' value="twilio"}}
+        </label>
+        <button type="submit" class="btn btn-primary pull-right">Activate</button>
+      {{/autoForm}}
+    </div>
+  </div>
+  <div class="sms-body">
+    {{> UI.dynamic template=showSettings }}
+  </div>
+</template>
+
+<template name="twilloSettings">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Twillo Settings</div>
+    </div>
+    <div class="panel-body">
+      {{#autoForm collection=Collections.Packages schema=TwilloPackageConfig doc=packageData type="update" id="twillo-update-form"}}
+        {{>afQuickField name='settings.api.twillo.authToken'}}
+        {{>afQuickField name='settings.api.twillo.accSid'}}
+        {{>afQuickField name='settings.api.twillo.phoneNumber'}}
+        <button type="submit" class="btn btn-primary pull-right">Update</button>
+      {{/autoForm}}
+    </div>
+  </div>
+</template>
+
+<template name="jusibeSettings">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Jusibe settings</div>
+    </div>
+    <div class="panel-body">
+      {{#autoForm collection=Collections.Packages schema=JusibePackageConfig doc=packageData type="update" id="jusibe-update-form"}}
+        {{>afQuickField name='settings.api.jusibe.accessToken'}}
+        {{>afQuickField name='settings.api.jusibe.publicKey'}}
+        {{>afQuickField name='settings.api.jusibe.phoneNumber'}}
         <button type="submit" class="btn btn-primary pull-right">Update</button>
       {{/autoForm}}
     </div>
