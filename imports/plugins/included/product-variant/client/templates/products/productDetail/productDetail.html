@@ -38,6 +38,9 @@
               <h3 data-i18n="productDetail.details">Details</h3>
             {{/if}}
             {{> metaComponent }}
+            <div>
+            {{> showTweets }}
+            </div>
           </div>
           <!-- END Left Side -->
           <!-- BEGIN Right Side -->
@@ -91,7 +94,11 @@
                   </button>
                 </div>
               </div>
-
+              <!--Social media-->
+              <div class="user-review">
+              {{>showReviews}}
+              {{>productReview}}
+              </div>
             </div>
             <!-- END Right Side -->
           </div>

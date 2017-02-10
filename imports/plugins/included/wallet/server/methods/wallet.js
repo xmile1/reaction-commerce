@@ -61,10 +61,8 @@ Meteor.methods({
         "wallet.transactions.sent": transaction
       }
     };
-
     Collections.Accounts.update({_id: userId }, update);
   },
-
 
   /**
    * wallet/withdrawFund
@@ -79,11 +77,9 @@ Meteor.methods({
         "wallet.balance": -amount
       }
     };
-
     Collections.Accounts.update({ _id: Meteor.userId()}, update);
     return amount;
   },
-
 
   /**
    * wallet/withdrawFund
@@ -95,7 +91,6 @@ Meteor.methods({
   "wallet/sendFund"(amount, email) {
     check(amount, Number);
     check(email, String);
-
 
     const query = {
       emails: {
@@ -118,7 +113,7 @@ Meteor.methods({
       }
       const wallet = sender.wallet;
       if (wallet.balance < amount) {
-        throw new Meteor.Error(`Insufficient balance $${wallet.balance} is all you have`);
+        throw new Meteor.Error(`Insufficient balance ₦${wallet.balance} is all you have`);
       } else {
         const credit = {
           $inc: {
@@ -136,11 +131,11 @@ Meteor.methods({
           date: new Date()
         };
 
-        Meteor.call("wallet/withdrawFund", amount);
-        Collections.Accounts.update({_id: user._id }, credit);
-
-        Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
-        Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+        Meteor.call("wallet/withdrawFund", amount, () => {
+          Collections.Accounts.update({_id: user._id }, credit);
+          Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
+          Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+        });
         return sentTransaction;
       }
     }
@@ -160,7 +155,7 @@ Meteor.methods({
     if (wallet.balance < amount) {
       throw new Meteor.Error(`Insufficient balance $${wallet.balance} is all you have`);
     } else {
-      shopOwnerEmail = Collections.Shops.findOne().emails[0].address;
+      const shopOwnerEmail = Collections.Shops.findOne().emails[0].address;
       const query = {
         emails: {
           $elemMatch: {
@@ -170,7 +165,6 @@ Meteor.methods({
       };
 
       const user = Collections.Accounts.findOne(query);
-      OwnerID = Collections.Accounts.findOne(query);
       const sentTransaction = {
         username: username || Meteor.user().username,
         amount,
@@ -182,9 +176,10 @@ Meteor.methods({
         date: new Date()
       };
 
-      Meteor.call("wallet/withdrawFund", amount);
-      Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
-      Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+      Meteor.call("wallet/withdrawFund", amount, () => {
+        Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
+        Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+      });
       return sentTransaction;
     }
   }

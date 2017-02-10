@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-export const uiEnd = (template, buttonText) => {
+export const enableButton = (template, buttonText) => {
   template.$(":input").removeAttr("disabled");
   template.$("#btn-complete-order").text(buttonText);
   return template.$("#btn-processing").addClass("hidden");

@@ -73,7 +73,7 @@ Template.coreOrderCancelOrder.events({
     const order = state.get("order");
 
     Alerts.alert({
-      title: "Are you sure you want to cancel this order?",
+      title: "Cancel this order?",
       showCancelButton: true,
       cancelButtonText: "No",
       confirmButtonText: "Yes"
