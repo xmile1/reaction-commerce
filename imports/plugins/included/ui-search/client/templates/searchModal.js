@@ -109,6 +109,7 @@ Template.searchModal.onCreated(function () {
             return product.title;
           }
         }
+        return undefined;
       });
       this.state.set("suggestionSearchResults", suggestionsResult);
       this.state.set("tagSearchResults", tagResults);
