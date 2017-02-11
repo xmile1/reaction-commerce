@@ -16,7 +16,8 @@ Template.searchModal.onCreated(function () {
     canLoadMoreProducts: false,
     searchQuery: "",
     productSearchResults: [],
-    tagSearchResults: []
+    tagSearchResults: [],
+    suggestionSearchResults: []
   });
 
 
@@ -101,11 +102,19 @@ Template.searchModal.onCreated(function () {
       const tagResults = Tags.find({
         _id: { $in: hashtags }
       }).fetch();
+
+      const suggestionsResult = results.map((product) => {
+        if (product.title && searchQuery) {
+          if (product.title[0].toLowerCase() === searchQuery[0].toLowerCase()) {
+            return product.title;
+          }
+        }
+      });
+      this.state.set("suggestionSearchResults", suggestionsResult);
       this.state.set("tagSearchResults", tagResults);
     }
   });
 });
-
 
 Template.searchModal.helpers({
   IconButtonComponent() {
@@ -133,6 +142,12 @@ Template.searchModal.helpers({
     const instance = Template.instance();
     const results = instance.state.get("tagSearchResults");
     return results;
+  },
+
+  suggestionSearchResults() {
+    const instance = Template.instance();
+    const suggestions = instance.state.get("suggestionSearchResults");
+    return suggestions;
   }
 });
 
