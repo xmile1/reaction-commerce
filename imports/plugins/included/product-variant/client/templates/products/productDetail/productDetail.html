@@ -62,15 +62,24 @@
             </div>
 
             <div class="vendor">
-              {{>fieldComponent field="vendor" value=vendor}}
+              {{#if hasPermission "createProduct"}}
+              <div>{{>digitalProduct}}</div>
+              {{/if}}
             </div>
 
+            <div class="vendor">
+              {{>fieldComponent field="vendor" value=vendor}}
+            </div>
             <!-- main product information -->
             <div class="pdp product-info">
               {{!-- Description --}}
               <div class="description">
                 {{>fieldComponent field="description" value=description type="textarea"}}
               </div>
+
+            <div>
+              {{>showDigitalDetail}}
+            </div>
 
               {{!-- Variants & Options --}}
               <div class="options-add-to-cart">
