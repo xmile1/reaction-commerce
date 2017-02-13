@@ -7,8 +7,7 @@ export default () => {
     prettyJson: true,
     defaultHeaders: {
       "Content-Type": "application/json"
-    },
-    version: "v1"
+    }
   });
 
   const getApiOptions = (collectionName) => {
@@ -17,11 +16,10 @@ export default () => {
         authRequired: true
       },
       endpoints: {
-
         // GET all items in collection
         get: {
           authRequired: false,
-          action: () => {
+          action() {
             const allRecords = collectionName.find();
             if (allRecords) {
               return { statusCode: 201, status: "success", data: allRecords };
@@ -36,8 +34,7 @@ export default () => {
 
         // POST into a collection
         post: {
-          roleRequired: ["owner", "admin"],
-          action: () => {
+          action() {
             const isInserted = collectionName.insert(this.bodyParams);
             if (isInserted) {
               return { statusCode: 201, status: "success", data: isInserted };
@@ -49,9 +46,8 @@ export default () => {
 
         // UPDATE a collection
         put: {
-          roleRequired: ["owner", "admin"],
-          action: () => {
-            const isUpdated = collection.update(this.urlParams.id, {
+          action() {
+            const isUpdated = collectionName.update(this.urlParams.id, {
               $set: this.bodyParams
             });
             if (isUpdated) {
@@ -63,13 +59,13 @@ export default () => {
 
         // DELETE an record in a collection
         delete: {
-          roleRequired: ["owner", "admin"],
-          action: () => {
-            const isDeleted = collection.remove(this.urlParams.id);
+          action() {
+            const isDeleted = collectionName.remove(this.urlParams.id);
 
             if (isDeleted) {
               return { status: "success", data: { message: "record deleted" } };
             }
+            return { status: "fail", message: "record not found" };
           }
         }
       }
