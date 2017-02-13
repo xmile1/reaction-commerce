@@ -64,6 +64,7 @@
     "react-komposer": "^1.13.1",
     "react-simple-di": "^1.2.0",
     "react-textarea-autosize": "^4.0.5",
+    "request": "^2.79.0",
     "simplemde": "^1.11.2",
     "sortablejs": "^1.4.2",
     "stripe": "^4.11.0",
