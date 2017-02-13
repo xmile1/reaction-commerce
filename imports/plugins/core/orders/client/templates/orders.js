@@ -95,7 +95,15 @@ Template.orders.onCreated(function () {
     this.subscribe("Orders");
     const filter = Reaction.Router.getQueryParam("filter");
     const query = OrderHelper.makeQuery(filter);
-    const orders = Orders.find(query).fetch();
+    let orders = Orders.find(query).fetch();
+  let isVendor = Roles.userIsInRole(Meteor.userId(), ["vendor"], Reaction.shopId)
+
+    if (isVendor){
+const vendorOrders = orders.filter(function(element){
+  return element.items[0].reactionVendorId === Meteor.userId()
+})
+orders = vendorOrders;
+}
 
     this.state.set("orders", orders);
   });

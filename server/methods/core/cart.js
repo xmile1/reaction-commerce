@@ -364,7 +364,6 @@ Meteor.methods({
         return result;
       });
     }
-
     // cart variant doesn't exist
     return Collections.Cart.update({
       _id: cart._id
@@ -377,6 +376,7 @@ Meteor.methods({
           quantity: quantity,
           variants: variant,
           title: product.title,
+          reactionVendorId: product.reactionVendorId,
           type: product.type
         }
       }
