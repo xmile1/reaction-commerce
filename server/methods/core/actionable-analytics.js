@@ -35,8 +35,8 @@ Meteor.methods({
     if (result) {
       const query = {
         $inc: { salesCount: 1 }
-      }
-      Products.update({productId}, query)
+      };
+      Products.update({productId}, query);
     }
   }
 });
