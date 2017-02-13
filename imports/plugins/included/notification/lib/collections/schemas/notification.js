@@ -2,21 +2,21 @@ import { SimpleSchema } from "meteor/aldeed:simple-schema";
 import { PackageConfig } from "/lib/collections/schemas/registry";
 
 
-export const TwilloPackageConfig = new SimpleSchema([
+export const TwilioPackageConfig = new SimpleSchema([
   PackageConfig, {
-    "settings.api.twillo.accSid": {
+    "settings.api.twilio.accSid": {
       type: String,
       label: "Account sid",
       optional: true
     },
-    "settings.api.twillo.authToken": {
+    "settings.api.twilio.authToken": {
       type: String,
       label: "Authentication Token",
       optional: true
     },
-    "settings.api.twillo.phoneNumber": {
+    "settings.api.twilio.phoneNumber": {
       type: String,
-      label: "Twillo Phone Number",
+      label: "Twilio Phone Number",
       optional: true
     }
   }
@@ -42,19 +42,38 @@ export const JusibePackageConfig = new SimpleSchema([
   }
 ]);
 
+export const EmailNotificationPackageConfig = new SimpleSchema([
+  PackageConfig, {
+    "settings.email.host": {
+      type: String,
+      label: "Host",
+      optional: true
+    },
+    "settings.email.port": {
+      type: String,
+      label: "Port",
+      optional: true
+    },
+    "settings.email.username": {
+      type: String,
+      label: "Username",
+      optional: true
+    },
+    "settings.email.password": {
+      type: String,
+      label: "Password",
+      optional: true
+    }
+  }
+]);
+
 export const DefaultPackageConfig = new SimpleSchema([
   PackageConfig, {
     "settings.default": {
       type: String,
       optional: true,
       defaultValue: "twilio",
-      allowedValues: ["jusibe", "twilio"],
-      // label: false,
-      autoform: {
-        afFieldInput: {
-          type: "radio"
-        }
-      }
+      allowedValues: ["twilio", "jusibe"]
     }
   }
 ]);

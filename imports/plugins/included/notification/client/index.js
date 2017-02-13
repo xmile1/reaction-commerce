@@ -1,4 +1,4 @@
-import "./dropdown/notification.html";
-import "./dropdown/notification.js";
+import "./notification/notification.html";
+import "./notification/notification.js";
 import "./settings/notification";
 import "./style/style.css";

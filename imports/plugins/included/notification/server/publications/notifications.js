@@ -1,8 +1,7 @@
 import { Meteor } from "meteor/meteor";
-import { Notifications } from "/lib/collections";
 
 /**
- * PublishNotifications
+ * Publish Notifications
  * @type {Object} options - standard publication options object
  */
 Meteor.publish("Notifications");

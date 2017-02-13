@@ -9,7 +9,7 @@ Reaction.registerPackage({
   settings: {
     default: "twillo",
     api: {
-      twillo: {
+      twilio: {
         authToken: "",
         accSid: "",
         phoneNumber: ""
@@ -19,14 +19,20 @@ Reaction.registerPackage({
         accSid: "",
         phoneNumber: ""
       }
+    },
+    email: {
+      host: "",
+      port: "",
+      user: "",
+      password: ""
     }
   },
   registry: [
     // Dashboard card
     {
       provides: "dashboard",
-      label: "Twillo sms",
-      description: "Twillo sms settings",
+      label: "Notification",
+      description: "Notification settings",
       icon: "fa fa-bullhorn",
       priority: 3,
       container: "core"

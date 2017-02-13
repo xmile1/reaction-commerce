@@ -3,17 +3,24 @@
   <div class="notification-head">
     <div class="arrow-up"></div>
     <p>Notifications</p>
+    <p class="unread"> unread <span class="badge">{{ getUnread }}</span></p>
   </div>
   <div class="main-notification">
   {{#if hasValue Notifications}}
     {{#each notification in Notifications}}
-    <div class="notification">
-      <h4>
-        <i class="fa fa-bell" aria-hidden="true"></i>
-        {{ notification.type}}
-      </h4>
-      <p> {{ notification.message}}</p>
-    </div>
+      {{#with notification}}
+        <div class="notification" style="background-color: {{ getStatus read}}">
+          <span class="notification-date">{{ getDate notification.createdAt }}</span>
+          <h4>
+            <i class="fa fa-bell" aria-hidden="true"></i>
+            {{type}}
+          </h4>
+          <p> {{message}}</p>
+          <span class="notification-delete">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </span>
+        </div>
+      {{/with }}
     {{/each}}
   {{else}}
     <div class="notification">
@@ -26,6 +33,9 @@
   <div class="notification-footer">
     <div class="delete-all">
       <p>Delete All</p>
+    </div>
+    <div class="read-all">
+      <p>Raed All</p>
     </div>
     <div class="load-more n-prev">
       <p>prev</p>

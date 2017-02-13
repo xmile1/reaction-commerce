@@ -4,9 +4,10 @@ import { Meteor } from "meteor/meteor";
 import { ReactiveDict } from "meteor/reactive-dict";
 import { Reaction } from "/client/api";
 import { Packages } from "/lib/collections";
-import { TwilloPackageConfig } from "../../lib/collections/schemas";
+import { TwilioPackageConfig } from "../../lib/collections/schemas";
 import { JusibePackageConfig } from "../../lib/collections/schemas";
 import { DefaultPackageConfig } from "../../lib/collections/schemas";
+import { EmailNotificationPackageConfig } from "../../lib/collections/schemas";
 
 
 import "./notification.html";
@@ -15,7 +16,7 @@ import "./notification.html";
 Template.notificationSettings.onCreated(function () {
   this.state = new ReactiveDict();
   this.state.setDefault({
-    smsMethod: "twilloSettings"
+    smsMethod: "twilioSettings"
   });
 });
 
@@ -36,9 +37,9 @@ Template.notificationSettings.events({
 });
 
 
-Template.twilloSettings.helpers({
-  TwilloPackageConfig() {
-    return TwilloPackageConfig;
+Template.twilioSettings.helpers({
+  TwilioPackageConfig() {
+    return TwilioPackageConfig;
   },
   packageData() {
     return Packages.findOne({
@@ -72,6 +73,17 @@ Template.notificationSettings.helpers({
   }
 });
 
+Template.emailNotificationSettings.helpers({
+  EmailNotificationPackageConfig() {
+    return EmailNotificationPackageConfig;
+  },
+  packageData() {
+    return Packages.findOne({
+      name: "notification",
+      shopId: Reaction.getShopId()
+    });
+  }
+});
 // Template.paystack.helpers({
 //   packageData: function () {
 //     return Packages.findOne({
@@ -88,7 +100,7 @@ Template.notificationSettings.helpers({
 // });
 
 AutoForm.hooks({
-  "twillo-update-form": {
+  "twilio-update-form": {
     onSuccess: function () {
       Meteor.call("notification/sendSms", "Wallet deposit", "you have be credited");
       Alerts.removeSeen();
@@ -105,11 +117,11 @@ AutoForm.hooks({
   "jusibe-update-form": {
     onSuccess: function () {
       Alerts.removeSeen();
-      return Alerts.add("Paystack Payment Method settings saved.", "success");
+      return Alerts.add("Jusibe api settings saved", "success");
     },
     onError: function (operation, error) {
       Alerts.removeSeen();
-      return Alerts.add("Paystack Payment Method settings update failed. " + error, "danger");
+      return Alerts.add("Jusibe api settings saved. " + error, "danger");
     }
   }
 });

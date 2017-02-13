@@ -1,103 +1,62 @@
 <template name="notificationSettings"> 
   <div class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">Default settings</div>
+    <div class="panel-heading" data-toggle="collapse" data-target="#setings">
+      <div class="panel-title">Notification settings</div>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" id="setings">
       <form novalidate="novalidate">
         <div class="form-group" data-required="true">
           <select name="smsMethod" id="smsMethod" class="form-control">
             <option disabled>(Select One)</option>
-            <option value="twilloSettings">Twillo</option>
+            <option value="twilioSettings">Twilio</option>
             <option value="jusibeSettings">Jusibe</option>
+            <option value="emailNotificationSettings">Email</option>
           </select>
         </div>   
       </form>
+      <div class="sms-body">
+        {{> UI.dynamic template=showSettings }}
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" data-toggle="collapse" data-target="#default">
+      <div class="panel-title">Default settings</div>
+    </div>
+    <div class="panel-body collapse" id="default">
       {{#autoForm collection=Collections.Packages schema=DefaultPackageConfig doc=packageData type="update" id="sms-update-form"}}
-        <label class="radio-inline">
-          {{>afFieldInput name='settings.default' value="jusibe"}}
-        </label>
-        <label class="radio-inline">
-          {{>afFieldInput name='settings.default' value="twilio"}}
-        </label>
+          {{>afQuickField name='settings.default' options="allowed"  noselect=true}}
         <button type="submit" class="btn btn-primary pull-right">Activate</button>
       {{/autoForm}}
     </div>
   </div>
-  <div class="sms-body">
-    {{> UI.dynamic template=showSettings }}
-  </div>
 </template>
 
-<template name="twilloSettings">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">Twillo Settings</div>
-    </div>
-    <div class="panel-body">
-      {{#autoForm collection=Collections.Packages schema=TwilloPackageConfig doc=packageData type="update" id="twillo-update-form"}}
-        {{>afQuickField name='settings.api.twillo.authToken'}}
-        {{>afQuickField name='settings.api.twillo.accSid'}}
-        {{>afQuickField name='settings.api.twillo.phoneNumber'}}
-        <button type="submit" class="btn btn-primary pull-right">Update</button>
-      {{/autoForm}}
-    </div>
-  </div>
+<template name="twilioSettings">
+  {{#autoForm collection=Collections.Packages schema=TwilioPackageConfig doc=packageData type="update" id="twilio-update-form"}}
+    {{>afQuickField name='settings.api.twilio.authToken'}}
+    {{>afQuickField name='settings.api.twilio.accSid'}}
+    {{>afQuickField name='settings.api.twilio.phoneNumber'}}
+    <button type="submit" class="form-control btn btn-success pull-right">Update</button>
+  {{/autoForm}}
 </template>
 
 <template name="jusibeSettings">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <div class="panel-title">Jusibe settings</div>
-    </div>
-    <div class="panel-body">
-      {{#autoForm collection=Collections.Packages schema=JusibePackageConfig doc=packageData type="update" id="jusibe-update-form"}}
-        {{>afQuickField name='settings.api.jusibe.accessToken'}}
-        {{>afQuickField name='settings.api.jusibe.publicKey'}}
-        {{>afQuickField name='settings.api.jusibe.phoneNumber'}}
-        <button type="submit" class="btn btn-primary pull-right">Update</button>
-      {{/autoForm}}
-    </div>
-  </div>
+  {{#autoForm collection=Collections.Packages schema=JusibePackageConfig doc=packageData type="update" id="jusibe-update-form"}}
+    {{>afQuickField name='settings.api.jusibe.accessToken' placeholder="Access token"}}
+    {{>afQuickField name='settings.api.jusibe.publicKey' placeholder="Public Key"}}
+    {{>afQuickField name='settings.api.jusibe.phoneNumber' placeholder="Shope Name"}}
+    <button type="submit" class="form-control btn btn-success pull-right">Update</button>
+  {{/autoForm}}
 </template>
 
-<!--<template name="notificationSettings">
-  <div class="container-fluid-sm flex">
-    <div class="flex-item">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="panel-title">paystack Payment Method</div>
-        </div>
-        <div class="list-group">
-          <div class="list-group-item">
-            {{#if packageData.settings.authToken}}
-              <span>API Client ID: <button type="button" class="btn btn-link" data-event-action="showPaystackSettings">**********</button></span>
-            {{else}}
-              <span>API Client ID: <button type="button" class="btn btn-link" data-event-action="showPaystackSettings">Configure Now</button></span>
-            {{/if}}
-          </div>
-        </div>
-        <div class="panel-footer">
-          <div class="left"></div>
-          <div class="right">
 
-            <div class="panel-footer-item">
-              {{#if packageData.settings.accSid}}
-                <i class="fa fa-check-circle fa-2x text-success"></i>
-              {{else}}
-                <i class="fa fa-minus-circle fa-2x text-muted"></i>
-              {{/if}}
-            </div>
-
-            <div class="panel-footer-item">
-              <button class="btn btn-default" data-event-action="showPaystackSettings">
-                <i class="fa fa-gear"></i>
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>-->
+<template name="emailNotificationSettings">
+  {{#autoForm collection=Collections.Packages schema=EmailNotificationPackageConfig doc=packageData type="update" id="email-update-form"}}
+    {{>afQuickField name='settings.email.host' placeholder="host"}}
+    {{>afQuickField name='settings.email.port' placeholder="port"}}
+    {{>afQuickField name='settings.email.username' placeholder="username"}}
+    {{>afQuickField name='settings.email.password' type="password" placeholder="password"}}
+    <button type="submit" class="form-control btn btn-success pull-right">Update</button>
+  {{/autoForm}}
+</template>

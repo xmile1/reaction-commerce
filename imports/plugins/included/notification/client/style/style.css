@@ -19,6 +19,7 @@
   width:350px;
   padding:10px 0px 10px 10px;
   border-bottom: 1px solid #dddddd;
+  position:relative;
   font-size:100%;
   background-color: #ecf5fb;
   color: #000000;
@@ -39,6 +40,7 @@
   color: white;
 }
 .notification-footer .delete-all,
+.notification-footer .read-all,
 .notification-footer .load-more {
   float: left;
   background-color: grey;
@@ -51,10 +53,11 @@
   cursor: pointer;
 }
 .notification-footer .load-more {
-  width: 25%;
+  width: 20%;
 }
-.notification-footer .delete-all {
-  width: 50%;
+.notification-footer .delete-all, 
+.notification-footer .read-all{
+  width: 30%;
   border-right: 1px solid #000000;
 }
 .notification-footer .n-prev {
@@ -87,4 +90,28 @@
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   border-bottom: 15px solid #908674;
+}
+
+.notification-date {
+  color: grey;
+  float: right;
+  margin-right: 5px;
+  font-size:12px;
+}
+
+.notification-delete {
+  color: grey;
+  position: absolute;
+  right: 5px;
+  bottom: 0px
+}
+.notification-delete i:hover {
+  color: red;
+}
+
+.notification-head p {
+  display: inline-block
+}
+.notification-head .unread {
+  float: right;
 }
