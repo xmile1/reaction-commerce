@@ -1,10 +1,12 @@
 import { Reaction } from "/client/api";
 import { ReactionProduct } from "/lib/api";
-import { Products, Tags, Packages } from "/lib/collections";
+import { Products, Tags, Packages} from "/lib/collections";
 import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 import { ITEMS_INCREMENT } from "/client/config/defaults";
 import { ReactiveDict } from "meteor/reactive-dict";
+import * as Collections from "/lib/collections";
+import { FlowRouter as Router } from "meteor/kadira:flow-router-ssr";
 
 /**
  * loadMoreProducts
@@ -51,6 +53,7 @@ Template.products.onCreated(function () {
   // Update product subscription
   this.autorun(() => {
     const slug = Reaction.Router.getParam("slug");
+    const shopName = Reaction.Router.getParam("shopName");
     const tag = Tags.findOne({ slug: slug }) || Tags.findOne(slug);
     const scrollLimit = Session.get("productScrollLimit");
     let tags = {}; // this could be shop default implementation needed
@@ -75,18 +78,34 @@ Template.products.onCreated(function () {
 
     // we are caching `currentTag` or if we are not inside tag route, we will
     // use shop name as `base` name for `positions` object
+
     const currentTag = ReactionProduct.getTag();
-    const products = Products.find({
-      ancestors: []
+    let products;
+    if (shopName) {
+      products = Products.find({
+        ancestors: [], reactionVendor: shopName
+        // keep this, as an example
+        // type: { $in: ["simple"] }
+      }, {
+        sort: {
+          [`positions.${currentTag}.position`]: 1,
+          [`positions.${currentTag}.createdAt`]: 1,
+          createdAt: 1
+        }
+      });
+    }    else {
+      products = Products.find({
+        ancestors: []
       // keep this, as an example
       // type: { $in: ["simple"] }
-    }, {
-      sort: {
-        [`positions.${currentTag}.position`]: 1,
-        [`positions.${currentTag}.createdAt`]: 1,
-        createdAt: 1
-      }
-    });
+      }, {
+        sort: {
+          [`positions.${currentTag}.position`]: 1,
+          [`positions.${currentTag}.createdAt`]: 1,
+          createdAt: 1
+        }
+      });
+    }
 
     this.state.set("canLoadMoreProducts", products.count() >= Session.get("productScrollLimit"));
     this.products.set(products);
@@ -107,6 +126,15 @@ Template.products.onRendered(() => {
 });
 
 Template.products.helpers({
+  shopDetails() {
+    let account;
+    if (Reaction.Router.getParam("shopName")) {
+      const shopName = Reaction.Router.getParam("shopName");
+      account = Collections.Accounts.find({"profile.vendorDetails.0.shopName": shopName}).fetch();
+      console.log(account[0].profile.vendorDetails[0]);
+      return account[0].profile.vendorDetails[0];
+    }
+  },
   tag: function () {
     const id = Reaction.Router.getParam("_tag");
     return {

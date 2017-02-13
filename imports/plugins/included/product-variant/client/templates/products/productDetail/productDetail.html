@@ -56,7 +56,14 @@
                 {{!-- Social Commentary --}}
                 {{> productSocial }}
                 {{#if hasPermission "createProduct"}}
+                  {{#if isProductVendor}}
                   <div>{{> React SocialEditButton}}</div>
+                  {{/if}}
+                {{/if}}
+                {{#if hasPermission "createProduct"}}
+                  {{#if isAdmin}}
+                  <div>{{> React SocialEditButton}}</div>
+                  {{/if}}
                 {{/if}}
               </div>
             </div>
@@ -64,6 +71,10 @@
             <div class="vendor">
               {{>fieldComponent field="vendor" value=vendor}}
             </div>
+
+            <a href="/reaction/vendors/{{reactionVendor}}"><div class="vendor">
+              {{>fieldComponent field="reactionVendor" value=reactionVendor}}
+            </div></a>
 
             <!-- main product information -->
             <div class="pdp product-info">

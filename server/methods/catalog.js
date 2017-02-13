@@ -674,8 +674,14 @@ Meteor.methods({
       return Products.insert(product);
     }
 
+    let reactionVendor = null;
+    Meteor.call("vendor/getVendorDetails", function (err, result) {
+      reactionVendor = result;
+    });
     return Products.insert({
-      type: "simple" // needed for multi-schema
+      type: "simple", // needed for multi-schema
+      reactionVendor: reactionVendor.shopName,
+      reactionVendorId: reactionVendor["_id"]
     }, {
       validate: false
     }, (error, result) => {
@@ -685,6 +691,8 @@ Meteor.methods({
           ancestors: [result],
           price: 0.00,
           title: "",
+          reactionVendor: reactionVendor.shopName,
+          reactionVendorId: reactionVendor["_id"],
           type: "variant" // needed for multi-schema
         });
       }

@@ -2,9 +2,17 @@
   <div class="rui navbar">
     <div class="showmenu">{{> button icon="bars" onClick=onMenuButtonClick}}</div>
     {{> coreNavigationBrand}}
+    {{#if shopDetails}}
+    {{#with shopDetails}}
+    <a class="rui navbar my-shop-menu" href="/reaction/vendors/{{shopName}}"><div>
+      MY SHOP
+    </div></a>
+    {{/with}}
+    {{/if}}
     <div class="menu">
       {{> tagNav tagNavProps}}
     </div>
+
     {{#unless currentUser}}
       <div id="takeTour" class="tour">{{> React tourButton}}</div>
     {{/unless}}

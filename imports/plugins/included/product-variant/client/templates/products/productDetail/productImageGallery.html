@@ -9,7 +9,9 @@
      </li>
     {{/each}}
   </ul>
-  {{>imageUploader}}
+  {{#if isAdminOrVendor}}
+    {{>imageUploader}}
+  {{/if}}
 </div>
 
 </template>
