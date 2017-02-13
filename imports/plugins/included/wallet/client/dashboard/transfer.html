@@ -1,0 +1,42 @@
+<template name="transfer">
+   <row>
+     <div class="col-md-6 seperator">
+       <h2>Credit transfer</h2>
+       <p>You can easily transfer money from one wallet to another</p>
+       <h3>STEPS</h3>
+       <ul>
+         <li>Enter an email for the account you want to credit.</li>
+         <li>Enter the amount to be credited <i>NB it must not exceed your account balance.</i></li>
+         <li>Click Tansfer to complete the transaction.</li>
+       </ul>
+     </div>
+     <div class="col-md-6 ">
+       {{#autoForm schema=WalletTransfer id="wallet-transfer-form"}}
+        <div class="row">
+          <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8 form-group{{#if afFieldIsInvalid name='payerEmail'}} has-error{{/if}}">
+              <label class="control-label">{{afFieldLabelText name='payerEmail'}}</label>
+              {{>afFieldInput name="payerEmail" value=payerEmail placeholder="Email" class="form-control"}}
+              {{#if afFieldIsInvalid name="payerEmail"}}
+              <span class="help-block">{{afFieldMessage name="payerEmail"}}</span>
+              {{/if}}
+          </div>
+          <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8 form-group{{#if afFieldIsInvalid name='amount'}} has-error{{/if}}">
+              <label class="control-label">{{afFieldLabelText name='amount'}}</label>
+              {{>afFieldInput name="amount" value=amount placeholder="Amount" class="form-control"}}
+              {{#if afFieldIsInvalid name="amount"}}
+              <span class="help-block">{{afFieldMessage name="amount"}}</span>
+              {{/if}}
+          </div>
+            <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8">
+              <div class="alert alert-danger hidden">Oh! Snap!</div>
+              <button type="submit" class="btn btn-lg btn-success btn-block btn-complete-order">
+                <span id="btn-complete-order">Transfer Now</span>
+                <i class="fa fa-spinner fa-spin hidden" id="btn-processing"></i>
+              </button>
+            </div>
+        </div>
+        
+        {{/autoForm}}
+     </div>
+   </row>
+</template>
