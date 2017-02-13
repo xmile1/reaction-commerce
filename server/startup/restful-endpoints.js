@@ -9,54 +9,68 @@ export default () => {
 		defaultHeaders: {
 			'Content-Type': 'application/json'
 		},
+		version: 'v1'
 	});
 
 	const getApiOptions = (collectionName) => {
 		return {
+			routeOptions: {
+				authRequired: true
+			},
 			endpoints: {
-				//get all items in collections
+
+				//GET all items in collection
 				get: {
 					authRequired: false,
 					action: () => {
 						const allRecords = collectionName.find();
 						if (allRecords) {
-							return { status: 'success', data: allRecords }
+							return { statusCode: 201, status: 'success', data: allRecords }
 						}
-						return { status: 'fail', message: 'error' };
+						return { 
+							statusCode: 404,
+							status: 'fail', 
+							message: 'error' 
+						};
 					}
 				},
 
-				//insert into the collection
+				//POST into a collection
 				post: {
+					roleRequired: ['owner', 'admin'],
 					action: () => {
 						const isInserted = collectionName.insert(this.bodyParams);
 						if (isInserted) {
-							return { status: 'success', data: isInserted }
+							return { statusCode: 201, status: 'success', data: isInserted }
 						}
 
 						return { status: 'fail', message: 'error' }
 					}
 				},
 
-				//update a collection
+				//UPDATE a collection
 				put: {
+					roleRequired: ['owner', 'admin'],
 					action: () => {
 						const isUpdated = collection.update(this.urlParams.id, {
 							$set: this.bodyParams
 						});
 						if (isUpdated) {
-							return { status: 'success', data: isUpdated }
+							return { statusCode: 201, status: 'success', data: isUpdated }
 						}
 						return { status: 'fail', message: 'record not found' }
 					}
 				},
 
-				//delete a record
-				delete: () => {
-					const isDeleted = collection.remove(this.urlParams.id);
+				//DELETE an record in a collection
+				delete: {
+					roleRequired: ['owner', 'admin'],
+					action: () => {
+						const isDeleted = collection.remove(this.urlParams.id);
 
-					if (isDeleted) {
-						return { status: 'success', data: { message: 'record deleted' } }
+						if (isDeleted) {
+							return { status: 'success', data: { message: 'record deleted' } }
+						}
 					}
 				}
 			}

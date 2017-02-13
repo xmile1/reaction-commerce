@@ -3,7 +3,6 @@ import Catalog from "./catalog";
 import Core from "./core";
 import i18n from "./i18n";
 import Router from "./router";
-import RestApi from "./restful-endpoints";
 
 export default function () {
   Accounts();
@@ -11,5 +10,4 @@ export default function () {
   Core();
   i18n();
   Router();
-  RestApi();
 }
