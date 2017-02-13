@@ -26,7 +26,6 @@ const getVendours = (vendourId) => {
         vendourNames.push(result[0].vendor);
       } else {
         vendourCounts[index] = vendourCounts[index] + vendourCounts[vendourIds.indexOf(id)];
-        delete vendourCounts[vendourIds.indexOf(id)];
       }
     });
   });
