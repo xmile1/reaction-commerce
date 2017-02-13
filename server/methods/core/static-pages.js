@@ -3,6 +3,7 @@ import { check } from "meteor/check";
 import {StaticPages } from "/lib/collections";
 import * as Collections from "/lib/collections";
 import * as Schemas from "/lib/collections/schemas";
+import { Reaction } from "/server/api";
 
 Meteor.methods({
   /**
@@ -22,6 +23,10 @@ Meteor.methods({
     check(shopId, String);
     check(pageOwner, String);
     check(createdAt, Date);
+
+if(Roles.userIsInRole(this.userId, ["admin", "owner"], Reaction.shopId)){
+  pageOwner = "admin";
+}
 
     const page = {
       title: title,

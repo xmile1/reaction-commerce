@@ -4,6 +4,9 @@ import { Session } from "meteor/session";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { buyerTour, vendorTour } from "/imports/plugins/included/tour/client/tour";
+import { FlowRouter as Router } from "meteor/kadira:flow-router-ssr";
+import * as Collections from "/lib/collections";
+// import { Accounts } from "/lib/collections";
 
 Template.staticPagesNav.onCreated(function () {
   Meteor.subscribe("viewPages");
@@ -11,7 +14,13 @@ Template.staticPagesNav.onCreated(function () {
 
 Template.staticPagesNav.helpers({
   staticPages() {
-    return StaticPages.find({shopId: Reaction.shopId}).fetch();
+    let vendorId = 'admin';
+    if (Router.getParam("shopName")){
+      let shopName = Router.getParam("shopName");
+      vendorId = Collections.Accounts.findOne({"profile.vendorDetails.0.shopName": shopName});
+      vendorId = vendorId._id;
+    }
+    return StaticPages.find({shopId: Reaction.shopId, pageOwner: vendorId}).fetch();
   }
 });
 
