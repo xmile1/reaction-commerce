@@ -2,8 +2,6 @@ import { Template } from "meteor/templating";
 import { Media } from "/lib/collections";
 import { NumericInput } from "/imports/plugins/core/ui/client/components";
 
-
-
 /**
  * ordersListItems helpers
  *
@@ -29,42 +27,40 @@ Template.ordersListItems.helpers({
   },
 
   items() {
-      const { order } = Template.instance().data;
-      const combinedItems = [];
+    const { order } = Template.instance().data;
+    const combinedItems = [];
 
 
-      if (order) {
+    if (order) {
         // Lopp through all items in the order. The items are split into indivital items
-        for (const orderItem of order.items) {
-
+      for (const orderItem of order.items) {
         //   if (orderItem.reactionVendorId !==   Meteor.userId()) {
         //     continue;
         //         console.log(orderItem);
         // }
           // Find an exising item in the combinedItems array
-          const foundItem = combinedItems.find((combinedItem) => {
+        const foundItem = combinedItems.find((combinedItem) => {
             // If and item variant exists, then we return true
-            if (combinedItem.variants) {
-              return combinedItem.variants._id === orderItem.variants._id;
-            }
+          if (combinedItem.variants) {
+            return combinedItem.variants._id === orderItem.variants._id;
+          }
 
-            return false;
-          });
+          return false;
+        });
 
           // Increment the quantity count for the duplicate product variants
-          if (foundItem) {
-            foundItem.quantity++;
-          } else {
+        if (foundItem) {
+          foundItem.quantity++;
+        } else {
             // Otherwise push the unique item into the combinedItems array
-            combinedItems.push(orderItem);
-          }
+          combinedItems.push(orderItem);
         }
-console.log(combinedItems);
-        return combinedItems;
       }
+      return combinedItems;
+    }
 
-      return false;
-    },
+    return false;
+  },
 
 
   numericInputProps(value) {

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import * as Collections from "/lib/collections";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
@@ -30,9 +31,8 @@ Template.accountProfile.helpers({
   },
 
   shopDetails() {
-    const account = Collections.Accounts.findOne({id: Meteor.userId});
+    const account = Collections.Accounts.findOne({userId: Meteor.userId()});
     if (account.profile.vendorDetails) {
-      console.log(account.profile.vendorDetails[0]);
       return account.profile.vendorDetails[0];
     }
     return false;
@@ -104,7 +104,7 @@ Template.vendorForm.events({
       shopPhone: shopPhone,
       shopAddress: shopAddress
     }]};
-    Meteor.call("vendor/updateDetails", vendorDetails, function (err, result) {
+    Meteor.call("vendor/updateDetails", vendorDetails, function (err) {
       if (err) {
         Alerts.toast(err, "error");
       }
@@ -116,8 +116,9 @@ Template.vendorForm.events({
 });
 
 Template.upgradeToVendor.events({
-  "click .upgrade-toggle": function (event, template) {
+  "click .upgrade-toggle": function () {
     $("#upgrade-form").toggleClass("upgrade-form-visible");
+    $(".upgrade-toggle").toggleClass("upgrade-form-visible");
   },
 
   "click .upgrade-vendor": function (event, template) {
@@ -147,10 +148,11 @@ Template.upgradeToVendor.events({
     vendorDetails = {vendorDetails: [{
       shopName: shopName,
       shopPhone: shopPhone,
-      shopAddress: shopAddress
+      shopAddress: shopAddress,
+      isVendor: true,
+      shopActive: false
     }]};
-    console.log(vendorDetails);
-    Meteor.call("vendor/upgradeToVendor", vendorDetails, function (err, result) {
+    Meteor.call("vendor/upgradeToVendor", vendorDetails, function (err) {
       if (err) {
         Alerts.toast(err, "error");
       }        else {

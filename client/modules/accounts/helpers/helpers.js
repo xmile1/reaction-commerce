@@ -45,7 +45,7 @@ export const LoginFormSharedHelpers = {
   hasPasswordService() {
     return !!Package["accounts-password"];
   },
-  shopDetails(){
+  shopDetails() {
     const account = Collections.Accounts.findOne();
     if (account.profile.vendorDetails) {
       return account.profile.vendorDetails[0];

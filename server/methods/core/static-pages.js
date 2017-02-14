@@ -17,6 +17,7 @@ Meteor.methods({
    * @return {no-return} there is no return
    */
   insertPage: function (title, slug, content, shopId, pageOwner, createdAt) {
+    let ownerOfPage = pageOwner;
     check(title, String);
     check(slug, String);
     check(content, String);
@@ -24,16 +25,16 @@ Meteor.methods({
     check(pageOwner, String);
     check(createdAt, Date);
 
-if(Roles.userIsInRole(this.userId, ["admin", "owner"], Reaction.shopId)){
-  pageOwner = "admin";
-}
+    if (Roles.userIsInRole(this.userId, ["admin", "owner"], Reaction.shopId)) {
+      ownerOfPage = "admin";
+    }
 
     const page = {
       title: title,
       slug: slug,
       content: content,
       shopId: shopId,
-      pageOwner: pageOwner,
+      pageOwner: ownerOfPage,
       createdAt: createdAt
     };
     check(page, Schemas.StaticPages);

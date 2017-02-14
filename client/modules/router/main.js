@@ -202,8 +202,6 @@ Router.initPackageRoutes = () => {
       }
     });
 
-
-
     // get package registry route configurations
     for (const pkg of pkgs) {
       const newRoutes = [];

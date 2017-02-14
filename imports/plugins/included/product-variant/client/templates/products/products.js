@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { Reaction } from "/client/api";
 import { ReactionProduct } from "/lib/api";
 import { Products, Tags, Packages} from "/lib/collections";
@@ -6,7 +7,6 @@ import { Template } from "meteor/templating";
 import { ITEMS_INCREMENT } from "/client/config/defaults";
 import { ReactiveDict } from "meteor/reactive-dict";
 import * as Collections from "/lib/collections";
-import { FlowRouter as Router } from "meteor/kadira:flow-router-ssr";
 
 /**
  * loadMoreProducts
@@ -127,13 +127,14 @@ Template.products.onRendered(() => {
 
 Template.products.helpers({
   shopDetails() {
-    let account;
     if (Reaction.Router.getParam("shopName")) {
       const shopName = Reaction.Router.getParam("shopName");
-      account = Collections.Accounts.find({"profile.vendorDetails.0.shopName": shopName}).fetch();
-      console.log(account[0].profile.vendorDetails[0]);
-      return account[0].profile.vendorDetails[0];
+      const vendor = Collections.Accounts.find({"profile.vendorDetails.0.shopName": shopName}).fetch();
+      if (vendor.length > 0 && vendor[0].profile !== undefined && vendor[0].profile.vendorDetails !== undefined) {
+        return (vendor[0].profile.vendorDetails[0]);
+      }
     }
+    return undefined;
   },
   tag: function () {
     const id = Reaction.Router.getParam("_tag");

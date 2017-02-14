@@ -33,7 +33,7 @@ Template.staticPages.helpers({
   },
   userPages() {
     let owner = Meteor.userId();
-    if(Roles.userIsInRole(Meteor.userId(), ["admin", "owner"], Reaction.shopId)){
+    if (Roles.userIsInRole(Meteor.userId(), ["admin", "owner"], Reaction.shopId)) {
       owner = "admin";
     }
 

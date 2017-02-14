@@ -1,9 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
-import {Accounts } from "/lib/collections";
 import * as Collections from "/lib/collections";
-import { Session } from "meteor/session";
-import { Reaction } from "/server/api";
 
 Meteor.methods({
 
@@ -39,30 +36,39 @@ Meteor.methods({
   },
   "vendor/getVendorDetails"() {
     const profile = Collections.Accounts.find({userId: Meteor.userId()}).fetch();
-    console.log(profile[0].profile.vendorDetails, "Vendor Details");
-    if (profile.length > 0 && profile[0].profile !== undefined && profile[0].profile.vendorDetails !== undefined ) {
+    if (profile.length > 0 && profile[0].profile !== undefined && profile[0].profile.vendorDetails !== undefined) {
       return (profile[0].profile.vendorDetails[0]);
     }
     throw new Meteor.Error(500, "Vendor Details Not Found", "Vendor");
   },
-"vendor/updateDetails"(vendorDetails){
-  Collections.Accounts.update({
-   "userId": Meteor.userId()
- }, {
-   $set: {
-     "profile.vendorDetails[0]": vendorDetails
-   }
-     });
-},
-"vendor/upgradeToVendor"(vendorDetails){
-  Collections.Accounts.upsert({
-   "userId": Meteor.userId()
- }, {
-   $set: {
-     "profile.vendorDetails[0]": vendorDetails
-   }
-     });
-}
+  "vendor/getVendorDetailsbyShopName"(shopName) {
+    check(shopName, String);
+    const vendor = Collections.Accounts.find({"profile.vendorDetails.0.shopName": shopName}).fetch();
+    if (vendor.length > 0 && vendor[0].profile !== undefined && vendor[0].profile.vendorDetails !== undefined) {
+      return (vendor[0].profile.vendorDetails[0]);
+    }
+    throw new Meteor.Error(500, "Vendor Details Not Found", "Vendor");
+  },
+  "vendor/updateDetails"(vendorDetails) {
+    check(vendorDetails, Object);
+    Collections.Accounts.update({
+      userId: Meteor.userId()
+    }, {
+      $set: {
+        "profile.vendorDetails[0]": vendorDetails
+      }
+    });
+  },
+  "vendor/upgradeToVendor"(vendorDetails) {
+    check(vendorDetails, Object);
+    Collections.Accounts.upsert({
+      userId: Meteor.userId()
+    }, {
+      $set: {
+        profile: vendorDetails
+      }
+    });
+  }
 
 
 });

@@ -40,7 +40,8 @@ Meteor.publish("Accounts", function (userId) {
   }
   // regular users should get just their account
   return Collections.Accounts.find({
-    userId: this.userId
+    _id: { $in: nonAnonUsers },
+    shopId: shopId
   });
 });
 

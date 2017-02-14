@@ -36,12 +36,8 @@ Template.CoreNavigationBar.events({
 Template.CoreNavigationBar.helpers({
   shopDetails() {
     let account;
-    console.log(Roles.userIsInRole(Meteor.userId(), ["vendor"], Reaction.shopId));
-
     if (Roles.userIsInRole(Meteor.userId(), ["vendor"], Reaction.shopId)) {
       account = Collections.Accounts.findOne({userId: Meteor.userId()});
-      console.log(account);
-
       return account.profile.vendorDetails[0];
     }
     return false;

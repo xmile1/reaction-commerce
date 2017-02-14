@@ -44,7 +44,7 @@ Template.member.events({
 
   "click [data-event-action=activateVendor]": function (event, template) {
     // we can create the store here using the below, We can try this in the future
-    // Meteor.call("shop/createShop", this.userId);
+    // Meteor.call("shop/createShop", this.userId, shopObject);
     const member = template.data;
     Meteor.call("accounts/addUserPermissions", member.userId, permissions, Reaction.shopId);
     Meteor.call("vendor/activateVendor", member.userId);

@@ -71,7 +71,6 @@ Template.productDetail.helpers({
     const productId = product._id;
     const auth = isProductVendor();
     const canEdit = Reaction.hasPermission("createProduct") && (auth[0] || auth[1]);
-
     return {
       tags,
       isEditing: canEdit,
