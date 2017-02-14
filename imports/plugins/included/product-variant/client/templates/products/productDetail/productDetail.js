@@ -65,6 +65,10 @@ Template.productDetail.helpers({
     const tags = instance.state.get("tags");
     const productId = product._id;
     const canEdit = Reaction.hasPermission("createProduct");
+    // Keep track of product views when users visit
+    if (!canEdit) {
+      Meteor.call("ProductAnalytics/count", productId);
+    }
 
     return {
       tags,

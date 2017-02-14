@@ -1,7 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Reaction } from "/server/api";
 
-
 /**
  *  Step 4 of the "workflow/pushOrderWorkflow" flow
  *	The following methods are called from Orders.before.update hook.
