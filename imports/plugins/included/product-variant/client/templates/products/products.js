@@ -191,6 +191,7 @@ Template.socialTimeline.helpers({
     }
     return false;
   },
+
   facebook() {
     const facebookConfig = Template.instance().state.get("timeline").facebook;
     if (facebookConfig.enabled && facebookConfig.appId && facebookConfig.profilePage) {
