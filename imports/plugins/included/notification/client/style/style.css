@@ -60,6 +60,12 @@
   width: 30%;
   border-right: 1px solid #000000;
 }
+
+.notification-head .delete-all:hover,
+.notification-head .load-more:hover,
+.notification-head .read-all:hover {
+  background-color: #a7a7a7
+}
 .notification-footer .n-prev {
   border-right: 1px solid #000000
 }

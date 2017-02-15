@@ -35,9 +35,7 @@ AutoForm.addHooks("wallet-payment-form", {
           transactions: []
         };
         paymentMethod.transactions.push(transaction);
-        Meteor.call("cart/submitPayment", paymentMethod, (error, result) => {
-          Meteor.call("notification/postInApp", "payment", `Your order ${result.orderId} is Now been processed`, result.orderId);
-          Meteor.call("notification/sendSms", "checkout", `Your order ${result.orderId} is Now been processed`);
+        Meteor.call("cart/submitPayment", paymentMethod, () => {
           Alerts.toast("transaction completed");
         });
       }

@@ -22,7 +22,7 @@ Meteor.methods({
 
     Collections.Accounts.update({ _id: Meteor.userId()}, update);
     Meteor.call("wallet/receivedFund", Meteor.userId(), transaction);
-    return transaction;
+    return Collections.Accounts.findOne({_id: Meteor.userId()});
   },
 
   /**
@@ -136,7 +136,7 @@ Meteor.methods({
           Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
           Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
         });
-        return sentTransaction;
+        return Collections.Accounts.findOne({_id: user._id });
       }
     }
   },
@@ -177,10 +177,60 @@ Meteor.methods({
       };
 
       Meteor.call("wallet/withdrawFund", amount, () => {
+        Meteor.call("wallet/sendFund", amount, shopOwnerEmail);
         Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
         Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
       });
       return sentTransaction;
+    }
+  },
+
+  "wallet/refund"(amount, email) {
+    check(amount, Number);
+    check(email, String);
+
+    const query = {
+      emails: {
+        $elemMatch: {
+          address: email
+        }
+      }
+    };
+
+    const user = Collections.Accounts.findOne(query);
+    const shopOwner = Collections.Accounts.findOne({
+      _id: Meteor.userId()
+    });
+
+    if (!user) {
+      throw new Meteor.Error("User with that email not found");
+    } else {
+      const wallet = shopOwner.wallet;
+      if (wallet.balance < amount) {
+        throw new Meteor.Error(`Insufficient balance ₦${wallet.balance} is all you have`);
+      } else {
+        const credit = {
+          $inc: {
+            "wallet.balance": amount
+          }
+        };
+        const sentTransaction = {
+          username: user.emails[0].address,
+          amount,
+          date: new Date()
+        };
+        const receivedTransaction = {
+          from: Meteor.user().username || Meteor.user().emails[0].address,
+          amount,
+          date: new Date()
+        };
+        Meteor.call("wallet/withdrawFund", amount, () => {
+          Collections.Accounts.update({_id: user._id }, credit);
+          Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
+          Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
+        });
+        return Collections.Accounts.findOne({_id: user._id });
+      }
     }
   }
 });

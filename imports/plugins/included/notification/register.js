@@ -7,7 +7,7 @@ Reaction.registerPackage({
   icon: "fa fa-bullhorn",
   autoEnable: true,
   settings: {
-    default: "twillo",
+    default: "twilio",
     api: {
       twilio: {
         authToken: "",
@@ -15,16 +15,30 @@ Reaction.registerPackage({
         phoneNumber: ""
       },
       jusibe: {
-        authToken: "",
-        accSid: "",
+        publicKey: "",
+        accessToken: "",
         phoneNumber: ""
+      },
+      message: {
+        payment: "",
+        wallet: "",
+        cancel: "",
+        transfer: "",
+        failed: ""
       }
     },
     email: {
       host: "",
       port: "",
       user: "",
-      password: ""
+      password: "",
+      message: {
+        payment: "",
+        wallet: "",
+        transfer: "",
+        cancel: "",
+        failed: ""
+      }
     }
   },
   registry: [
@@ -40,7 +54,7 @@ Reaction.registerPackage({
 
     // Settings panel
     {
-      label: "Notification Settings", // this key (minus spaces) is used for translations
+      label: "Notification Settings",
       route: "/dashboard/notification",
       provides: "settings",
       container: "dashboard",

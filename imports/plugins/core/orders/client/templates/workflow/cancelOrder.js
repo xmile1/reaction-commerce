@@ -82,6 +82,16 @@ Template.coreOrderCancelOrder.events({
         Meteor.call("orders/cancelOrder", order, newComment, (error) => {
           if (!error) {
             template.showCancelOrderForm.set(false);
+            const amount = parseInt(order.billing[0].invoice.total, 10);
+            Meteor.call("wallet/refund", amount, order.email, (err, user)=> {
+              if (!err) {
+                Meteor.call("notification/notify", "cancel", {
+                  orderId: order._id,
+                  balance: parseInt(user.wallet.balance, 10),
+                  amount
+                }, order.userId);
+              }
+            });
           }
         });
       }

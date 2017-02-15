@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import { Template } from "meteor/templating";
-import { Meteor } from "meteor/meteor";
 import { ReactiveDict } from "meteor/reactive-dict";
 import { Reaction } from "/client/api";
 import { Packages } from "/lib/collections";
@@ -8,9 +7,19 @@ import { TwilioPackageConfig } from "../../lib/collections/schemas";
 import { JusibePackageConfig } from "../../lib/collections/schemas";
 import { DefaultPackageConfig } from "../../lib/collections/schemas";
 import { EmailNotificationPackageConfig } from "../../lib/collections/schemas";
+import { SmsMessagePackageConfig } from "../../lib/collections/schemas";
+import { EmailMessagePackageConfig } from "../../lib/collections/schemas";
 
 
 import "./notification.html";
+
+// gets form package
+const getPackageData = () => {
+  return Packages.findOne({
+    name: "notification",
+    shopId: Reaction.getShopId()
+  });
+};
 
 
 Template.notificationSettings.onCreated(function () {
@@ -24,6 +33,15 @@ Template.notificationSettings.helpers({
   showSettings() {
     const template = Template.instance();
     return template.state.get("smsMethod");
+  },
+  EmailMessagePackageConfig() {
+    return EmailMessagePackageConfig;
+  },
+  SmsMessagePackageConfig() {
+    return SmsMessagePackageConfig;
+  },
+  packageData() {
+    return getPackageData();
   }
 });
 
@@ -36,16 +54,12 @@ Template.notificationSettings.events({
   }
 });
 
-
 Template.twilioSettings.helpers({
   TwilioPackageConfig() {
     return TwilioPackageConfig;
   },
   packageData() {
-    return Packages.findOne({
-      name: "notification",
-      shopId: Reaction.getShopId()
-    });
+    return getPackageData();
   }
 });
 
@@ -54,10 +68,7 @@ Template.jusibeSettings.helpers({
     return JusibePackageConfig;
   },
   packageData() {
-    return Packages.findOne({
-      name: "notification",
-      shopId: Reaction.getShopId()
-    });
+    return getPackageData();
   }
 });
 
@@ -66,10 +77,7 @@ Template.notificationSettings.helpers({
     return DefaultPackageConfig;
   },
   packageData() {
-    return Packages.findOne({
-      name: "notification",
-      shopId: Reaction.getShopId()
-    });
+    return getPackageData();
   }
 });
 
@@ -78,37 +86,20 @@ Template.emailNotificationSettings.helpers({
     return EmailNotificationPackageConfig;
   },
   packageData() {
-    return Packages.findOne({
-      name: "notification",
-      shopId: Reaction.getShopId()
-    });
+    return getPackageData();
   }
 });
-// Template.paystack.helpers({
-//   packageData: function () {
-//     return Packages.findOne({
-//       name: "notification",
-//       shopId: Reaction.getShopId()
-//     });
-//   }
-// });
 
-// Template.paystack.events({
-//   "click [data-event-action=showPaystackSettings]": function () {
-//     Reaction.showActionView();
-//   }
-// });
 
 AutoForm.hooks({
   "twilio-update-form": {
     onSuccess: function () {
-      Meteor.call("notification/sendSms", "Wallet deposit", "you have be credited");
       Alerts.removeSeen();
-      return Alerts.add("Paystack Payment Method settings saved.", "success");
+      return Alerts.add("Twilio settings saved", "success");
     },
     onError: function (operation, error) {
       Alerts.removeSeen();
-      return Alerts.add("Paystack Payment Method settings update failed. " + error, "danger");
+      return Alerts.add("An error occurred" + error, "danger");
     }
   }
 });
@@ -121,7 +112,46 @@ AutoForm.hooks({
     },
     onError: function (operation, error) {
       Alerts.removeSeen();
-      return Alerts.add("Jusibe api settings saved. " + error, "danger");
+      return Alerts.add("An error occurred " + error, "danger");
+    }
+  }
+});
+
+AutoForm.hooks({
+  "sms-update-form": {
+    onSuccess: function () {
+      Alerts.removeSeen();
+      return Alerts.add("Sms default set", "success");
+    },
+    onError: function (operation, error) {
+      Alerts.removeSeen();
+      return Alerts.add("Unable to set sms default " + error, "danger");
+    }
+  }
+});
+
+AutoForm.hooks({
+  "email-message-form": {
+    onSuccess: function () {
+      Alerts.removeSeen();
+      return Alerts.add("Email messages saved", "success");
+    },
+    onError: function (operation, error) {
+      Alerts.removeSeen();
+      return Alerts.add("Error saving email messages " + error, "danger");
+    }
+  }
+});
+
+AutoForm.hooks({
+  "sms-message-form": {
+    onSuccess: function () {
+      Alerts.removeSeen();
+      return Alerts.add("Sms message saved", "success");
+    },
+    onError: function (operation, error) {
+      Alerts.removeSeen();
+      return Alerts.add("Error saving sms messages " + error, "danger");
     }
   }
 });

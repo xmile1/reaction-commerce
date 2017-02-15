@@ -12,14 +12,19 @@ Template.transfer.helpers({
 AutoForm.addHooks("wallet-transfer-form", {
   onSubmit(doc) {
     const template = this.template;
-    Meteor.call("wallet/sendFund", doc.amount, doc.payerEmail, (err, transaction) => {
+    Meteor.call("wallet/sendFund", doc.amount, doc.payerEmail, (err, user) => {
       if (err) {
         walletApi.handlePaystackSubmitError(template, err);
         walletApi.enableButton(template, "Resend");
       } else {
-        Alerts.toast(`Funds successfully sent to ${transaction.username}`);
+        Alerts.toast(`Funds successfully sent to ${user.emails[0].address}`);
         walletApi.enableButton(template, "Transfer Now");
         this.resetForm();
+        Meteor.call("notification/notify", "transfer", {
+          amount: doc.amount,
+          balance: user.wallet.balance,
+          userTo: user.profile.addressBook[0].fullName || user.emails[0].address
+        }, user._id);
       }
     });
     return false;

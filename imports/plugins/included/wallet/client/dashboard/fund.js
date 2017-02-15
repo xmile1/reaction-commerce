@@ -41,8 +41,16 @@ AutoForm.addHooks("wallet-fund-form", {
                   amount: res.data.amount,
                   date: new Date()
                 };
-                Meteor.call("wallet/fundAccount", transaction);
-                Alerts.toast("Account funded");
+                Meteor.call("wallet/fundAccount", transaction, (e, user) => {
+                  Alerts.toast("Account funded");
+                  Meteor.call("notification/notify", "wallet", {
+                    transactionId: reference,
+                    amount: doc.amount,
+                    userId: Meteor.userId(),
+                    balance: user.wallet.balance / 100,
+                    message: `Your account has been funded with ${res.data.amount}`
+                  });
+                });
                 walletApi.enableButton(template, "Pay Now");
                 self.resetForm();
               }

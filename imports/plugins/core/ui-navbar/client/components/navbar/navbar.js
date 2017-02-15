@@ -29,7 +29,7 @@ Template.CoreNavigationBar.events({
   "click #takeTour": (event) =>{
     event.preventDefault();
     buyerTour.start();
-  },
+  }
 });
 
 

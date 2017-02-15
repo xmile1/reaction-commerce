@@ -8,7 +8,9 @@
     {{#unless currentUser}}
       <div id="takeTour" class="tour">{{> React tourButton}}</div>
     {{/unless}}
-    {{> notificationMenu}}
+    {{#if currentUser }}
+      {{> notificationMenu }}
+    {{/if}}
     <div class="search">{{> React IconButtonComponent tpl="notification"}}</div>
     <div  class="accounts">{{> accounts tpl="staticPagesNav"}}</div>
     <div class="search">{{> React IconButtonComponent}}</div>

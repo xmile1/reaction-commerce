@@ -54,7 +54,7 @@ export const EmailNotificationPackageConfig = new SimpleSchema([
       label: "Port",
       optional: true
     },
-    "settings.email.username": {
+    "settings.email.user": {
       type: String,
       label: "Username",
       optional: true
@@ -62,6 +62,76 @@ export const EmailNotificationPackageConfig = new SimpleSchema([
     "settings.email.password": {
       type: String,
       label: "Password",
+      optional: true
+    }
+  }
+]);
+
+export const EmailMessagePackageConfig = new SimpleSchema([
+  PackageConfig, {
+    "settings.email.message.payment": {
+      type: String,
+      label: "Payment",
+      optional: true
+    },
+    "settings.email.message.wallet": {
+      type: String,
+      label: "Wallet",
+      optional: true
+    },
+    "settings.email.message.transfer": {
+      type: String,
+      label: "Transfer",
+      optional: true
+    },
+    "settings.email.message.cancel": {
+      type: String,
+      label: "Cancel",
+      optional: true
+    },
+    "settings.email.message.shipped": {
+      type: String,
+      label: "Shipped",
+      optional: true
+    },
+    "settings.email.message.failed": {
+      type: String,
+      label: "Failed",
+      optional: true
+    }
+  }
+]);
+
+export const SmsMessagePackageConfig = new SimpleSchema([
+  PackageConfig, {
+    "settings.api.message.payment": {
+      type: String,
+      label: "Payment",
+      optional: true
+    },
+    "settings.api.message.wallet": {
+      type: String,
+      label: "Wallet",
+      optional: true
+    },
+    "settings.api.message.transfer": {
+      type: String,
+      label: "Transfer",
+      optional: true
+    },
+    "settings.api.message.cancel": {
+      type: String,
+      label: "Cancel",
+      optional: true
+    },
+    "settings.api.message.shipped": {
+      type: String,
+      label: "Shipped",
+      optional: true
+    },
+    "settings.api.message.failed": {
+      type: String,
+      label: "Failed",
       optional: true
     }
   }

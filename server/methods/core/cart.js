@@ -993,10 +993,18 @@ Meteor.methods({
     try {
       Collections.Cart.update(selector, update);
     } catch (e) {
+      Meteor.call("notification/notify", "failed", {
+        orderId: cart.billing[0]._id,
+        message: "Failed to complete your order"
+      });
       Logger.error(e);
       throw new Meteor.Error("An error occurred saving the order");
     }
-
-    return Collections.Cart.findOne(selector);
+    const order = Collections.Cart.findOne(selector);
+    Meteor.call("notification/notify", "payment", {
+      orderId: order._id,
+      message: `Thank you for shopping with us, order ${order._id} is Now been processed`
+    }, order.userId);
+    return order;
   }
 });

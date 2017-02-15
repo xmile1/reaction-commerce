@@ -1,26 +1,41 @@
 import { Template } from "meteor/templating";
-import { Session } from "meteor/session";
-import moment from "moment";''
+import moment from "moment";
 import { ReactiveDict } from "meteor/reactive-dict";
-import { Notifications } from "/lib/collections";
-import { Accounts } from "/lib/collections";
 
 import "./notification";
 
+// renders notification
 const reRenderNotification = (template) => {
   const skip = template.state.get("skip");
   Meteor.call("notification/getInApp", Meteor.userId(), 3, skip, (err, notification) => {
     template.state.set("notification", notification.notifications);
   });
+  Meteor.call("notification/getReadCount", (err, count) => {
+    template.state.set("count", count);
+  });
 };
 
 
 Template.notification.onCreated(function () {
-  this.state = new ReactiveDict();
-  this.state.setDefault({
+  const template = this;
+  template.state = new ReactiveDict();
+  template.state.setDefault({
     notifications: [],
     skip: 0,
     count: 0
+  });
+
+  this.autorun(() => {
+    Meteor.call("notification/getReadCount", (err, count) => {
+      this.state.set("count", count);
+    });
+
+    reRenderNotification(template);
+    Template.notificationMenu.events({
+      "click .notification-icon"() {
+        reRenderNotification(template);
+      }
+    });
   });
 });
 
@@ -42,9 +57,6 @@ Template.notification.helpers({
   },
   getUnread() {
     const template = Template.instance();
-    Meteor.call("notification/getReadCount", (err, count) => {
-      template.state.set("count", count);
-    });
     return template.state.get("count");
   },
   getDate(date) {
@@ -77,16 +89,24 @@ Template.notification.events({
   },
 
   "click .notification"(event, template) {
-    Meteor.call("notification/markRead", this._id, ()=> {
-      reRenderNotification(template);
-      Meteor.call("notification/getReadCount", (err, count) => {
-        template.state.set("count", count);
+    if (this._id) {
+      Meteor.call("notification/markRead", this._id, ()=> {
+        reRenderNotification(template);
+        Meteor.call("notification/getReadCount", (err, count) => {
+          template.state.set("count", count);
+        });
       });
-    });
+    }
   },
 
   "click .notification-delete"(event, template) {
     Meteor.call("notification/delete", this._id, () => {
+      reRenderNotification(template);
+    });
+  },
+
+  "click .read-all"(event, template) {
+    Meteor.call("notification/markReadAll", () => {
       reRenderNotification(template);
     });
   }
