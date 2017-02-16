@@ -32,7 +32,12 @@ Template.staticPages.helpers({
     return window.location.host;
   },
   userPages() {
-    return StaticPages.find({shopId: Reaction.shopId}).fetch();
+    let owner = Meteor.userId();
+    if (Roles.userIsInRole(Meteor.userId(), ["admin", "owner"], Reaction.shopId)) {
+      owner = "admin";
+    }
+
+    return StaticPages.find({shopId: Reaction.shopId, pageOwner: owner}).fetch();
   }
 });
 
@@ -41,7 +46,7 @@ Template.staticPages.events({
     const title = $("#static-page-title").val();
     const slug = $("#static-page-slug").val();
     const shopId = Reaction.shopId;
-    const pageOwner = Meteor.user()._id;
+    const pageOwner = Meteor.userId();
     const content = simplemde.value();
     const createdAt = new Date();
     Meteor.call("insertPage", title, slug, content, shopId, pageOwner,  createdAt, function (err) {

@@ -364,7 +364,6 @@ Meteor.methods({
         return result;
       });
     }
-
     // cart variant doesn't exist
     return Collections.Cart.update({
       _id: cart._id
@@ -379,6 +378,7 @@ Meteor.methods({
           title: product.title,
           type: product.type,
           isDigital: product.isDigital,
+          reactionVendorId: product.reactionVendorId,
           downloadUrl: product.downloadUrl
         }
       }

@@ -9,6 +9,8 @@ import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 import { EditButton } from "/imports/plugins/core/ui/client/components";
 
+import * as Collections from "/lib/collections";
+
 Template.productDetail.onCreated(function () {
   this.state = new ReactiveDict();
   this.state.setDefault({
@@ -30,7 +32,8 @@ Template.productDetail.onCreated(function () {
       const product = ReactionProduct.setProduct(this.productId(), this.variantId());
       this.state.set("product", product);
 
-      if (Reaction.hasPermission("createProduct")) {
+      const auth = isProductVendor();
+      if (Reaction.hasPermission("createProduct") && (auth[0] || auth[1])) {
         if (!Reaction.getActionView() && Reaction.isActionViewOpen() === true) {
           Reaction.setActionView({
             template: "productDetailForm",
@@ -53,23 +56,26 @@ Template.productDetail.onCreated(function () {
   });
 });
 
+
 /**
  * productDetail helpers
  * see helper/product.js for
  * product data source
  */
 Template.productDetail.helpers({
+
   tagListProps() {
     const instance = Template.instance();
     const product = instance.state.get("product") || {};
     const tags = instance.state.get("tags");
     const productId = product._id;
-    const canEdit = Reaction.hasPermission("createProduct");
     // Keep track of product views when users visit
+    const auth = isProductVendor();
+    const canEdit = Reaction.hasPermission("createProduct") && (auth[0] || auth[1]);
+
     if (!canEdit) {
       Meteor.call("ProductAnalytics/count", productId);
     }
-
     return {
       tags,
       isEditing: canEdit,
@@ -147,8 +153,8 @@ Template.productDetail.helpers({
   showTagTitle() {
     const instance = Template.instance();
     const product = instance.state.get("product") || {};
-
-    if (Reaction.hasPermission("createProduct")) {
+    const auth = isProductVendor();
+    if (Reaction.hasPermission("createProduct") && (auth[0] || auth[1])) {
       return true;
     }
 
@@ -162,8 +168,8 @@ Template.productDetail.helpers({
   showDetailTitle() {
     const instance = Template.instance();
     const product = instance.state.get("product") || {};
-
-    if (Reaction.hasPermission("createProduct")) {
+    const auth = isProductVendor();
+    if (Reaction.hasPermission("createProduct") && (auth[0] || auth[1])) {
       return true;
     }
 
@@ -195,7 +201,8 @@ Template.productDetail.helpers({
     return null;
   },
   tagsComponent: function () {
-    if (Reaction.hasPermission("createProduct")) {
+    const auth = isProductVendor();
+    if (Reaction.hasPermission("createProduct") && (auth[0] || auth[1])) {
       return Template.productTagInputForm;
     }
     return Template.productDetailTags;
@@ -215,18 +222,34 @@ Template.productDetail.helpers({
     return null;
   },
   fieldComponent: function () {
-    if (Reaction.hasPermission("createProduct")) {
+    const auth = isProductVendor();
+    if (Reaction.hasPermission("createProduct") && (auth[0] || auth[1])) {
       return Template.productDetailEdit;
     }
     return Template.productDetailField;
   },
   metaComponent: function () {
-    if (Reaction.hasPermission("createProduct")) {
+    const auth = isProductVendor();
+    if (Reaction.hasPermission("createProduct") && (auth[0] || auth[1])) {
       return Template.productMetaFieldForm;
     }
     return Template.productMetaField;
   }
 });
+
+function isProductVendor() {
+  let isVendor = false;
+  const isAdmin = Reaction.hasOwnerAccess() || Reaction.hasAdminAccess();
+  const instance = Template.instance();
+  const product = instance.state.get("product") || {};
+  const productId = product._id;
+  const productAvailable = Collections.Products.findOne({
+    _id: productId,
+    reactionVendorId: Meteor.userId()
+  });
+  if (productAvailable) isVendor = true;
+  return [isAdmin, isVendor];
+}
 
 /**
  * productDetail events
@@ -235,7 +258,8 @@ Template.productDetail.helpers({
 Template.productDetail.events({
   "click #price": function () {
     let formName;
-    if (Reaction.hasPermission("createProduct")) {
+    const auth = isProductVendor();
+    if (Reaction.hasPermission("createProduct") && (auth[0] || auth[1])) {
       const variant = ReactionProduct.selectedVariant();
       if (!variant) {
         return;

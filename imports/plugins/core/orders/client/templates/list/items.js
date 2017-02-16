@@ -32,11 +32,15 @@ Template.ordersListItems.helpers({
 
 
     if (order) {
-      // Lopp through all items in the order. The items are split into indivital items
+        // Lopp through all items in the order. The items are split into indivital items
       for (const orderItem of order.items) {
-        // Find an exising item in the combinedItems array
+        //   if (orderItem.reactionVendorId !==   Meteor.userId()) {
+        //     continue;
+        //         console.log(orderItem);
+        // }
+          // Find an exising item in the combinedItems array
         const foundItem = combinedItems.find((combinedItem) => {
-          // If and item variant exists, then we return true
+            // If and item variant exists, then we return true
           if (combinedItem.variants) {
             return combinedItem.variants._id === orderItem.variants._id;
           }
@@ -44,20 +48,20 @@ Template.ordersListItems.helpers({
           return false;
         });
 
-        // Increment the quantity count for the duplicate product variants
+          // Increment the quantity count for the duplicate product variants
         if (foundItem) {
           foundItem.quantity++;
         } else {
-          // Otherwise push the unique item into the combinedItems array
+            // Otherwise push the unique item into the combinedItems array
           combinedItems.push(orderItem);
         }
       }
-
       return combinedItems;
     }
 
     return false;
   },
+
 
   numericInputProps(value) {
     const { currencyFormat } = Template.instance().data;

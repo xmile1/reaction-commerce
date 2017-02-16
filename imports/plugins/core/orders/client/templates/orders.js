@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import _ from "lodash";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
@@ -17,11 +18,9 @@ const orderFilters = [{
   name: "cancelled",
   label: "Cancelled"
 }];
-
 const OrderHelper =  {
   makeQuery(filter) {
     let query = {};
-
     switch (filter) {
       // New orders
       case "new":
@@ -78,7 +77,10 @@ const OrderHelper =  {
         break;
       default:
     }
-
+    const isVendor = Roles.userIsInRole(Meteor.userId(), ["vendor"], Reaction.shopId);
+    if (isVendor) {
+      query["items.0.reactionVendorId"] =  Meteor.userId();
+    }
     return query;
   }
 };
@@ -96,7 +98,6 @@ Template.orders.onCreated(function () {
     const filter = Reaction.Router.getQueryParam("filter");
     const query = OrderHelper.makeQuery(filter);
     const orders = Orders.find(query).fetch();
-
     this.state.set("orders", orders);
   });
 
@@ -236,7 +237,6 @@ Template.orderListFilters.onCreated(function () {
   this.autorun(() => {
     const queryFilter = Reaction.Router.getQueryParam("filter");
     this.subscribe("Orders");
-
     const filters = orderFilters.map((filter) => {
       filter.label = i18next.t(`order.filter.${filter.name}`, {defaultValue: filter.label});
       filter.i18nKeyLabel = `order.filter.${filter.name}`;
@@ -245,10 +245,8 @@ Template.orderListFilters.onCreated(function () {
       if (queryFilter) {
         filter.active = queryFilter === filter.name;
       }
-
       return filter;
     });
-
     this.state.set("filters", filters);
   });
 });

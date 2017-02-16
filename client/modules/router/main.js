@@ -192,6 +192,16 @@ Router.initPackageRoutes = () => {
       }
     });
 
+    // Shop View route
+    Router.route("/reaction/vendors/:shopName", {
+      action(params) {
+        ReactionLayout({
+          template: "products",
+          shopName: params.shopName
+        });
+      }
+    });
+
     // get package registry route configurations
     for (const pkg of pkgs) {
       const newRoutes = [];

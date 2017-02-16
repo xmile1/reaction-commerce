@@ -57,7 +57,6 @@ Template.variant.helpers({
   },
   EditButton() {
     const data = Template.currentData();
-
     return {
       component: EditButton,
       toggleOn: variantIsInActionView(data._id),
@@ -74,12 +73,11 @@ Template.variant.helpers({
 
 function showVariant(variant) {
   const selectedProduct = ReactionProduct.selectedProduct();
-
   ReactionProduct.setCurrentVariant(variant._id);
   Session.set("variant-form-" + variant._id, true);
   Reaction.Router.go("product", {handle: selectedProduct.handle, variantId: variant._id});
 
-  if (Reaction.hasPermission("createProduct")) {
+  if (Reaction.hasPermission("createProduct") && (isProductVendor() || isAdmin())) {
     Reaction.showActionView({
       label: "Edit Variant",
       i18nKeyLabel: "productDetailEdit.editVariant",
@@ -87,6 +85,17 @@ function showVariant(variant) {
       data: variant
     });
   }
+}
+
+function isProductVendor() {
+  let isVendor = false;
+  const product = ReactionProduct.selectedProduct() || {};
+  if (Meteor.userId() === product.reactionVendorId) isVendor = true;
+  return isVendor;
+}
+
+function isAdmin() {
+  return Reaction.hasOwnerAccess() || Reaction.hasAdminAccess();
 }
 
 Template.variant.events({

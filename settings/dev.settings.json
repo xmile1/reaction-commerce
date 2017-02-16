@@ -1,10 +1,10 @@
 {
   "ROOT_URL": "",
-  "MAIL_URL": "",
+  "MAIL_URL": "smtp://jobs@fullclub.com.ng:federals@sv83.ifastnet.com:290",
   "reaction": {
-    "REACTION_USER": "",
-    "REACTION_AUTH": "",
-    "REACTION_EMAIL": ""
+    "REACTION_USER": "Admin",
+    "REACTION_AUTH": "1234567",
+    "REACTION_EMAIL": "enahomurphy@gmail.com"
   },
   "isDebug": "info",
   "public": {}

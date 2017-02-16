@@ -674,8 +674,20 @@ Meteor.methods({
       return Products.insert(product);
     }
 
+    let reactionVendor = undefined;
+    let shopName = "admin";
+    let shopId = "admin";
+    Meteor.call("vendor/getVendorDetails", function (err, result) {
+      reactionVendor = result;
+    });
+    if (reactionVendor) {
+      shopName = reactionVendor.shopName;
+      shopId = reactionVendor._id;
+    }
     return Products.insert({
-      type: "simple" // needed for multi-schema
+      type: "simple", // needed for multi-schema
+      reactionVendor: shopName || "admin",
+      reactionVendorId: shopId || "admin"
     }, {
       validate: false
     }, (error, result) => {
@@ -685,6 +697,8 @@ Meteor.methods({
           ancestors: [result],
           price: 0.00,
           title: "",
+          reactionVendor: shopName || "admin",
+          reactionVendorId: shopId || "admin",
           type: "variant" // needed for multi-schema
         });
       }

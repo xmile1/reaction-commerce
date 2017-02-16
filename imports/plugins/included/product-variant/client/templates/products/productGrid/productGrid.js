@@ -103,6 +103,7 @@ Template.productGrid.helpers({
   loadMoreProducts() {
     return Template.instance().state.equals("canLoadMoreProducts", true);
   },
+
   products() {
     return Template.currentData().products;
   }

@@ -22,7 +22,14 @@
 
 
         {{#if hasPermission "createProduct"}}
+          {{#if isProductVendor}}
           <div>{{> React EditButton}}</div>
+          {{/if}}
+        {{/if}}
+        {{#if hasPermission "createProduct"}}
+          {{#if isAdmin}}
+          <div>{{> React EditButton}}</div>
+          {{/if}}
         {{/if}}
       </div>
     </div>

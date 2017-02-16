@@ -10,7 +10,7 @@
           checked={{checked}}
         >
       </label>
-
+{{#if isVendorProduct }}
       <div>
         {{> React VisibilityButton}}
       </div>
@@ -18,7 +18,7 @@
       <div>
         {{> React EditButton}}
       </div>
-
+{{/if}}
     </div>
   {{/if}}
 </template>
