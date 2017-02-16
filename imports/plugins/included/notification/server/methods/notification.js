@@ -54,7 +54,7 @@ Meteor.methods({
       name: "notification",
       shopId: Reaction.getShopId()
     }).settings;
-
+    const smsApi = settings.default;
     const getMessage = settings.api.message[type];
     const user = Collections.Accounts.findOne({ _id: userId });
     const profile = user.profile.addressBook[0];
@@ -76,7 +76,6 @@ Meteor.methods({
         settings,
         number: `+${locale}${profile.phone}`
       };
-      const smsApi = settings.default;
       Meteor.call(`notification/${smsApi}`, notificationDetails);
     }
     message = message ||  details.message;

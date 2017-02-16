@@ -18,6 +18,8 @@ import "./templates/products/productDetail/social.html";
 import "./templates/products/productDetail/social.js";
 import "./templates/products/productDetail/review.html";
 import "./templates/products/productDetail/review.js";
+import "./templates/products/productDetail/digital.html";
+import "./templates/products/productDetail/digital.js";
 
 import "./templates/products/productGrid/content.html";
 import "./templates/products/productGrid/content.js";

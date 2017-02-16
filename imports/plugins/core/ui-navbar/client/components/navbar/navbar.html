@@ -25,8 +25,8 @@
   <div class="notification-body">
     {{> notification}}
     <div class="notification-icon">{{> React notificationBar}}</div>
-    {{#if newNotificationCount newNotificationCount }}
-    <span class="badge notification-badge">{{ newNotificationCount }}</span>
+    {{#if newNotification NotificationCount }}
+    <span class="badge notification-badge">{{ NotificationCount }}</span>
     {{/if}}
   </div>
 </template>

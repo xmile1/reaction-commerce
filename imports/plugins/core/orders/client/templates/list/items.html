@@ -24,6 +24,9 @@
           -
           <span>{{> React (numericInputProps variants.price)}}</span>
         </span>
+        {{#if isDigital}}
+        <div><a href="http://{{downloadUrl}}"><button class="btn btn-success float-right">Download</button></a></div>
+        {{/if}}
       </div>
     </div>
   </div>
