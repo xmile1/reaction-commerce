@@ -103,10 +103,15 @@ Template.notificationMenu.helpers({
       kind: "flat"
     };
   },
-  newNotificationCount() {
+  NotificationCount() {
     return Accounts.findOne({_id: Meteor.userId()})
       .notificationCount;
+  },
+
+  newNotification(notification) {
+    return notification > 0 ? true : false;
   }
+
 });
 
 Template.notificationMenu.events({
