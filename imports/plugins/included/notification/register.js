@@ -7,7 +7,7 @@ Reaction.registerPackage({
   icon: "fa fa-bullhorn",
   autoEnable: true,
   settings: {
-    default: "twilio",
+    default: "jusibe",
     api: {
       twilio: {
         authToken: "",

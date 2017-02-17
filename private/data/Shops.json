@@ -3091,7 +3091,9 @@
     "tag",
     "index",
     "cart/checkout",
-    "cart/completed"
+    "cart/completed",
+    "wallet", 
+    "wallet/walletPaymentForm"
   ]
 }, {
   "_id": "ddzuN2YPvgvx7rJS5",

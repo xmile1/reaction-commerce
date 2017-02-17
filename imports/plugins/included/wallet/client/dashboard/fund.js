@@ -48,7 +48,7 @@ AutoForm.addHooks("wallet-fund-form", {
                     amount: doc.amount,
                     userId: Meteor.userId(),
                     balance: user.wallet.balance / 100,
-                    message: `Your account has been funded with ${res.data.amount}`
+                    message: `Your account has been funded with ${doc.amount}`
                   });
                 });
                 walletApi.enableButton(template, "Pay Now");

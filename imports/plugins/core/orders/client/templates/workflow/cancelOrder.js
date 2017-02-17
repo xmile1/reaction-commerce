@@ -87,6 +87,7 @@ Template.coreOrderCancelOrder.events({
               if (!err) {
                 Meteor.call("notification/notify", "cancel", {
                   orderId: order._id,
+                  message: `your order with id ${order._id} has been canceled`,
                   balance: parseInt(user.wallet.balance, 10),
                   amount
                 }, order.userId);

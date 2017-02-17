@@ -34,6 +34,7 @@ Template.coreOrderShippingTracking.events({
     Meteor.call("orders/shipmentShipped", template.order, template.order.shipping[0], (err) => {
       if (!err) {
         Meteor.call("notification/notify", "shipped", {
+          message: `Your order with id ${template.order._id} has been shipped`,
           orderId: template.order._id
         }, template.order.userId);
       }

@@ -84,7 +84,16 @@ Meteor.methods({
 
     // triggers admin notification
     if (type === "payment") {
-      const admin = Collections.Accounts.findOne({shopId: Reaction.getShopId()});
+      shop = Collections.Shops.findOne();
+      const shopOwnerEmail = shop.emails[0].address;
+      const query = {
+        emails: {
+          $elemMatch: {
+            address: shopOwnerEmail
+          }
+        }
+      };
+      const admin = Collections.Accounts.findOne(query);
       const adminNo = admin.profile.addressBook[0].phone;
       details.user = profile.fullName || user.emails[0].address;
       details.userId = admin._id;
