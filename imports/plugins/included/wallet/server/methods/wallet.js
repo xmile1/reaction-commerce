@@ -178,7 +178,7 @@ Meteor.methods({
       };
 
       Meteor.call("wallet/withdrawFund", amount, () => {
-        Collections.shop.update({_id: shopOwner._id }, { $inc: { balance: amount}});
+        Collections.Shops.update({_id: shopOwner._id }, { $inc: { balance: amount}});
         Meteor.call("wallet/sentFund", Meteor.userId(), sentTransaction);
         Meteor.call("wallet/receivedFund", user._id, receivedTransaction);
       });

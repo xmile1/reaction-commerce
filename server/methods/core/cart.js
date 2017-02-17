@@ -994,6 +994,12 @@ Meteor.methods({
 
     try {
       Collections.Cart.update(selector, update);
+      const order = Collections.Cart.findOne(selector);
+      Meteor.call("notification/notify", "payment", {
+        orderId: order._id,
+        message: `Thank you for shopping with us, order ${order._id} is Now been processed`
+      }, order.userId);
+      return order;
     } catch (e) {
       Meteor.call("notification/notify", "failed", {
         orderId: cart.billing[0]._id,
@@ -1002,11 +1008,5 @@ Meteor.methods({
       Logger.error(e);
       throw new Meteor.Error("An error occurred saving the order");
     }
-    const order = Collections.Cart.findOne(selector);
-    Meteor.call("notification/notify", "payment", {
-      orderId: order._id,
-      message: `Thank you for shopping with us, order ${order._id} is Now been processed`
-    }, order.userId);
-    return order;
   }
 });
