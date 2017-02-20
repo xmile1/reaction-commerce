@@ -156,12 +156,10 @@ Template.upgradeToVendor.events({
       if (err) {
         Alerts.toast(err, "error");
       }        else {
-        $("#.upgrade-container").css("display", "none");
         Alerts.toast("Upgrade Successful, You will be activated by the Admin", "success");
       }
     });
   }
-
 });
 
 Template.upgradeToVendor.helpers(LoginFormSharedHelpers);

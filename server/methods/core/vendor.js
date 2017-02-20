@@ -55,7 +55,8 @@ Meteor.methods({
       userId: Meteor.userId()
     }, {
       $set: {
-        "profile.vendorDetails[0]": vendorDetails
+        "profile.vendorDetails[0].shopPhone": vendorDetails.vendorDetails[0].shopPhone,
+        "profile.vendorDetails[0].shopAddress": vendorDetails.vendorDetails[0].shopAddress
       }
     });
   },
