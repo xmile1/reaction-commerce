@@ -991,10 +991,9 @@ Meteor.methods({
         }
       };
     }
-
+    const order = Collections.Cart.findOne(selector);
     try {
       Collections.Cart.update(selector, update);
-      const order = Collections.Cart.findOne(selector);
       Meteor.call("notification/notify", "payment", {
         orderId: order._id,
         message: `Thank you for shopping with us, order ${order._id} is Now been processed`

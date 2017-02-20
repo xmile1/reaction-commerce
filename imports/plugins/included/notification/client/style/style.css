@@ -81,7 +81,7 @@
 }
 
 .notification-badge {
-  background: red;
+  background: red !important;
   position: absolute;
   top: -5px;
   right: -15px;
