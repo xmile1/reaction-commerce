@@ -76,7 +76,15 @@
 
 
             <a href="/reaction/vendors/{{reactionVendor}}"><div class="vendor">
+              {{#if hasPermission "createProduct"}}
               {{>fieldComponent field="reactionVendor" value=reactionVendor}}
+              {{/if}}
+
+              {{#unless hasPermission "createProduct"}}
+              <div class="product-detail-field {{field}}">
+              {{visitShop shopName=reactionVendor}}
+              </div>
+              {{/unless}}
             </div></a>
 
             <!-- main product information -->

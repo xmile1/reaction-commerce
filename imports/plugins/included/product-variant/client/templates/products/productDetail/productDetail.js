@@ -63,6 +63,9 @@ Template.productDetail.onCreated(function () {
  * product data source
  */
 Template.productDetail.helpers({
+  visitShop(shopName) {
+    return `Click here to visit ${shopName.hash.shopName}'s shop`;
+  },
 
   tagListProps() {
     const instance = Template.instance();

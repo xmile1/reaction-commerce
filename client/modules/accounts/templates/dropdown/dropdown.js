@@ -17,7 +17,7 @@ Template.staticPagesNav.helpers({
     let vendorId = "admin";
     if (Router.getParam("shopName")) {
       const shopName = Router.getParam("shopName");
-      vendorId = Collections.Accounts.findOne({"profile.vendorDetails.0.shopName": shopName});
+      vendorId = Collections.Accounts.find({"profile.vendorDetails.0.shopName": shopName}).fetch()[0];
       vendorId = vendorId._id;
     }
     return StaticPages.find({shopId: Reaction.shopId, pageOwner: vendorId}).fetch();

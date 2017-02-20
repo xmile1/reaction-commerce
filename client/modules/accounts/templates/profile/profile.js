@@ -31,7 +31,7 @@ Template.accountProfile.helpers({
   },
 
   shopDetails() {
-    const account = Collections.Accounts.findOne({userId: Meteor.userId()});
+    const account = Collections.Accounts.find({userId: Meteor.userId()}).fetch()[0];
     if (account.profile.vendorDetails) {
       return account.profile.vendorDetails[0];
     }
