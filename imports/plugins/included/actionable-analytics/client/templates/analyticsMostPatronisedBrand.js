@@ -36,9 +36,14 @@ const storeProductData = (productId) => {
 const getVendours = (vendourId) => {
   vendourId.forEach((id) => {
     Meteor.call("analytics/getproduct", id, (error, result) => {
-      const index = vendourNames.indexOf(result[0].vendor);
+      const index = vendourNames.indexOf(result[0].reactionVendor)
+        || vendourNames.indexOf(result[0].vendor);
       if (index === -1) {
-        vendourNames.push(result[0].vendor);
+        if (result[0].reactionVendor) {
+          vendourNames.push(result[0].reactionVendor);
+        } else {
+          vendourNames.push(result[0].vendor);
+        }
       } else {
         vendourCounts[index] = vendourCounts[index] + vendourCounts[vendourIds.indexOf(id)];
       }
