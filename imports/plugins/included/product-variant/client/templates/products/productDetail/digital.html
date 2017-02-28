@@ -1,12 +1,15 @@
 <template name="digitalProduct">
   <div>
     <div class="checkbox">
-      <h3><input id="digital" type="checkbox" value="">Digital Product</h3>
+      <label for="digital"><h3><input id="digital" type="checkbox" value="">Digital Product</h3></label>
     </div>
     <div id="showUrl" style="display: none">
-      <a href="http://{{downloadLink}}"><h5>Download url: {{ downloadLink }}</h5></a>
-      <input type="text" id="url" placeholder="Enter download url"><br>
-      <button id="save" class="btn btn-success pull-right">Save</button>
+       <div class="form-group">
+          <label for="file-input" class="btn btn-default btn-block btn-info btn-file">Upload your product (Not more than 5mb)
+              <input type="file" id="file-input" accept=".xls, .docs, .mp3, .jpeg, .pdf">
+            </label>
+        </div>
+        <div><a href="{{downloadUrl}}">Download Url: {{ downloadLink }}</a></div>
     </div>
   </div>
 </template>

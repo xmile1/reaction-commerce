@@ -21,12 +21,13 @@
 
         <span class="order-detail-price">
           <span class="badge badge-info">{{quantity}}</span>
-          -
           <span>{{> React (numericInputProps variants.price)}}</span>
         </span>
+        <span>
         {{#if isDigital}}
-        <div><a href="http://{{downloadUrl}}"><button class="btn btn-success float-right">Download</button></a></div>
+        <div style="margin-left: 10px"><a href="{{downloadUrl}}"><button class="btn btn-success">Download</button></a></div>
         {{/if}}
+        </span>
       </div>
     </div>
   </div>
