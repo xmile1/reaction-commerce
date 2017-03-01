@@ -13,6 +13,8 @@ export default function () {
   });
 
   Slingshot.createDirective("uploadToAmazonS3", Slingshot.S3Storage, {
+    AWSAccessKeyId: process.env.AWSAccessKeyId,
+    AWSSecretAccessKey: process.env.AWSSecretAccessKey,
     bucket: "kissa-test",
     acl: "public-read",
     authorize: function () {
