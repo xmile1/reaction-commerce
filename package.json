@@ -81,7 +81,8 @@
     "twit": "^2.2.5",
     "twitter-js-client": "0.0.5",
     "twitter-node-client": "0.0.6",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "snyk": "^1.46.0"
   },
   "script": {
     "start": "meteor"
@@ -107,5 +108,10 @@
         ]
       }
     }
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
