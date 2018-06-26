@@ -77,7 +77,7 @@
     "tether-shepherd": "^1.8.1",
     "tether-tooltip": "^1.2.0",
     "transliteration": "^1.1.9",
-    "twilio": "^2.11.1",
+    "twilio": "^3.0.0",
     "twit": "^2.2.5",
     "twitter-js-client": "0.0.5",
     "twitter-node-client": "0.0.6",
